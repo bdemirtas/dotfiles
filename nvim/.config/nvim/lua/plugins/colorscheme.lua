@@ -1,11 +1,12 @@
 return {
   {
-    "projekt0n/github-nvim-theme",
+    "ellisonleao/gruvbox.nvim",
     lazy = false,
     priority = 1000,
     config = function()
-      require('github-theme').setup({})
-      vim.cmd('colorscheme github_dark_high_contrast')
+      require("gruvbox").setup({})
+      vim.o.background = "dark"
+      vim.cmd("colorscheme gruvbox")
     end,
   },
 }
