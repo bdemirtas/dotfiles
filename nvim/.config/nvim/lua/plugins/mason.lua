@@ -38,14 +38,7 @@ return {
           "marksman",
           "cssls",
           "taplo",
-          -- Formatter
-          "eslint_d",
-          "prettier",
-          "black",
-          "isort",
-          "fixjson",
-          "jq",
-          "yamlfmt",
+          "ruff_lsp"
         },
       })
     end

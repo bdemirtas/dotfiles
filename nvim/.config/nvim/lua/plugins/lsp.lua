@@ -15,7 +15,6 @@ return {
     cmd = { "LspInfo", "LspInstall", "LspStart" },
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-      -- { "hrsh7th/cmp-nvim-lsp" },
       { "williamboman/mason-lspconfig.nvim" },
     },
     config = function()
@@ -27,7 +26,7 @@ return {
         lsp_zero.default_keymaps({
           buffer = bufnr,
           preserve_mappings = false,
-          vim.keymap.set('n', 'gR', '<cmd>lua vim.lsp.buf.rename()<cr>', { buffer = bufnr })
+          vim.keymap.set('n', 'gR', '<cmd>lua vim.lsp.buf.rename()<cr>', { buffer = bufnr, desc = "Rename Symbole" }),
         })
       end)
 
@@ -45,7 +44,9 @@ return {
               settings = {
                 python = {
                   analysis = {
-                    typeCheckingMode = "off"
+                    typeCheckingMode = "off",
+                    autoSearchPaths = true,
+                    useLibraryCodeForTypes = true
                   }
                 }
               }
