@@ -3,3 +3,11 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.signcolumn = "number"
 vim.opt.scrolloff = 999
+vim.filetype.add({
+	extension = {
+		yml = "yaml.ansible",
+	},
+	pattern = {
+		[".*/tasks/.*.yaml"] = "yaml.ansible",
+	},
+})

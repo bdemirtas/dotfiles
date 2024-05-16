@@ -53,6 +53,12 @@ return {
 										typeCheckingMode = "off",
 										autoSearchPaths = true,
 										useLibraryCodeForTypes = true,
+										diagnosticSeverityOverrides = {
+											reportOptionalMemberAccess = "none",
+											reportGeneralTypeIssues = "none",
+											reportCallIssue = false,
+											reportArgumentType = false,
+										},
 									},
 								},
 							},

@@ -30,6 +30,7 @@ return {
 					"yamlls",
 					"bashls",
 					"dockerls",
+					"ansible-language-server",
 					"jsonls",
 					"html",
 					"jqls",
@@ -39,6 +40,7 @@ return {
 					"ruff_lsp",
 					"prettierd",
 					-- Formatter
+					"ansible-lint",
 					"eslint_d",
 					"prettier",
 					"fixjson",
