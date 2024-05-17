@@ -52,13 +52,6 @@ return {
 		end,
 	},
 	{
-		"echasnovski/mini.notify",
-		version = false,
-		config = function()
-			require("mini.notify").setup({})
-		end,
-	},
-	{
 		"echasnovski/mini.sessions",
 		version = false,
 		config = function()
