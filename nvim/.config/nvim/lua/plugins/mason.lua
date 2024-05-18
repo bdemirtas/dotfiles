@@ -1,4 +1,4 @@
-servers = {
+local servers = {
 	"lua_ls",
 	"marksman",
 	"yamlls",

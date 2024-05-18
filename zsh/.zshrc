@@ -42,6 +42,8 @@ else
   export EDITOR='nano'
 fi
 
+# Default Editor
+export EDITOR='nvim'
 # Example aliases
 vv() {
   select config in lazyvim kickstart nvchad astrovim lunarvim
@@ -54,6 +56,7 @@ alias vim="nvim"
 alias cd="z"
 
 path+=(~/.local/bin)
+fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
 
 # FZF configuration
 export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
