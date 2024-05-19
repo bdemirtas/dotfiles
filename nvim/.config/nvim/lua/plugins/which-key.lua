@@ -32,6 +32,7 @@ return {
         ["f"] = { name = "Find" },
         ["d"] = { name = "Delete/Close" },
         ["g"] = { name = "Git" },
+        ["o"] = { name = "Org"},
         ["s"] = { name = "Search" },
         ["t"] = { name = "Terminal" },
         ["u"] = { name = "UI" },
