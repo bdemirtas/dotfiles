@@ -14,6 +14,7 @@ local servers = {
 	"marksman",
 	"ansiblels",
 	"pyright",
+  "rust_analyzer",
 }
 
 return {

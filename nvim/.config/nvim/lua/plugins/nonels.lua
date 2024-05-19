@@ -21,6 +21,7 @@ return {
 				"yamlfmt",
 				"markdownlint",
 				"stylua",
+        "ast-grep",
 			},
 			handlers = {},
 		})
