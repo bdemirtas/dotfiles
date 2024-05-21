@@ -9,36 +9,18 @@ return {
 		event = { "BufReadPre", "BufNewFile" },
 		init = function()
 			vim.g.VM_theme = "purplegray"
-			vim.g.VM_mouse_mappings = 1
-		end,
-	},
-	{
-		"mrjones2014/legendary.nvim",
-		priority = 10000,
-		lazy = false,
-		keys = {
-			{ "<C-S-P>", "<cmd>:Legendary<cr>", desc = "Legendary" },
-		},
-		config = function()
-			require("legendary").setup({
-				extensions = {
-					lazy_nvim = true,
-					which_key = {
-						auto_register = true,
-					},
-					nvim_tree = true,
-					smart_splits = {
-						directions = { "h", "j", "k", "l" },
-						mods = {
-							move = "<C>",
-							resize = "<A>",
-						},
-					},
-					op_nvim = true,
-					diffview = true,
-				},
-			})
-		end,
+      vim.g.VM_set_statusline = 0
+      vim.cmd([[
+      " To change any mapping you must first initialize the variable:
+      let g:VM_maps = {}
+      let g:VM_maps['Find Under'] = "<C-n>"
+
+      " https://github.com/mg979/vim-visual-multi/issues/172
+      let g:VM_maps['I BS'] = "" " disable backspace mapping
+      let g:VM_maps['I CtrlC'] = "" " disable backspace mapping
+
+      ]])
+    end,
 	},
 	{
 		"mrjones2014/smart-splits.nvim",
