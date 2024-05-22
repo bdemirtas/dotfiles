@@ -30,7 +30,7 @@ return {
 				},
 				focus_alternate_buffer = false,
 				short_file_names = true,
-				short_term_names = true,
+        order_buffers = "filename",
 				loop_nav = true,
 				highlight = "Normal:BufferManagerBorder",
 				win_extra_options = {

@@ -14,7 +14,7 @@ local servers = {
 	"marksman",
 	"ansiblels",
 	"pyright",
-  "rust_analyzer",
+	"rust_analyzer",
 }
 
 return {
@@ -61,8 +61,8 @@ return {
 				map("n", "go", "<cmd>lua vim.lsp.buf.type_definition()<cr>", "Go to type definition", bufnr)
 				map("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", "Go to reference", bufnr)
 				map("n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", "Show function signature", bufnr)
-				map("n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename symbol", bufnr)
-				map({ "n", "x" }, "gR", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", bufnr)
+				map("n", "gR", "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename symbol", bufnr)
+				map({ "n", "x" }, "gF", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", "Format", bufnr)
 				map("n", "<F4>", "<cmd>lua vim.lsp.buf.code_action()<cr>", "Execute code action", bufnr)
 				map("n", "gl", "<cmd>lua vim.diagnostic.open_float()<cr>", "Show diagnostic", bufnr)
 				map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<cr>", "Previous diagnostic", bufnr)
