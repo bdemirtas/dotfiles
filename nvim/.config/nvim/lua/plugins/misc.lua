@@ -1,7 +1,24 @@
 return {
 	{
-		"mfussenegger/nvim-ansible",
-		ft = { "yaml", "yaml.ansible" },
+		"kylechui/nvim-surround",
+		version = "*", -- Use for stability; omit to use `main` branch for the latest features
+		event = "VeryLazy",
+		config = true,
+	},
+	{
+		"roobert/surround-ui.nvim",
+		dependencies = {
+			"kylechui/nvim-surround",
+			"folke/which-key.nvim",
+		},
+		config = function()
+			require("surround-ui").setup({
+				root_key = "S",
+			})
+		end,
+	},
+	{
+		"danilamihailov/beacon.nvim",
 	},
 	{
 		"mg979/vim-visual-multi",
@@ -9,8 +26,8 @@ return {
 		event = { "BufReadPre", "BufNewFile" },
 		init = function()
 			vim.g.VM_theme = "purplegray"
-      vim.g.VM_set_statusline = 0
-      vim.cmd([[
+			vim.g.VM_set_statusline = 0
+			vim.cmd([[
       " To change any mapping you must first initialize the variable:
       let g:VM_maps = {}
       let g:VM_maps['Find Under'] = "<C-n>"
@@ -20,7 +37,7 @@ return {
       let g:VM_maps['I CtrlC'] = "" " disable backspace mapping
 
       ]])
-    end,
+		end,
 	},
 	{
 		"mrjones2014/smart-splits.nvim",

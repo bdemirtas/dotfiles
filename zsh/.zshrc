@@ -37,34 +37,28 @@ export MANPATH="/usr/local/man:$MANPATH"
 export LANG=en_US.UTF-8
 
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nvim'
+  export EDITOR='vim'
 else
   export EDITOR='nano'
 fi
 
 # Default Editor
 export EDITOR='nvim'
-# Example aliases
-vv() {
-  select config in lazyvim kickstart nvchad astrovim lunarvim
-  do NVIM_APPNAME=nvim-$config nvim; break; done
-}
-alias zshconfig="nano ~/.zshrc"
-alias ohmyzsh="nano ~/.oh-my-zsh"
-alias ls='eza --icons=always'
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+alias zshconfig="vim ~/.zshrc"
+alias ohmyzsh="vim ~/.oh-my-zsh"
 alias vim="nvim"
-alias cd="z"
+if hash exa 2>/dev/null; then
+  alias l="exa -l --group-directories-first --color-scale --color=always"
+  alias ll="exa -l --group-directories-first --color-scale --color=always -a --icons"
+  alias ls="exa --group-directories-first --color-scale --color=always"
+else
+  alias l="ls -lh --group-directories-first"
+  alias ll="ls -lah --group-directories-first"
+fi
 
 path+=(~/.local/bin)
 fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
-
-# FZF configuration
-export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
-export FZF_CTRL_T_OPTS="--preview '$show_file_or_dir_preview'"
-export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
-export FPATH="/usr/bin/eza/completions/zsh:$FPATH"
 
 # Pyenv
 export PYENV_ROOT="$HOME/.pyenv"
@@ -76,8 +70,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# Zoxide
-eval "$(zoxide init zsh)"
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"

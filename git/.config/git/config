@@ -1,0 +1,55 @@
+[init]
+  defaultBranch = main
+
+[include]
+  path = ~/.config/git/themes.gitconfig
+
+[user]
+  name = Burak Demirtas
+  email = burak@burakdemirtas.io
+  username = bdemirtas
+
+[web]
+  browser = firefox
+
+[rerere]
+  enabled = 1
+  autoupdate = 1
+
+[color]
+  ui = auto
+
+[color "branch"]
+  current = yellow bold
+  local = green bold
+  remote = cyan bold
+
+[color "status"]
+  added = green bold
+  changed = yellow bold
+  untracked = red bold
+
+[merge]
+  conflictstyle = diff3
+
+[core]
+  pager = delta
+  editor = "nvim"
+
+[commit]
+  template = "~/.config/git/gitmessage.txt"
+
+[push]
+  autoSetupRemote = true
+
+[rebase]
+  autostash = true
+
+[diff]
+  algorithm = histogram
+
+[interactive]
+  diffFilter = delta --color-only --features=interactive
+
+[delta]
+  features = mellow-barbet

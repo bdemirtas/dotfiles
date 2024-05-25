@@ -1,4 +1,12 @@
 return {
+  {
+    "fredeeb/tardis.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = true,
+    keys = {
+      { "<leader>gt", "<cmd>Tardis<cr>", desc = "Time Machine" },
+    }
+  },
 	{
 		"lewis6991/gitsigns.nvim",
 		config = function()
@@ -31,16 +39,10 @@ return {
 
 					-- Actions
 					map("n", "]g", gitsigns.stage_hunk, { desc = "Next Git hunk" })
-					map("n", "[g", gitsigns.reset_hunk, { desc = "Previous Git hub" })
-					map("v", "<leader>gs", function()
-						gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
-					end, { desc = "Stage Git hunk" })
-					map("v", "<leader>gr", function()
-						gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
-					end, { desc = "Reset Git hunk" })
-					map("n", "<leader>gS", gitsigns.stage_buffer, { desc = "Stage Git buffer" })
-					map("n", "<leader>gu", gitsigns.undo_stage_hunk, { desc = "Unstage Git hunk" })
-					map("n", "<leader>gR", gitsigns.reset_buffer, { desc = "Reset Git buffer" })
+          map("n", "[g", gitsigns.reset_hunk, { desc = "Previous Git hub" })
+          -- map("n", "<leader>gS", gitsigns.stage_buffer, { desc = "Stage Git buffer" })
+          map("n", "<leader>gu", gitsigns.undo_stage_hunk, { desc = "Unstage Git hunk" })
+          map("n", "<leader>gR", gitsigns.reset_buffer, { desc = "Reset Git buffer" })
 					map("n", "<leader>gp", gitsigns.preview_hunk, { desc = "Preview Git hunk" })
 					map("n", "<leader>gL", function()
 						gitsigns.blame_line({ full = true })
@@ -56,17 +58,14 @@ return {
 	},
 	{
 		"NeogitOrg/neogit",
-    tag = "v0.0.1",
 		dependencies = {
 			"nvim-lua/plenary.nvim", -- required
 			"sindrets/diffview.nvim", -- optional - Diff integration
-			"nvim-telescope/telescope.nvim", -- optional
 			"ibhagwan/fzf-lua", -- optional
 		},
 		config = function()
 			require("neogit").setup({
-				vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<CR>", { desc = "Status" }),
-				-- vim.keymap.set("n", "<leader>gc", "<cmd>Neogit commit<CR>", { desc = "Commit" }),
+				vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<CR>", { desc = "Neogit" }),
 			})
 		end,
 	},

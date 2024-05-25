@@ -29,6 +29,5 @@ return {
 			},
 			handlers = {},
 		})
-		vim.keymap.set("n", "gF", vim.lsp.buf.format, { desc = "Format file" })
-	end,
+  end,
 }
