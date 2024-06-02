@@ -1,30 +1,28 @@
 return {
 	{
 		"nvim-telescope/telescope.nvim",
-    enabled = true,
+    enabled = false,
 		dependencies = {
 			"nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-ui-select.nvim",
-			{
-				"nvim-telescope/telescope-fzf-native.nvim",
-				enabled = vim.fn.executable("make") == 1,
-				build = "make",
-			},
-			"andrew-george/telescope-themes",
+			"nvim-telescope/telescope-fzy-native.nvim",
+      "andrew-george/telescope-themes",
 			"nvim-telescope/telescope-frecency.nvim",
 		},
 		config = function()
 			local builtin = require("telescope.builtin")
 			local actions = require("telescope.actions")
+      local action_layout = require("telescope.actions.layout")
 			local map = require("helper.util").Map
 			-- find
 			map("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
+			map("n", "<leader>/", builtin.current_buffer_fuzzy_find, { desc = "File fuzzy find" })
 			map("n", "<leader>ff", builtin.find_files, { desc = "Find Files (Root Dir)" })
 			map("n", "<leader>fh", builtin.help_tags, { desc = "Help Tags" })
 			map("n", "<leader>fg", builtin.live_grep, { desc = "Live Grep" })
 			map("n", "<leader>fr", builtin.oldfiles, { desc = "Recent" })
 			-- git
-			map("n", "<leader>gc", builtin.git_commits, { desc = "Commits" })
+			map("n", "<leader>gC", builtin.git_commits, { desc = "Commits" })
 			map("n", "<leader>gc", builtin.git_bcommits, { desc = "Buffer Commits" })
 			-- search
 			map("n", '<leader>s"', builtin.registers, { desc = "Registers" })
@@ -44,41 +42,65 @@ return {
 			map("n", "<leader>st", ":Telescope themes<CR>", { desc = "Theme Switcher" })
 			local telescope = require("telescope")
 			telescope.setup({
-				find_files = {
-					hidden = true,
+        find_files = {
+          hidden = true,
+        },
+        defaults = {
+          layout_strategy = "center",
+          results_title = false,
+          sorting_strategy = "ascending",
+          layout_config = {
+            center = {
+              width = 0.6,
+              height = 0.4,
+            },
+          },
+          mappings = {
+            i = {
+              ["<c-d>"] = actions.delete_buffer + actions.move_to_top,
+              ["<M-p>"] = action_layout.toggle_preview,
+              ["<c-j>"] = actions.move_selection_next,
+              ["<c-k>"] = actions.move_selection_previous,
+              ["<C-u>"] = actions.preview_scrolling_up,
+              ["<C-d>"] = actions.preview_scrolling_down,
+            },
+            n = {
+              q = actions.close,
+              ["<M-p>"] = action_layout.toggle_preview
+            },
+          },
+        },
+        pickers = {
+          find_files = {
+            find_command = { "fd", "--type", "f", "--strip-cwd-prefix" },
+          },
+          buffers = { previewer = false, theme = "dropdown", show_remote_tracking_branches = false },
+          current_buffer_fuzzy_find = {
+            previewer = false,
+          },
 				},
-				defaults = {
-					mappings = {
-						i = {
-							["<C-h>"] = "which_key",
-							["<C-N>"] = actions.cycle_history_next,
-							["<C-P>"] = actions.cycle_history_prev,
-							["<C-J>"] = actions.move_selection_next,
-							["<C-K>"] = actions.move_selection_previous,
-						},
-						n = { q = actions.close },
-					},
-				},
-				pickers = {
-					layout_config = {},
-				},
-				extensions = {
+        extensions = {
           ["ui-select"] = {
             require("telescope.themes").get_dropdown {},
           },
-					fzf = {
-						fuzzy = true, -- false will only do exact matching
-						override_generic_sorter = true, -- override the generic sorter
-						override_file_sorter = true, -- override the file sorter
-						case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-					},
-					smart_open = {
-						match_algorithm = "fzf",
-						disable_devicons = false,
-					},
-				},
-			})
-			telescope.load_extension("fzf")
+          fzy_native = {
+            override_generic_sorter = false,
+            override_file_sorter = true,
+          },
+          smart_open = {
+            match_algorithm = "fzf",
+            disable_devicons = false,
+          },
+          themes = {
+            enable_live_preview = true,
+            persist = {
+              enabled = true,
+              path = vim.fn.stdpath("config") .. "/lua/helper/colorscheme.lua"
+            }
+          }
+        },
+      })
+			telescope.load_extension("fzy_native")
 			telescope.load_extension("themes")
 			telescope.load_extension("frecency")
 			telescope.load_extension("ui-select")
@@ -86,7 +108,7 @@ return {
 	},
 	{
 		"danielfalk/smart-open.nvim",
-    enabled = true,
+    enabled = false,
 		branch = "0.2.x",
 		config = function()
 			require("telescope").load_extension("smart_open")
