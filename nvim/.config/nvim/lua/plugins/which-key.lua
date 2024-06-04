@@ -6,18 +6,18 @@ return {
     vim.keymap.set("v", "<Leader>?", "<Esc>:WhichKey '' v<CR>", { silent = true })
     vim.keymap.set("n", "<Leader>?", "<Esc>:WhichKey '' n<CR>", { silent = true, desc = "which-key root" })
 
-    vim.cmd([[highlight default link WhichKey          Label]])
-    vim.cmd([[highlight default link WhichKeySeperator String]])
-    vim.cmd([[highlight default link WhichKeyGroup     Include]])
-    vim.cmd([[highlight default link WhichKeyDesc      Function]])
-    vim.cmd([[highlight default link WhichKeyFloat     CursorLine]])
-    vim.cmd([[highlight default link WhichKeyValue     Comment]])
+    vim.cmd [[highlight default link WhichKey          Label]]
+    vim.cmd [[highlight default link WhichKeySeperator String]]
+    vim.cmd [[highlight default link WhichKeyGroup     Include]]
+    vim.cmd [[highlight default link WhichKeyDesc      Function]]
+    vim.cmd [[highlight default link WhichKeyFloat     CursorLine]]
+    vim.cmd [[highlight default link WhichKeyValue     Comment]]
 
-    local wk = require("which-key")
+    local wk = require "which-key"
     local opts = {
       mode = { "n", "v" },
-      buffer = nil,   -- Global mappings. Specify a buffer number for buffer local mappings
-      silent = true,  -- use `silent` when creating keymaps
+      buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+      silent = true, -- use `silent` when creating keymaps
       noremap = true, -- use `noremap` when creating keymaps
       nowait = false, -- use `nowait` when creating keymaps
     }
@@ -31,8 +31,9 @@ return {
         ["c"] = { name = "Code" },
         ["f"] = { name = "Find" },
         ["d"] = { name = "Delete/Close" },
+        ["h"] = { name = "Gitsign" },
         ["g"] = { name = "Git" },
-        ["o"] = { name = "Org"},
+        ["o"] = { name = "Org" },
         ["s"] = { name = "Search" },
         ["t"] = { name = "Terminal" },
         ["w"] = { name = "Workspace" },
