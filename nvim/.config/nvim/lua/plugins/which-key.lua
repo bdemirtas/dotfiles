@@ -35,6 +35,7 @@ return {
         ["o"] = { name = "Org"},
         ["s"] = { name = "Search" },
         ["t"] = { name = "Terminal" },
+        ["w"] = { name = "Workspace" },
         ["u"] = { name = "UI" },
       },
     }

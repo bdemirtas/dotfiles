@@ -60,21 +60,20 @@ return {
         desc = "LSP actions",
         callback = function(event)
           local client = vim.lsp.get_client_by_id(event.data.client_id)
+          local builtin = require('telescope.builtin')
           local nmap = function(mode, keys, func, desc)
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = desc })
           end
 
           nmap("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", "Hover documentation")
-          nmap("n", "gd", "<cmd>lua require('fzf-lua').lsp_definitions()<cr>", "Go to definition")
+          nmap("n", "gd", builtin.lsp_definitions, "Go to definition")
           nmap("n", "gD", "<cmd>lua vim.lsp.buf.declaration() <cr>", "Go to declaration")
-          nmap("n", "gi", "<cmd>lua require('fzf-lua').lsp_implementations()<cr>", "Go to implementation")
-          nmap("n", "go", "<cmd>lua require('fzf-lua').lsp_typedefs()<cr>", "Go to definition")
-          nmap("n", "gr", "<cmd>lua require('fzf-lua').lsp_references()<cr>", "Go to references")
+          nmap("n", "gi", builtin.lsp_implementations, "Go to implementation")
+          nmap("n", "go", builtin.lsp_type_definitions, "Go to definition")
+          nmap("n", "gr", builtin.lsp_references, "Go to references")
           nmap("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<cr>", "Signature Documentation")
           nmap("n", "gR", "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename symbole")
-          nmap("n", "<leader>ca", "<cmd>lua require('fzf-lua').lsp_code_actions()<cr>", "Code action")
-          nmap("n", "gl", "<cmd>lua require('fzf-lua').lsp_document_diagnostics()<cr>", "Document diagnostic")
-          nmap("n", "gL", "<cmd>lua require('fzf-lua').lsp_workspace_diagnostics()<cr>", "Workspace diagnostic")
+          nmap("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code action")
           nmap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<cr>", "Previous diagnostic")
           nmap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<cr>", "Next diagnostic")
           if client ~= nil and client.name == "ruff" then
