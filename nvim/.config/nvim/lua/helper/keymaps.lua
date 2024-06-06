@@ -1,4 +1,3 @@
-local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
 vim.cmd("set expandtab")
@@ -8,19 +7,38 @@ vim.cmd("set shiftwidth=2")
 
 vim.opt.swapfile = false
 
-keymap.set("n", "<leader>h", ":nohlsearch<CR>")
+vim.keymap.set("n", "<leader>h", ":nohlsearch<CR>")
 vim.wo.number = true
 
 -- search movement keeps cursor in middle
-keymap.set("n", "n", "nzzzv", opts)
-keymap.set("n", "N", "Nzzzv", opts)
+vim.keymap.set("n", "n", "nzzzv", opts)
+vim.keymap.set("n", "N", "Nzzzv", opts)
 
 -- the greatest remap ever (Primeagen)
-keymap.set("v", "<leader>p", "_dP", opts)
+vim.keymap.set("v", "<leader>p", "_dP", opts)
 
 -- indent
-keymap.set('v', '<', '<gv', opts)
-keymap.set('v', '>', '>gv', opts)
+vim.keymap.set('v', '<', '<gv', opts)
+vim.keymap.set('v', '>', '>gv', opts)
 -- Normal mode
-keymap.set('n', '<', '<<', opts)
-keymap.set('n', '>', '>>', opts)
+vim.keymap.set('n', '<', '<<', opts)
+vim.keymap.set('n', '>', '>>', opts)
+
+vim.keymap.set({ "n", "v" }, "x", "\"_x")
+vim.keymap.set({ "n", "v" }, "X", "\"_X")
+vim.keymap.set({ "n", "v" }, "c", "\"_c")
+vim.keymap.set({ "n", "v" }, "C", "\"_C")
+
+-- quit neovim
+vim.keymap.set("n", "<leader>q", vim.cmd.Ex)
+
+vim.keymap.set("n", "<leader>z", "mzgg\"+yG`z")
+vim.keymap.set("n", "<leader>x", "gg\"_dG")
+
+vim.keymap.set({ "i", "s" }, "<C-j>", function() vim.snippet.jump(1) end)
+vim.keymap.set({ "i", "s" }, "<C-k>", function() vim.snippet.jump(-1) end)
+
+if vim.o.wrap then
+  map("n", "j", [[v:count ? 'j' : 'gj']], { expr = true })
+  map("n", "k", [[v:count ? 'k' : 'gk']], { expr = true })
+end

@@ -4,6 +4,9 @@ return {
   config = function()
     require("nvim-treesitter.configs").setup {
       ensure_installed = {
+        "json",
+        "luadoc",
+        "bash",
         "git_config",
         "csv",
         "vim",
@@ -14,7 +17,10 @@ return {
         "gitcommit",
         "git_rebase",
         "yaml",
+        "sql",
+        "markdown",
         "markdown_inline",
+        "regex",
         "norg",
       },
       ignore_install = {},
