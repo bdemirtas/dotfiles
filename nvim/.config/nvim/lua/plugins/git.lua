@@ -38,27 +38,18 @@ return {
           end)
 
           -- Actions
-          map("n", "<leader>hs", gitsigns.stage_hunk, { desc = "Stage hunk" })
-          map("n", "<leader>hr", gitsigns.reset_hunk, { desc = "Reset hunk" })
-          map("v", "<leader>hs", function()
-            gitsigns.stage_hunk { vim.fn.line ".", vim.fn.line "v" }
-          end, { desc = "Stage hunk" })
-          map("v", "<leader>hr", function()
-            gitsigns.reset_hunk { vim.fn.line ".", vim.fn.line "v" }
-          end, { desc = "Reset hunk" })
-          map("n", "<leader>hS", gitsigns.stage_buffer, { desc = "Stage buffer" })
-          map("n", "<leader>hu", gitsigns.undo_stage_hunk, { desc = "Undo Hunk" })
-          map("n", "<leader>hR", gitsigns.reset_buffer, { desc = "Reset buffer" })
-          map("n", "<leader>hp", gitsigns.preview_hunk, { desc = "Preview hunk" })
-          map("n", "<leader>hb", function()
+          map({ "n", "v" }, "<leader>gs", ":Gitsigns stage_hunk<CR>", { desc = "Stage hunk" })
+          map({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<CR>", { desc = "Reset hunk" })
+          map("n", "<leader>gS", gitsigns.stage_buffer, { desc = "Stage buffer" })
+          map("n", "<leader>gu", gitsigns.undo_stage_hunk, { desc = "Undo stage hunk" })
+          map("n", "<leader>gR", gitsigns.reset_buffer, { desc = "Reset buffer" })
+          map("n", "<leader>gp", gitsigns.preview_hunk, { desc = "Preview hunk" })
+          map("n", "<leader>gB", function()
             gitsigns.blame_line { full = true }
-          end, { desc = "Blame line" })
-          map("n", "<leader>tb", gitsigns.toggle_current_line_blame, { desc = "Blame current line" })
-          map("n", "<leader>hd", gitsigns.diffthis, { desc = "Diff hunk" })
-          map("n", "<leader>hD", function()
-            gitsigns.diffthis "~"
-          end, { desc = "Diff" })
-          map("n", "<leader>td", gitsigns.toggle_deleted, { desc = "Stage hunk" })
+          end, { desc = "Open git blame panel" })
+          map("n", "<leader>gb", gitsigns.toggle_current_line_blame, { desc = "Enter line blame mode" })
+          map("n", "<leader>gD", gitsigns.diffthis, { desc = "Open diff" })
+          map("n", "<leader>gd", gitsigns.toggle_deleted, { desc = "Toggle deleted line" })
 
           -- Text object
           map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Select hunk" })
@@ -69,9 +60,8 @@ return {
   {
     "NeogitOrg/neogit",
     dependencies = {
-      "nvim-lua/plenary.nvim", -- required
-      "sindrets/diffview.nvim", -- optional - Diff integration
-      "ibhagwan/fzf-lua", -- optional
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
     },
     config = function()
       require("neogit").setup {

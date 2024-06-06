@@ -14,7 +14,6 @@ local lsp_servers = {
   "html",
   "marksman",
   "rust_analyzer",
-  "azure_pipelines_ls",
 }
 
 local lint_servers = {
@@ -60,7 +59,7 @@ return {
         desc = "LSP actions",
         callback = function(event)
           local client = vim.lsp.get_client_by_id(event.data.client_id)
-          local builtin = require('telescope.builtin')
+          local builtin = require "telescope.builtin"
           local nmap = function(mode, keys, func, desc)
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = desc })
           end
@@ -119,20 +118,6 @@ return {
               ["https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/inventory.json"] = "inventoy.{yml.yaml}",
               ["http://json.schemastore.org/gitlab-ci.json"] = "/*lab-ci.{yml,yaml}",
               ["https://json.schemastore.org/databricks-asset-bundles.json"] = ".databricks.{yml,yaml}",
-            },
-          },
-        },
-      }
-
-      lspconfig.azure_pipelines_ls.setup {
-        yaml = {
-          schemas = {
-            ["https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json"] = {
-              "/azure-pipeline*.y*l",
-              "/*.azure*",
-              "Azure-Pipelines/**/*.y*l",
-              "Pipelines/*.y*l",
-              "deploy.*.y*l",
             },
           },
         },
