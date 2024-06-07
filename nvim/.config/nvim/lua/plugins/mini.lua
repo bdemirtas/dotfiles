@@ -1,5 +1,9 @@
 return {
   {
+    "echasnovski/mini.comment",
+    version = false,
+  },
+  {
     "echasnovski/mini.align",
     version = false,
     config = function()
