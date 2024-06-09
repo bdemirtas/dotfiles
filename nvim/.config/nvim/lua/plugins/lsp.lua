@@ -59,7 +59,7 @@ return {
         desc = "LSP actions",
         callback = function(event)
           local client = vim.lsp.get_client_by_id(event.data.client_id)
-          local builtin = require "telescope.builtin"
+          local builtin = require('fzf-lua')
           local nmap = function(mode, keys, func, desc)
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = desc })
           end
@@ -68,7 +68,7 @@ return {
           nmap("n", "gd", builtin.lsp_definitions, "Go to definition")
           nmap("n", "gD", "<cmd>lua vim.lsp.buf.declaration() <cr>", "Go to declaration")
           nmap("n", "gi", builtin.lsp_implementations, "Go to implementation")
-          nmap("n", "go", builtin.lsp_type_definitions, "Go to definition")
+          nmap("n", "go", builtin.lsp_typedefs, "Go to definition")
           nmap("n", "gr", builtin.lsp_references, "Go to references")
           nmap("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<cr>", "Signature Documentation")
           nmap("n", "gR", "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename symbole")

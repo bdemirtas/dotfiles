@@ -1,7 +1,7 @@
 return {
   {
     "nvim-telescope/telescope.nvim",
-    enabled = true,
+    enabled = false,
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-ui-select.nvim",
@@ -51,7 +51,6 @@ return {
           sorting_strategy = "ascending",
           mappings = {
             i = {
-              ["<c-d>"] = actions.delete_buffer + actions.move_to_top,
               ["<M-p>"] = action_layout.toggle_preview,
               ["<c-j>"] = actions.move_selection_next,
               ["<c-k>"] = actions.move_selection_previous,
@@ -68,7 +67,19 @@ return {
           find_files = {
             find_command = { "fd", "--type", "f", "--strip-cwd-prefix" },
           },
-          buffers = { previewer = false, theme = "dropdown", show_remote_tracking_branches = false },
+          man_pages = {
+            theme = "dropdown",
+          },
+          buffers = {
+            sort_lastused = true,
+            theme = "dropdown",
+            previewer = false,
+            mappings = {
+              i = {
+                ["<c-d>"] = actions.delete_buffer + actions.move_to_top,
+              },
+            },
+          },
           current_buffer_fuzzy_find = {
             previewer = false,
           },
@@ -102,7 +113,7 @@ return {
   },
   {
     "danielfalk/smart-open.nvim",
-    enabled = true,
+    enabled = false,
     branch = "0.2.x",
     config = function()
       require("telescope").load_extension "smart_open"
