@@ -6,6 +6,13 @@ config.color_scheme = 'Dark Ocean (terminal.sexy)'
 config.audible_bell = 'Disabled'
 config.font_size = 13
 
+config.keys = {
+  {key="Tab", mods="CTRL", action=wezterm.action{ActivateTabRelative=1}},
+  {key="Tab", mods="CTRL|SHIFT", action=wezterm.action{ActivateTabRelative=-1}},
+  {key="h", mods="ALT", action=wezterm.action{ActivateTabRelative=-1}},
+  {key="l", mods="ALT", action=wezterm.action{ActivateTabRelative=1}},
+}
+
 wezterm.on('update-right-status', function(window, pane)
   -- "Wed Mar 3 08:14"
   local date = wezterm.strftime '%a %b %-d %H:%M '

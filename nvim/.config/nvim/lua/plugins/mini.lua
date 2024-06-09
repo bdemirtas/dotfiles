@@ -1,5 +1,9 @@
 return {
   {
+    "echasnovski/mini.ai",
+    version = false,
+  },
+  {
     "echasnovski/mini.comment",
     version = false,
   },

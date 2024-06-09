@@ -2,7 +2,7 @@ return {
   {
     "b0o/incline.nvim",
     config = function()
-      require("incline").setup({})
+      require("incline").setup {}
     end,
     event = "VeryLazy",
   },
@@ -36,34 +36,6 @@ return {
     "mrjones2014/smart-splits.nvim",
     event = "VeryLazy",
     keys = {
-      {
-        "<A-k>",
-        function()
-          require("smart-splits").resize_up(2)
-        end,
-        desc = "Resize split up",
-      },
-      {
-        "<A-j>",
-        function()
-          require("smart-splits").resize_down(2)
-        end,
-        desc = "Resize split down",
-      },
-      {
-        "<A-h>",
-        function()
-          require("smart-splits").resize_left(2)
-        end,
-        desc = "Resize split left",
-      },
-      {
-        "<A-l>",
-        function()
-          require("smart-splits").resize_right(2)
-        end,
-        desc = "Resize split right",
-      },
       {
         "<C-k>",
         function()
