@@ -39,6 +39,15 @@ vim.keymap.set({ "i", "s" }, "<C-j>", function() vim.snippet.jump(1) end)
 vim.keymap.set({ "i", "s" }, "<C-k>", function() vim.snippet.jump(-1) end)
 
 if vim.o.wrap then
-  map("n", "j", [[v:count ? 'j' : 'gj']], { expr = true })
-  map("n", "k", [[v:count ? 'k' : 'gk']], { expr = true })
+  vim.keymap.set("n", "j", [[v:count ? 'j' : 'gj']], { expr = true })
+  vim.keymap.set("n", "k", [[v:count ? 'k' : 'gk']], { expr = true })
 end
+
+vim.api.nvim_set_keymap('n', '<leader>m', [[:lua PreserveAndRunMacro('q')<CR>]], { noremap = true })
+
+function PreserveAndRunMacro(register)
+  local saved_register = vim.fn.getreg('"')
+  vim.cmd('normal! @' .. register)
+  vim.fn.setreg('"', saved_register)
+end
+

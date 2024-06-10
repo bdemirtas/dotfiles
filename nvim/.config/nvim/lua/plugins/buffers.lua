@@ -33,13 +33,6 @@ return {
     config = function()
       require("bufferline").setup {
         options = {
-          custom_filter = function(buf_number)
-            local filetype = vim.bo[buf_number].filetype
-            if filetype == "TelescopePrompt" or filetype == "fzf" then
-              return false
-            end
-            return true
-          end,
           close_command = function(n)
             require("mini.bufremove").delete(n, false)
           end,
@@ -59,14 +52,5 @@ return {
         },
       }
     end,
-  },
-  {
-    {
-      "kazhala/close-buffers.nvim",
-      enabled = false,
-      opts = {
-        preserve_window_layout = { "this", "nameless" },
-      },
-    },
   },
 }
