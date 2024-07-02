@@ -1,16 +1,28 @@
 return {
   {
+    "AckslD/muren.nvim",
+    config = function()
+      require("muren").setup {
+        -- ui sizes
+        patterns_width = 50,
+        patterns_height = 20,
+        options_width = 30,
+        preview_height = 12,
+      }
+    end,
+  },
+  {
+    "mbbill/undotree",
+    keys = {
+      { "<Leader><F5>", "<Cmd>UndotreeToggle<CR>", desc = "Toggle undotree window", mode = "n", silent = true },
+    },
+  },
+  {
     "b0o/incline.nvim",
     config = function()
       require("incline").setup {}
     end,
     event = "VeryLazy",
-  },
-  {
-    "altermo/ultimate-autopair.nvim",
-    event = { "InsertEnter", "CmdlineEnter" },
-    branch = "v0.6",
-    config = true,
   },
   {
     "danilamihailov/beacon.nvim",
