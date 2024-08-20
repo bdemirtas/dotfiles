@@ -1,7 +1,6 @@
 return {
   {
     "nvim-telescope/telescope.nvim",
-    enabled = false,
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-ui-select.nvim",
@@ -16,6 +15,7 @@ return {
       local map = require("helper.util").Map
       -- find
       map("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
+      map("n", "<leader>bb", builtin.buffers, { desc = "Buffers" })
       map("n", "<leader>/", builtin.current_buffer_fuzzy_find, { desc = "File fuzzy find" })
       map("n", "<leader>ff", builtin.find_files, { desc = "Find Files (Root Dir)" })
       map("n", "<leader>fh", builtin.help_tags, { desc = "Help Tags" })
@@ -25,33 +25,51 @@ return {
       map("n", "<leader>gC", builtin.git_commits, { desc = "Commits" })
       map("n", "<leader>gc", builtin.git_bcommits, { desc = "Buffer Commits" })
       -- search
-      map("n", '<leader>s"', builtin.registers, { desc = "Registers" })
-      map("n", "<leader>sa", builtin.autocommands, { desc = "Auto Commands" })
-      map("n", "<leader>sb", builtin.current_buffer_fuzzy_find, { desc = "Buffer" })
-      map("n", "<leader>sc", builtin.command_history, { desc = "Command History" })
-      map("n", "<leader>sC", builtin.commands, { desc = "Commands" })
-      map("n", "<leader>wd", "<cmd>Telescope diagnostics bufnr=0<cr>", { desc = "Document Diagnostics" })
-      map("n", "<leader>sH", builtin.highlights, { desc = "Search Highlight Groups" })
-      map("n", "<leader>wD", builtin.diagnostics, { desc = "Workspace Diagnostics" })
-      map("n", "<leader>sh", builtin.help_tags, { desc = "Help Pages" })
-      map("n", "<leader>sk", builtin.keymaps, { desc = "Key Maps" })
-      map("n", "<leader>sM", builtin.man_pages, { desc = "Man Pages" })
-      map("n", "<leader>sm", builtin.marks, { desc = "Jump to Mark" })
-      map("n", "<leader>so", builtin.vim_options, { desc = "Options" })
-      map("n", "<leader>sR", builtin.resume, { desc = "Resume" })
-      map("n", "<leader>st", ":Telescope themes<CR>", { desc = "Theme Switcher" })
+      map("n", '<leader>fG"', builtin.registers, { desc = "Registers" })
+      map("n", "<leader>fc", builtin.command_history, { desc = "Command History" })
+      map("n", "<leader>f/", builtin.search_history, { desc = "Commands" })
+      map("n", "<leader>wd", builtin.lsp_document_symbols, { desc = "Workspace Diagnostics" })
+      map("n", "<leader>wD", builtin.lsp_workspace_symbols, { desc = "Workspace Diagnostics" })
+      map("n", "<leader>fh", builtin.help_tags, { desc = "Help Pages" })
+      map("n", "<leader>fk", builtin.keymaps, { desc = "Key Maps" })
+      map("n", "<leader>fM", builtin.man_pages, { desc = "Man Pages" })
+      map("n", "<leader>fm", builtin.marks, { desc = "Jump to Mark" })
+      map("n", "<leader>fo", builtin.vim_options, { desc = "Options" })
+      map("n", "<leader>fR", builtin.resume, { desc = "Resume" })
+      map("n", "<leader>ft", ":Telescope themes<CR>", { desc = "Theme Switcher" })
       local telescope = require "telescope"
       telescope.setup {
         find_files = {
           hidden = true,
         },
         defaults = {
-          layout_strategy = "vertical",
+          prompt_title = false,
+          layout_strategy = "horizontal",
           results_title = false,
           sorting_strategy = "ascending",
+          file_ignore_patterns = {'node_modules', 'build'},
+          layout_config = {
+            bottom_pane = {
+              height = 20,
+              preview_cutoff = 120,
+              prompt_position = 'top'
+            },
+            center = {
+              height = 0.4,
+              preview_cutoff = 40,
+              prompt_position = 'top',
+              width = 0.7
+            },
+            horizontal = {
+              prompt_position = 'top',
+              preview_cutoff = 40,
+              height = 0.9,
+              width = 0.8
+            }
+          },
           mappings = {
             i = {
-              ["<M-p>"] = action_layout.toggle_preview,
+              ["<c-p>"] = action_layout.toggle_preview,
               ["<c-j>"] = actions.move_selection_next,
               ["<c-k>"] = actions.move_selection_previous,
               ["<C-u>"] = actions.preview_scrolling_up,
@@ -66,9 +84,6 @@ return {
         pickers = {
           find_files = {
             find_command = { "fd", "--type", "f", "--strip-cwd-prefix" },
-          },
-          man_pages = {
-            theme = "dropdown",
           },
           buffers = {
             sort_lastused = true,
@@ -113,13 +128,12 @@ return {
   },
   {
     "danielfalk/smart-open.nvim",
-    enabled = false,
     branch = "0.2.x",
     config = function()
       require("telescope").load_extension "smart_open"
       vim.keymap.set("n", "<leader><leader>", function()
         require("telescope").extensions.smart_open.smart_open()
-      end, { noremap = true, silent = true })
+      end, { noremap = true, silent = true, desc = "Smart File Find" })
     end,
     dependencies = {
       "kkharji/sqlite.lua",

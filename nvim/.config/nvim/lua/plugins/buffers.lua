@@ -5,25 +5,25 @@ return {
     event = "VeryLazy",
     keys = {
       {
-        "<leader>dP",
+        "<leader>bP",
         "<Cmd>BufferLineGroupClose ungrouped<CR>",
         desc = "Delete Non-Pinned Buffers",
       },
-      { "<leader>do", "<Cmd>BufferLineCloseOthers<CR>", desc = "Delete Other Buffers" },
+      { "<leader>bo", "<Cmd>BufferLineCloseOthers<CR>", desc = "Delete Other Buffers" },
       {
-        "<leader>db",
+        "<leader>bd",
         function()
           require("mini.bufremove").delete(0, false)
         end,
         desc = "Delete Buffer",
       },
       {
-        "<leader>dr",
+        "<leader>br",
         "<Cmd>BufferLineCloseRight<CR>",
         desc = "Delete Buffers to the Right",
       },
       {
-        "<leader>dl",
+        "<leader>bl",
         "<Cmd>BufferLineCloseLeft<CR>",
         desc = "Delete Buffers to the Left",
       },
@@ -41,7 +41,6 @@ return {
           right_mouse_command = nil,
           middle_mouse_command = nil,
           always_show_bufferline = false,
-          diagnostics_update_in_insert = true,
           style = "thick",
           offsets = {
             {
