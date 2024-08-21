@@ -9,10 +9,4 @@ return {
       { 'ge', "<cmd>lua require('spider').motion('ge')<CR>", mode = { 'x', 'n', 'o' }, },
     },
   },
-  {
-    "tris203/precognition.nvim",
-    cmd = { "Precognition" },
-    event = { "BufRead", "BufNewFile" },
-    opts = {},
-  },
 }

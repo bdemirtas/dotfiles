@@ -17,4 +17,4 @@ set -gx MY_PROJECTS $HOME/Projects
 set -U fish_greeting
 set -U pure_enable_single_line_prompt true
 set -U pure_shorten_prompt_current_directory_length 1
-
+set -U nvm_default_version v20.14.0

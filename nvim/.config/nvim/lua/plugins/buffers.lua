@@ -32,7 +32,6 @@ return {
     },
     config = function()
       require("bufferline").setup {
-        highlights = require("catppuccin.groups.integrations.bufferline").get(),
         options = {
           close_command = function(n)
             require("mini.bufremove").delete(n, false)
