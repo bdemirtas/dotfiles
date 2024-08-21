@@ -29,11 +29,25 @@ return {
     require("luasnip.loaders.from_vscode").lazy_load()
 
     cmp.setup {
+      completion = {
+        keyword_length = 3,
+      },
+      vuew = {
+        docs = {
+          auto_open = false,
+        },
+      },
       formatting = {
         format = lspkind.cmp_format {
+          before = function(_entry, vim_item)
+            if vim_item.menu ~= nil and string.len(vim_item.menu) > 0 then
+              vim_item.menu = string.sub(vim_item.menu, 1, 0) .. ""
+            end
+            return vim_item
+          end,
           mode = "symbol_text",
           symbol_map = {
-            -- Text = "て",
+            Text = "て",
             Method = "Ⲙ",
             Class = "Ⲥ",
             Module = "",

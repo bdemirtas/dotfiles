@@ -90,7 +90,6 @@ return {
       end
 
       lspconfig.pyright.setup {
-        capabilities = capabilities,
         settings = {
           pyright = {
             -- Using Ruff's import organizer
@@ -98,8 +97,12 @@ return {
           },
           python = {
             analaysis = {
+              ignore = { "*" },
               autoSearchPaths = true,
-              diagnosticMode = "openFilesOnly",
+              diagnosticMode = "workspace",
+              typeCheckingMode = "basic",
+              useLibraryCodeForTypes = false,
+              reportPrivateImportUsage = false,
             },
             ignore = { "*" },
           },
@@ -109,7 +112,7 @@ return {
       lspconfig.yamlls.setup {
         settings = {
           yamll = {
-            schmeas = {
+            schemas = {
               ["http://json.schemastore.org/github-workflow.json"] = ".github/workflows/*.{yml,yaml}",
               ["http://json.schemastore.org/github-action.json"] = ".github/action.{yml,yaml}",
               ["http://json.schemastore.org/ansible-stable-2.9.json"] = "roles/tasks/*.{yml,yaml}",
