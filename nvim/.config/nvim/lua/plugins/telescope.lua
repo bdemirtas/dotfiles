@@ -7,6 +7,7 @@ return {
       "nvim-telescope/telescope-fzy-native.nvim",
       "andrew-george/telescope-themes",
       "nvim-telescope/telescope-frecency.nvim",
+      "HUAHUAI23/telescope-session.nvim",
     },
     config = function()
       local builtin = require "telescope.builtin"
@@ -47,25 +48,25 @@ return {
           layout_strategy = "horizontal",
           results_title = false,
           sorting_strategy = "ascending",
-          file_ignore_patterns = {'node_modules', 'build'},
+          file_ignore_patterns = { "node_modules", "build" },
           layout_config = {
             bottom_pane = {
               height = 20,
               preview_cutoff = 120,
-              prompt_position = 'top'
+              prompt_position = "top",
             },
             center = {
               height = 0.4,
               preview_cutoff = 40,
-              prompt_position = 'top',
-              width = 0.7
+              prompt_position = "top",
+              width = 0.7,
             },
             horizontal = {
-              prompt_position = 'top',
+              prompt_position = "top",
               preview_cutoff = 40,
               height = 0.9,
-              width = 0.8
-            }
+              width = 0.8,
+            },
           },
           mappings = {
             i = {
@@ -124,6 +125,14 @@ return {
       telescope.load_extension "themes"
       telescope.load_extension "frecency"
       telescope.load_extension "ui-select"
+      telescope.load_extension "xray23"
+      telescope.load_extension "projects"
+    end,
+  },
+  {
+    "ahmedkhalf/project.nvim",
+    config = function()
+      require("project_nvim").setup {}
     end,
   },
   {

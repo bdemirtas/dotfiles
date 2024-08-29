@@ -47,4 +47,3 @@ vim.filetype.add({
   },
 })
 
-vim.api.nvim_command("autocmd! BufWinEnter * if &filetype == 'man' | wincmd _ | endif")
