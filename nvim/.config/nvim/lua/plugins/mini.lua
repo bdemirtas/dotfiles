@@ -35,13 +35,6 @@ return {
     end,
   },
   {
-    "echasnovski/mini.surround",
-    version = false,
-    config = function()
-      require("mini.surround").setup {}
-    end,
-  },
-  {
     "echasnovski/mini.move",
     config = function()
       require("mini.move").setup {
@@ -56,20 +49,6 @@ return {
           line_up = "<M-Up>",
         },
       }
-    end,
-  },
-  {
-    "echasnovski/mini.indentscope",
-    version = false,
-    config = function()
-      require("mini.indentscope").setup {}
-    end,
-  },
-  {
-    "echasnovski/mini.bufremove",
-    version = false,
-    config = function()
-      require("mini.bufremove").setup {}
     end,
   },
 }
