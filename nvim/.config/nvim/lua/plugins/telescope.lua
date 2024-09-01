@@ -108,6 +108,9 @@ return {
             override_generic_sorter = false,
             override_file_sorter = true,
           },
+          persisted = {
+            layout_config = { width = 0.55, height = 0.55 },
+          },
           smart_open = {
             match_algorithm = "fzf",
             disable_devicons = false,
@@ -127,6 +130,7 @@ return {
       telescope.load_extension "ui-select"
       telescope.load_extension "xray23"
       telescope.load_extension "projects"
+      telescope.load_extension "persisted"
     end,
   },
   {
