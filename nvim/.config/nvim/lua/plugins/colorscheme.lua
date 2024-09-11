@@ -1,9 +1,11 @@
 return {
-  "folke/tokyonight.nvim",
+  "Luxed/ayu-vim",
   lazy = false,
   priority = 1000,
   config = function()
-    require("tokyonight").setup {}
-    vim.cmd "colorscheme tokyonight-night"
+    vim.g.ayucolor = "dark"
+    vim.g.ayu_italic_comment = true
+    vim.g.ayu_extended_palette = true
+    vim.cmd "colorscheme ayu"
   end,
 }
