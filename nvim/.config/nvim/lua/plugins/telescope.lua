@@ -7,7 +7,7 @@ return {
       "nvim-telescope/telescope-fzy-native.nvim",
       "andrew-george/telescope-themes",
       "nvim-telescope/telescope-frecency.nvim",
-      "HUAHUAI23/telescope-session.nvim",
+      "olacin/telescope-cc.nvim",
     },
     config = function()
       local builtin = require "telescope.builtin"
@@ -29,8 +29,8 @@ return {
       map("n", '<leader>fG"', builtin.registers, { desc = "Registers" })
       map("n", "<leader>fc", builtin.command_history, { desc = "Command History" })
       map("n", "<leader>f/", builtin.search_history, { desc = "Commands" })
-      map("n", "<leader>wd", builtin.lsp_document_symbols, { desc = "Workspace Diagnostics" })
-      map("n", "<leader>wD", builtin.lsp_workspace_symbols, { desc = "Workspace Diagnostics" })
+      map("n", "<leader>fD", builtin.lsp_document_symbols, { desc = "Workspace Diagnostics" })
+      map("n", "<leader>fd", "<cmd>Telescope diagnostics bufnr=0<CR>", { desc = "Buffer Diagnostics" })
       map("n", "<leader>fh", builtin.help_tags, { desc = "Help Pages" })
       map("n", "<leader>fk", builtin.keymaps, { desc = "Key Maps" })
       map("n", "<leader>fM", builtin.man_pages, { desc = "Man Pages" })
@@ -38,6 +38,7 @@ return {
       map("n", "<leader>fo", builtin.vim_options, { desc = "Options" })
       map("n", "<leader>fR", builtin.resume, { desc = "Resume" })
       map("n", "<leader>ft", ":Telescope themes<CR>", { desc = "Theme Switcher" })
+      map("n", "<leader>cc", ":Telescope conventional_commits", { desc = "Create conventional commit" })
       local telescope = require "telescope"
       telescope.setup {
         find_files = {
@@ -115,6 +116,12 @@ return {
             match_algorithm = "fzf",
             disable_devicons = false,
           },
+          conventional_commits = {
+            action = function(entry)
+              vim.print(entry)
+            end,
+            include_body_and_footer = true,
+          },
           themes = {
             enable_live_preview = true,
             persist = {
@@ -128,9 +135,9 @@ return {
       telescope.load_extension "themes"
       telescope.load_extension "frecency"
       telescope.load_extension "ui-select"
-      telescope.load_extension "xray23"
       telescope.load_extension "projects"
       telescope.load_extension "persisted"
+      telescope.load_extension "conventional_commits"
     end,
   },
   {

@@ -54,8 +54,8 @@ return {
         indent = { char = "▏" },
         scope = {
           enabled = true,
-          show_start = true,
-          show_end = true,
+          show_start = false,
+          show_end = false,
           injected_languages = true,
           priority = 500,
           highlight = highlight,
