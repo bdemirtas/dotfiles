@@ -136,7 +136,6 @@ return {
       telescope.load_extension "frecency"
       telescope.load_extension "ui-select"
       telescope.load_extension "projects"
-      telescope.load_extension "persisted"
       telescope.load_extension "conventional_commits"
     end,
   },
