@@ -29,7 +29,7 @@ return {
       map("n", '<leader>fG"', builtin.registers, { desc = "Registers" })
       map("n", "<leader>fc", builtin.command_history, { desc = "Command History" })
       map("n", "<leader>f/", builtin.search_history, { desc = "Commands" })
-      map("n", "<leader>fD", builtin.lsp_document_symbols, { desc = "Workspace Diagnostics" })
+      map("n", "<leader>fD", builtin.diagnostics, { desc = "Workspace Diagnostics" })
       map("n", "<leader>fd", "<cmd>Telescope diagnostics bufnr=0<CR>", { desc = "Buffer Diagnostics" })
       map("n", "<leader>fh", builtin.help_tags, { desc = "Help Pages" })
       map("n", "<leader>fk", builtin.keymaps, { desc = "Key Maps" })
@@ -37,8 +37,8 @@ return {
       map("n", "<leader>fm", builtin.marks, { desc = "Jump to Mark" })
       map("n", "<leader>fo", builtin.vim_options, { desc = "Options" })
       map("n", "<leader>fR", builtin.resume, { desc = "Resume" })
-      map("n", "<leader>ft", ":Telescope themes<CR>", { desc = "Theme Switcher" })
-      map("n", "<leader>cc", ":Telescope conventional_commits", { desc = "Create conventional commit" })
+      map("n", "<leader>ft", "<cmd>Telescope themes<CR>", { desc = "Theme Switcher" })
+      map("n", "<leader>cc", "<cmd>Telescope conventional_commits<CR>", { desc = "Create conventional commit" })
       local telescope = require "telescope"
       telescope.setup {
         find_files = {
