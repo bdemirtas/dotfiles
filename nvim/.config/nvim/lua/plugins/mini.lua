@@ -28,13 +28,6 @@ return {
     end,
   },
   {
-    "echasnovski/mini.jump2d",
-    version = false,
-    config = function()
-      require("mini.jump2d").setup {}
-    end,
-  },
-  {
     "echasnovski/mini.move",
     config = function()
       require("mini.move").setup {

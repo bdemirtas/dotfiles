@@ -36,82 +36,21 @@ return {
     "danilamihailov/beacon.nvim",
   },
   {
-    "jake-stewart/multicursor.nvim",
-    config = function()
-      local mc = require "multicursor-nvim"
-
-      mc.setup()
-
-      -- add cursors above/below the main cursor
-      vim.keymap.set({ "n", "v" }, "<up>", function()
-        mc.addCursor "k"
-      end)
-      vim.keymap.set({ "n", "v" }, "<down>", function()
-        mc.addCursor "j"
-      end)
-
-      -- add a cursor and jump to the next word under cursor
-      vim.keymap.set({ "n", "v" }, "<c-n>", function()
-        mc.addCursor "*"
-      end)
-
-      -- jump to the next word under cursor but do not add a cursor
-      vim.keymap.set({ "n", "v" }, "<c-s>", function()
-        mc.skipCursor "*"
-      end)
-
-      -- rotate the main cursor
-      vim.keymap.set({ "n", "v" }, "<left>", mc.nextCursor)
-      vim.keymap.set({ "n", "v" }, "<right>", mc.prevCursor)
-
-      -- delete the main cursor
-      vim.keymap.set({ "n", "v" }, "<leader>x", mc.deleteCursor)
-
-      -- add and remove cursors with control + left click
-      vim.keymap.set("n", "<c-leftmouse>", mc.handleMouse)
-
-      vim.keymap.set({ "n", "v" }, "<c-q>", function()
-        if mc.cursorsEnabled() then
-          -- stop other cursors from moving. this allows you to reposition the main cursor
-          mc.disableCursors()
-        else
-          mc.addCursor()
-        end
-      end)
-
-      vim.keymap.set("n", "<esc>", function()
-        if not mc.cursorsEnabled() then
-          mc.enableCursors()
-        elseif mc.hasCursors() then
-          mc.clearCursors()
-        else
-          -- default <esc> handler
-        end
-      end)
-
-      -- align cursor columns
-      vim.keymap.set("n", "<leader>a", mc.alignCursors)
-
-      -- split visual selections by regex
-      vim.keymap.set("v", "S", mc.splitCursors)
-
-      -- match new cursors within visual selections by regex
-      vim.keymap.set({ "n", "v" }, "M", mc.matchCursors)
-
-      -- rotate visual selection contents
-      vim.keymap.set("v", "<leader>t", function()
-        mc.transposeCursors(1)
-      end)
-      vim.keymap.set("v", "<leader>T", function()
-        mc.transposeCursors(-1)
-      end)
-
-      -- customize how cursors look
-      vim.cmd.hi("link", "MultiCursorCursor", "Cursor")
-      vim.cmd.hi("link", "MultiCursorVisual", "Visual")
-      vim.cmd.hi("link", "MultiCursorDisabledCursor", "Visual")
-      vim.cmd.hi("link", "MultiCursorDisabledVisual", "Visual")
-    end,
+    "smoka7/multicursors.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "nvimtools/hydra.nvim",
+    },
+    opts = {},
+    cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
+    keys = {
+      {
+        mode = { "v", "n" },
+        "<C-n>",
+        "<cmd>MCstart<cr>",
+        desc = "Create a selection for selected text or word under the cursor",
+      },
+    },
   },
   {
     "mrjones2014/smart-splits.nvim",
