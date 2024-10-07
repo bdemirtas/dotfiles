@@ -38,14 +38,14 @@ return {
     "williamboman/mason-lspconfig.nvim",
     lazy = false,
     config = function()
-      require("mason-lspconfig").setup { ensure_installed = lsp_servers }
+      require("mason-lspconfig").setup {}
     end,
   },
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     config = function()
       require("mason-tool-installer").setup {
-        ensure_installed = lint_servers,
+        ensure_installed = vim.tbl_extend("force", lint_servers, lsp_servers),
       }
     end,
   },
@@ -154,14 +154,6 @@ return {
         underline = true,
         severity_sort = false,
         float = true,
-      }
-    end,
-  },
-  {
-    "kosayoda/nvim-lightbulb",
-    config = function()
-      require("nvim-lightbulb").setup {
-        autocmd = { enabled = true },
       }
     end,
   },

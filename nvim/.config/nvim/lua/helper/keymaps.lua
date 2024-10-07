@@ -47,7 +47,18 @@ if vim.o.wrap then
   vim.keymap.set("n", "k", [[v:count ? 'k' : 'gk']], { expr = true })
 end
 
-vim.api.nvim_set_keymap("n", "<leader>m", [[:lua PreserveAndRunMacro('q')<CR>]], { noremap = true, desc = "PreserveAndRunMacro" })
+-- Buffers
+vim.keymap.set("n", "<S-h>", require("nvchad.tabufline").prev, { desc = "Prev Buffer" })
+vim.keymap.set("n", "<S-l>", require("nvchad.tabufline").next, { desc = "Next Buffer" })
+vim.keymap.set("n", "<leader>x", require("nvchad.tabufline").close_buffer, { desc = "Close Buffer" })
+vim.keymap.set("n", "<leader>ba", function() require("nvchad.tabufline").closeAllBufs(true) end, { desc = "Close All Buffers Exclude Current" })
+vim.keymap.set("n", "<leader>ba", function() require("nvchad.tabufline").closeAllBufs(false) end, { desc = "Close All Buffers" })
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>m",
+  [[:lua PreserveAndRunMacro('q')<CR>]],
+  { noremap = true, desc = "PreserveAndRunMacro" }
+)
 
 function PreserveAndRunMacro(register)
   local saved_register = vim.fn.getreg '"'

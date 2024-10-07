@@ -5,7 +5,6 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-ui-select.nvim",
       "nvim-telescope/telescope-fzy-native.nvim",
-      "andrew-george/telescope-themes",
       "nvim-telescope/telescope-frecency.nvim",
       "olacin/telescope-cc.nvim",
     },
@@ -122,17 +121,9 @@ return {
             end,
             include_body_and_footer = true,
           },
-          themes = {
-            enable_live_preview = true,
-            persist = {
-              enabled = false,
-              path = vim.fn.stdpath "config" .. "/lua/helper/colorscheme.lua",
-            },
-          },
         },
       }
       telescope.load_extension "fzy_native"
-      telescope.load_extension "themes"
       telescope.load_extension "frecency"
       telescope.load_extension "ui-select"
       telescope.load_extension "projects"

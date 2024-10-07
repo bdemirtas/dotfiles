@@ -27,8 +27,7 @@ return {
     end
     local cmp = require "cmp"
     require("luasnip.loaders.from_vscode").lazy_load()
-
-    cmp.setup {
+    local options = {
       completion = {
         keyword_length = 3,
       },
@@ -128,5 +127,7 @@ return {
         { name = "path" },
       },
     }
+    options = vim.tbl_deep_extend("force", options, require "nvchad.cmp")
+    cmp.setup(options)
   end,
 }
