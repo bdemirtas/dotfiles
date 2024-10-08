@@ -1,3 +1,4 @@
+local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
 vim.cmd "set expandtab"
@@ -7,52 +8,54 @@ vim.cmd "set shiftwidth=2"
 
 vim.opt.swapfile = false
 
-vim.keymap.set("n", "<leader>h", ":nohlsearch<CR>")
+map("n", "<Esc>", "<cmd>noh<CR>", { desc = "General Clear highlights" })
+map("n", "<leader>/", "gcc", { desc = "Toggle Comment", remap = true })
+map("v", "<leader>/", "gc", { desc = "Toggle comment", remap = true })
 vim.wo.number = true
 
 -- search movement keeps cursor in middle
-vim.keymap.set("n", "n", "nzzzv", opts)
-vim.keymap.set("n", "N", "Nzzzv", opts)
+map("n", "n", "nzzzv", opts)
+map("n", "N", "Nzzzv", opts)
 
 -- the greatest remap ever (Primeagen)
-vim.keymap.set("v", "<leader>p", "_dP", opts)
+map("v", "<leader>p", "_dP", opts)
 
 -- indent
-vim.keymap.set("v", "<", "<gv", opts)
-vim.keymap.set("v", ">", ">gv", opts)
+map("v", "<", "<gv", opts)
+map("v", ">", ">gv", opts)
 -- Normal mode
-vim.keymap.set("n", "<", "<<", opts)
-vim.keymap.set("n", ">", ">>", opts)
+map("n", "<", "<<", opts)
+map("n", ">", ">>", opts)
 
-vim.keymap.set({ "n", "v" }, "x", '"_x')
-vim.keymap.set({ "n", "v" }, "X", '"_X')
-vim.keymap.set({ "n", "v" }, "c", '"_c')
-vim.keymap.set({ "n", "v" }, "C", '"_C')
+map({ "n", "v" }, "x", '"_x')
+map({ "n", "v" }, "X", '"_X')
+map({ "n", "v" }, "c", '"_c')
+map({ "n", "v" }, "C", '"_C')
 
 -- quit neovim
-vim.keymap.set("n", "<leader>q", vim.cmd.Ex)
+map("n", "<leader>q", vim.cmd.Ex)
 
-vim.keymap.set("n", "<leader>z", 'mzgg"+yG`z', { desc = "Yank File" })
-vim.keymap.set("n", "<leader>x", 'gg"_dG', { desc = "Delete File" })
+map("n", "<leader>z", 'mzgg"+yG`z', { desc = "Yank File" })
+map("n", "<leader>x", 'gg"_dG', { desc = "Delete File" })
 
-vim.keymap.set({ "i", "s" }, "<C-j>", function()
+map({ "i", "s" }, "<C-j>", function()
   vim.snippet.jump(1)
 end)
-vim.keymap.set({ "i", "s" }, "<C-k>", function()
+map({ "i", "s" }, "<C-k>", function()
   vim.snippet.jump(-1)
 end)
 
 if vim.o.wrap then
-  vim.keymap.set("n", "j", [[v:count ? 'j' : 'gj']], { expr = true })
-  vim.keymap.set("n", "k", [[v:count ? 'k' : 'gk']], { expr = true })
+  map("n", "j", [[v:count ? 'j' : 'gj']], { expr = true })
+  map("n", "k", [[v:count ? 'k' : 'gk']], { expr = true })
 end
 
 -- Buffers
-vim.keymap.set("n", "<S-h>", require("nvchad.tabufline").prev, { desc = "Prev Buffer" })
-vim.keymap.set("n", "<S-l>", require("nvchad.tabufline").next, { desc = "Next Buffer" })
-vim.keymap.set("n", "<leader>x", require("nvchad.tabufline").close_buffer, { desc = "Close Buffer" })
-vim.keymap.set("n", "<leader>ba", function() require("nvchad.tabufline").closeAllBufs(true) end, { desc = "Close All Buffers Exclude Current" })
-vim.keymap.set("n", "<leader>ba", function() require("nvchad.tabufline").closeAllBufs(false) end, { desc = "Close All Buffers" })
+map("n", "<S-h>", require("nvchad.tabufline").prev, { desc = "Prev Buffer" })
+map("n", "<S-l>", require("nvchad.tabufline").next, { desc = "Next Buffer" })
+map("n", "<leader>x", require("nvchad.tabufline").close_buffer, { desc = "Close Buffer" })
+map("n", "<leader>ba", function() require("nvchad.tabufline").closeAllBufs(true) end, { desc = "Close All Buffers Exclude Current" })
+map("n", "<leader>ba", function() require("nvchad.tabufline").closeAllBufs(false) end, { desc = "Close All Buffers" })
 vim.api.nvim_set_keymap(
   "n",
   "<leader>m",
