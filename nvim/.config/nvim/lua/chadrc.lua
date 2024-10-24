@@ -1,7 +1,7 @@
 local M = {}
 
 M.base46 = {
-  theme = "dark_horizon",
+  theme = "tokyodark",
 }
 
 M.ui = {
