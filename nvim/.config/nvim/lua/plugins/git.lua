@@ -38,21 +38,30 @@ return {
           end)
 
           -- Actions
-          map({ "n", "v" }, "<leader>gs", ":Gitsigns stage_hunk<CR>", { desc = "Stage hunk" })
-          map({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<CR>", { desc = "Reset hunk" })
-          map("n", "<leader>gS", gitsigns.stage_buffer, { desc = "Stage buffer" })
-          map("n", "<leader>gu", gitsigns.undo_stage_hunk, { desc = "Undo stage hunk" })
-          map("n", "<leader>gR", gitsigns.reset_buffer, { desc = "Reset buffer" })
-          map("n", "<leader>gp", gitsigns.preview_hunk, { desc = "Preview hunk" })
-          map("n", "<leader>gB", function()
+          map("n", "<leader>hs", gitsigns.stage_hunk)
+          map("n", "<leader>hr", gitsigns.reset_hunk)
+          map("v", "<leader>hs", function()
+            gitsigns.stage_hunk { vim.fn.line ".", vim.fn.line "v" }
+          end)
+          map("v", "<leader>hr", function()
+            gitsigns.reset_hunk { vim.fn.line ".", vim.fn.line "v" }
+          end)
+          map("n", "<leader>hS", gitsigns.stage_buffer)
+          map("n", "<leader>hu", gitsigns.undo_stage_hunk)
+          map("n", "<leader>hR", gitsigns.reset_buffer)
+          map("n", "<leader>hp", gitsigns.preview_hunk)
+          map("n", "<leader>hb", function()
             gitsigns.blame_line { full = true }
-          end, { desc = "Open git blame panel" })
-          map("n", "<leader>gb", gitsigns.toggle_current_line_blame, { desc = "Enter line blame mode" })
-          map("n", "<leader>gD", gitsigns.diffthis, { desc = "Open diff" })
-          map("n", "<leader>gd", gitsigns.toggle_deleted, { desc = "Toggle deleted line" })
+          end)
+          map("n", "<leader>tb", gitsigns.toggle_current_line_blame)
+          map("n", "<leader>hd", gitsigns.diffthis)
+          map("n", "<leader>hD", function()
+            gitsigns.diffthis "~"
+          end)
+          map("n", "<leader>td", gitsigns.toggle_deleted)
 
           -- Text object
-          map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Select hunk" })
+          map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
         end,
       }
     end,
