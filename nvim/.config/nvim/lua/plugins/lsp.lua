@@ -10,7 +10,7 @@ local lsp_servers = {
   "cssls",
   "taplo",
   "ruff",
-  "pyright",
+  "basedpyright",
   "html",
   "marksman",
 }
@@ -89,9 +89,9 @@ return {
         }
       end
 
-      lspconfig.pyright.setup {
+      lspconfig.basedpyright.setup {
         settings = {
-          pyright = {
+          basedpyright = {
             -- Using Ruff's import organizer
             disableOrganizeImports = true,
           },
