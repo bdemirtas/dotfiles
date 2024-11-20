@@ -94,16 +94,15 @@ return {
           basedpyright = {
             -- Using Ruff's import organizer
             disableOrganizeImports = true,
-          },
-          python = {
-            analaysis = {
-              ignore = { "*" },
+            analysis = {
               autoSearchPaths = true,
               diagnosticMode = "workspace",
               typeCheckingMode = "basic",
               useLibraryCodeForTypes = false,
               reportPrivateImportUsage = false,
             },
+          },
+          python = {
             ignore = { "*" },
           },
         },

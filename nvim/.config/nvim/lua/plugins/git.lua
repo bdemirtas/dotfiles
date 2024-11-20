@@ -8,18 +8,16 @@ return {
     },
   },
   {
-    "tpope/vim-fugitive",
-    cmd = { "G", "Git", "Gwrite" },
-    keys = {
-      -- Keys: git status
-      { "<leader>gg",  ":Git <CR>",          desc = "Fugitive: Git status" },
-      -- Keys: git write
-      { "<leader>gw",  ":Gwrite <CR>",       desc = "Fugitive: Git write to add file" },
-      -- Keys: git commit
-      { "<leader>gcc", ":Git commit <CR>",   desc = "Fugitive: Commit current hunk" },
-      { "<leader>gcf", ":Git commit %<CR>",  desc = "Fugitive: Commit current file" },
-      { "<leader>gca", ":Git commit -a<CR>", desc = "Fugitive: Commit all files" },
-    }
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+    },
+    config = function()
+      require("neogit").setup {
+        vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<CR>", { desc = "Neogit" }),
+      }
+    end,
   },
   {
     "sindrets/diffview.nvim",
@@ -88,8 +86,8 @@ return {
           end, { desc = 'git diff against last commit' })
 
           -- Toggles
-          map('n', '<leader>tb', gs.toggle_current_line_blame, { desc = 'toggle git blame line' })
-          map('n', '<leader>td', gs.toggle_deleted, { desc = 'toggle git show deleted' })
+          map('n', '<leader>gb', gs.toggle_current_line_blame, { desc = 'toggle git blame line' })
+          map('n', '<leader>dd', gs.toggle_deleted, { desc = 'toggle git show deleted' })
 
           -- Text object
           map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select git hunk' })
