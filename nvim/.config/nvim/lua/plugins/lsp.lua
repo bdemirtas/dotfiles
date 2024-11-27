@@ -13,6 +13,7 @@ local lsp_servers = {
   "basedpyright",
   "html",
   "marksman",
+  "ansible-language-server",
 }
 
 local lint_servers = {
@@ -89,6 +90,8 @@ return {
         }
       end
 
+      lspconfig.ansiblels.setup {}
+
       lspconfig.basedpyright.setup {
         settings = {
           basedpyright = {
@@ -114,9 +117,6 @@ return {
             schemas = {
               ["http://json.schemastore.org/github-workflow.json"] = ".github/workflows/*.{yml,yaml}",
               ["http://json.schemastore.org/github-action.json"] = ".github/action.{yml,yaml}",
-              ["http://json.schemastore.org/ansible-stable-2.9.json"] = "roles/tasks/*.{yml,yaml}",
-              ["http://json.schemastore.org/ansible-playbook.json"] = "playbook.{yml,yaml}",
-              ["https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/inventory.json"] = "inventoy.{yml.yaml}",
               ["http://json.schemastore.org/gitlab-ci.json"] = "/*lab-ci.{yml,yaml}",
               ["https://json.schemastore.org/databricks-asset-bundles.json"] = ".databricks.{yml,yaml}",
             },
@@ -125,25 +125,36 @@ return {
       }
 
       lspconfig.lua_ls.setup {
-        settings = {
-          Lua = {
+        on_init = function(client)
+          if client.workspace_folders then
+            local path = client.workspace_folders[1].name
+            if vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc") then
+              return
+            end
+          end
+
+          client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
             runtime = {
               -- Tell the language server which version of Lua you're using
               -- (most likely LuaJIT in the case of Neovim)
               version = "LuaJIT",
             },
-            diagnostics = {
-              -- Get the language server to recognize the `vim` global
-              globals = {
-                "vim",
-                "require",
-              },
-            },
+            -- Make the server aware of Neovim runtime files
             workspace = {
-              -- Make the server aware of Neovim runtime files
-              library = vim.api.nvim_get_runtime_file("", true),
+              checkThirdParty = false,
+              library = {
+                vim.env.VIMRUNTIME,
+                -- Depending on the usage, you might want to add additional paths here.
+                -- "${3rd}/luv/library"
+                -- "${3rd}/busted/library",
+              },
+              -- or pull in all of 'runtimepath'. NOTE: this is a lot slower and will cause issues when working on your own configuration (see https://github.com/neovim/nvim-lspconfig/issues/3189)
+              -- library = vim.api.nvim_get_runtime_file("", true)
             },
-          },
+          })
+        end,
+        settings = {
+          Lua = {},
         },
       }
 

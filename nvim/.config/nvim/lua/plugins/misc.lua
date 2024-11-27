@@ -1,23 +1,25 @@
 return {
   {
-    "kylechui/nvim-surround",
-    version = "*",
-    event = "VeryLazy",
-    config = function()
-      require("nvim-surround").setup {}
-    end,
-  },
-  {
-    "AckslD/muren.nvim",
-    config = function()
-      require("muren").setup {
-        -- ui sizes
-        patterns_width = 50,
-        patterns_height = 20,
-        options_width = 30,
-        preview_height = 12,
-      }
-    end,
+    "MagicDuck/grug-far.nvim",
+    opts = { headerMaxWidth = 80 },
+    cmd = "GrugFar",
+    keys = {
+      {
+        "<leader>sr",
+        function()
+          local grug = require "grug-far"
+          local ext = vim.bo.buftype == "" and vim.fn.expand "%:e"
+          grug.open {
+            transient = true,
+            prefills = {
+              filesFilter = ext and ext ~= "" and "*." .. ext or nil,
+            },
+          }
+        end,
+        mode = { "n", "v" },
+        desc = "Search and Replace",
+      },
+    },
   },
   {
     "mbbill/undotree",
@@ -34,23 +36,6 @@ return {
   },
   {
     "danilamihailov/beacon.nvim",
-  },
-  {
-    "smoka7/multicursors.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "nvimtools/hydra.nvim",
-    },
-    opts = {},
-    cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
-    keys = {
-      {
-        mode = { "v", "n" },
-        "<C-n>",
-        "<cmd>MCstart<cr>",
-        desc = "Create a selection for selected text or word under the cursor",
-      },
-    },
   },
   {
     "mrjones2014/smart-splits.nvim",
