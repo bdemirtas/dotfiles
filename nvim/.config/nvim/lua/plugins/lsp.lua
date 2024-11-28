@@ -13,7 +13,7 @@ local lsp_servers = {
   "basedpyright",
   "html",
   "marksman",
-  "ansible-language-server",
+  "ansiblels",
 }
 
 local lint_servers = {
@@ -45,8 +45,9 @@ return {
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     config = function()
+      vim.list_extend(lint_servers, lsp_servers)
       require("mason-tool-installer").setup {
-        ensure_installed = vim.tbl_extend("force", lint_servers, lsp_servers),
+        ensure_installed = lint_servers,
       }
     end,
   },
@@ -102,7 +103,13 @@ return {
               diagnosticMode = "workspace",
               typeCheckingMode = "basic",
               useLibraryCodeForTypes = false,
-              reportPrivateImportUsage = false,
+              diagnosticSeverityOverrides = {
+                reportGeneralTypeIssues = false,
+                reportOptionalMemberAccess = false,
+                reportOptionalSubscript = false,
+                reportPrivateImportUsage = false,
+                reportUnusedExpression = false,
+              },
             },
           },
           python = {

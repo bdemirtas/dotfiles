@@ -20,14 +20,6 @@ return {
     end,
   },
   {
-    "sindrets/diffview.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    cmd = { "DiffviewOpen", "DiffviewLog" },
-  },
-  {
     "lewis6991/gitsigns.nvim",
     event = "BufReadPre",
     config = function()

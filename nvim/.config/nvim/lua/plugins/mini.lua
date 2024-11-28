@@ -1,5 +1,21 @@
 return {
   {
+    "echasnovski/mini.diff",
+    version = false,
+    config = function()
+      require("mini.diff").setup()
+    end,
+  },
+  {
+    "echasnovski/mini.indentscope",
+    version = false,
+    config = function()
+      require("mini.indentscope").setup {
+        symbol = "|",
+      }
+    end,
+  },
+  {
     "echasnovski/mini.surround",
     version = false,
     config = function()
