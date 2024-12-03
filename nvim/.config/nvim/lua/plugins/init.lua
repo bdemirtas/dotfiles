@@ -28,12 +28,57 @@ return {
     end,
   },
   {
+    "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
+    dependencies = {
+      {
+        -- snippet plugin
+        "L3MON4D3/LuaSnip",
+        dependencies = "rafamadriz/friendly-snippets",
+        opts = { history = true, updateevents = "TextChanged,TextChangedI" },
+        config = function(_, opts)
+          require("luasnip").config.set_config(opts)
+          require "configs.luasnip"
+        end,
+      },
+      {
+        "saadparwaiz1/cmp_luasnip",
+        "hrsh7th/cmp-nvim-lua",
+        "hrsh7th/cmp-nvim-lsp",
+        "hrsh7th/cmp-buffer",
+        "hrsh7th/cmp-path",
+      },
+    },
+    opts = function()
+      return require "configs.cmp"
+    end,
+  },
+  {
     "nvim-telescope/telescope.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
     opts = function()
       return require "configs.telescope"
+    end,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    opts = function()
+      require "configs.treesitter"
+    end,
+  },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "MunifTanjim/nui.nvim",
+    },
+    opts = function()
+      return require "configs.neotree"
     end,
   },
   {
@@ -58,6 +103,16 @@ return {
         python = { "ruff_format", "ruff_fix", "ruff_organize_imports" },
       },
     },
+  },
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+    },
+    opts = function()
+      return require "configs.noice"
+    end,
   },
   {
     "echasnovski/mini.diff",
@@ -129,6 +184,197 @@ return {
     "nvim-lualine/lualine.nvim",
     config = function()
       require("lualine").setup {}
+    end,
+  },
+  {
+    "chrisgrieser/nvim-spider",
+    -- stylua: ignore
+    keys = {
+      { 'w', "<cmd>lua require('spider').motion('w')<CR>", mode = { 'x', 'n', 'o' }, },
+      { 'e', "<cmd>lua require('spider').motion('e')<CR>", mode = { 'x', 'n', 'o' }, },
+      { 'b', "<cmd>lua require('spider').motion('b')<CR>", mode = { 'x', 'n', 'o' }, },
+      { 'ge', "<cmd>lua require('spider').motion('ge')<CR>", mode = { 'x', 'n', 'o' }, },
+    },
+  },
+  {
+    "mg979/vim-visual-multi",
+    version = "*",
+    opts = {},
+    vscode = false,
+    config = function() end,
+  },
+  {
+    "MagicDuck/grug-far.nvim",
+    opts = { headerMaxWidth = 80 },
+    cmd = "GrugFar",
+    keys = {
+      {
+        "<leader>sr",
+        function()
+          local grug = require "grug-far"
+          local ext = vim.bo.buftype == "" and vim.fn.expand "%:e"
+          grug.open {
+            transient = true,
+            prefills = {
+              filesFilter = ext and ext ~= "" and "*." .. ext or nil,
+            },
+          }
+        end,
+        mode = { "n", "v" },
+        desc = "Search and Replace",
+      },
+    },
+  },
+  {
+    "mbbill/undotree",
+    keys = {
+      { "<Leader><F5>", "<Cmd>UndotreeToggle<CR>", desc = "Toggle undotree window", mode = "n", silent = true },
+    },
+  },
+  {
+    "b0o/incline.nvim",
+    config = function()
+      require("incline").setup {}
+    end,
+    event = "VeryLazy",
+  },
+  {
+    "danilamihailov/beacon.nvim",
+  },
+  {
+    "mrjones2014/smart-splits.nvim",
+    event = "VeryLazy",
+  },
+  {
+    "folke/todo-comments.nvim",
+    cmd = { "TodoTrouble" },
+    config = true,
+    -- stylua: ignore
+    keys = {
+      { "]t",         function() require("todo-comments").jump_next() end, desc = "Next Todo Comment" },
+      { "[t",         function() require("todo-comments").jump_prev() end, desc = "Previous Todo Comment" },
+      { "<leader>wt", "<cmd>TodoTrouble<cr>",                              desc = "Todo (Trouble)" },
+      { "<leader>wT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>",      desc = "Todo/Fix/Fixme (Trouble)" },
+    },
+  },
+  {
+    "fredeeb/tardis.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = true,
+    keys = {
+      { "<leader>gt", "<cmd>Tardis<cr>", desc = "Time Machine" },
+    },
+  },
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+    },
+    config = function()
+      require("neogit").setup {
+        vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<CR>", { desc = "Neogit" }),
+      }
+    end,
+  },
+  {
+    "lewis6991/gitsigns.nvim",
+    enabled = false,
+    opts = {
+      signs = {
+        add = { text = "▎" },
+        change = { text = "▎" },
+        delete = { text = "" },
+        topdelete = { text = "" },
+        changedelete = { text = "▎" },
+        untracked = { text = "▎" },
+      },
+      signs_staged = {
+        add = { text = "▎" },
+        change = { text = "▎" },
+        delete = { text = "" },
+        topdelete = { text = "" },
+        changedelete = { text = "▎" },
+      },
+      on_attach = function(buffer)
+        local gs = package.loaded.gitsigns
+
+        local function map(mode, l, r, desc)
+          vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
+        end
+
+        -- stylua: ignore start
+        map("n", "]h", function()
+          if vim.wo.diff then
+            vim.cmd.normal({ "]c", bang = true })
+          else
+            gs.nav_hunk("next")
+          end
+        end, "Next Hunk")
+        map("n", "[h", function()
+          if vim.wo.diff then
+            vim.cmd.normal({ "[c", bang = true })
+          else
+            gs.nav_hunk("prev")
+          end
+        end, "Prev Hunk")
+        map("n", "]H", function() gs.nav_hunk("last") end, "Last Hunk")
+        map("n", "[H", function() gs.nav_hunk("first") end, "First Hunk")
+        map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
+        map({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
+        map("n", "<leader>ghS", gs.stage_buffer, "Stage Buffer")
+        map("n", "<leader>ghu", gs.undo_stage_hunk, "Undo Stage Hunk")
+        map("n", "<leader>ghR", gs.reset_buffer, "Reset Buffer")
+        map("n", "<leader>ghp", gs.preview_hunk_inline, "Preview Hunk Inline")
+        map("n", "<leader>ghb", function() gs.blame_line({ full = true }) end, "Blame Line")
+        map("n", "<leader>ghB", function() gs.blame() end, "Blame Buffer")
+        map("n", "<leader>ghd", gs.diffthis, "Diff This")
+        map("n", "<leader>ghD", function() gs.diffthis("~") end, "Diff This ~")
+        map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
+      end,
+    },
+  },
+  {
+    "akinsho/toggleterm.nvim",
+    config = function()
+      require("toggleterm").setup {
+        size = 10,
+        open_mapping = { "<F12>", [[<M-\>]] },
+        direction = "float",
+      }
+    end,
+  },
+  {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    cmd = "Trouble",
+    config = true,
+  },
+  {
+    "folke/which-key.nvim",
+    config = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+      local wk = require "which-key"
+
+      wk.add {
+        { "<leader>e", "<cmd>Neotree filesystem reveal left<cr>", desc = "Neotree toggle" },
+        { "<leader>c", group = "Code" },
+        {
+          "<leader>b",
+          group = "Buffers",
+          expand = function()
+            return require("which-key.extras").expand.buf()
+          end,
+          { "<leader>f", group = "Find" },
+          { "<leader>g", group = "Git" },
+          { "<leader>n", group = "Noice" },
+          { "<leader>s", group = "Search" },
+          { "<leader>t", group = "Terminal" },
+          { "<leader>w", group = "Workspace" },
+          { "<leader>u", group = "UI" },
+        },
+      }
     end,
   },
 }

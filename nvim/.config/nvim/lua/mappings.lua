@@ -50,27 +50,29 @@ if vim.o.wrap then
   map("n", "k", [[v:count ? 'k' : 'gk']], { expr = true })
 end
 
--- Buffers
-map("n", "<S-h>", require("nvchad.tabufline").prev, { desc = "Prev Buffer" })
-map("n", "<S-l>", require("nvchad.tabufline").next, { desc = "Next Buffer" })
-map("n", "<leader>x", require("nvchad.tabufline").close_buffer, { desc = "Close Buffer" })
-map("n", "<leader>ba", function()
-  require("nvchad.tabufline").closeAllBufs(true)
-end, { desc = "Close All Buffers Exclude Current" })
-map("n", "<leader>ba", function()
-  require("nvchad.tabufline").closeAllBufs(false)
-end, { desc = "Close All Buffers" })
+-- tabufline
+map("n", "<leader>bn", "<cmd>enew<CR>", { desc = "buffer new" })
+
+map("n", "<tab>", function()
+  require("nvchad.tabufline").next()
+end, { desc = "buffer goto next" })
+
+map("n", "<S-tab>", function()
+  require("nvchad.tabufline").prev()
+end, { desc = "buffer goto prev" })
+
+map("n", "<leader>x", function()
+  require("nvchad.tabufline").close_buffer()
+end, { desc = "buffer close" })
 
 -- Telescope
 map("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
 map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
 map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
-map("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
 map("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" })
 map("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "telescope find in current buffer" })
-map("n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
+map("n", "<leader>gm", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
 map("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
-map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
 map("n", "<leader>ft", function()
   require("nvchad.themes").open()
 end, { desc = "telescope nvchad themes" })
@@ -97,15 +99,51 @@ vim.keymap.set({ "n", "v" }, "<leader>cf", function()
   }
 end, { desc = "Format buffer" })
 
-vim.api.nvim_set_keymap(
+-- Noice
+map("n", "<leader>nl", ":Noice last<cr>", { desc = "Last" })
+map("n", "<leader>nh", ":Noice history<cr>", { desc = "History" })
+map("n", "<leader>nc", ":Noice dismiss<cr>", { desc = "Dismiss" })
+map("n", "<leader>ne", ":Noice errors<cr>", { desc = "Errors" })
+map("n", "<leader>nt", ":Noice telescope<cr>", { desc = "Telescope" })
+
+-- Smart Split
+map("n", "<C-k>", function()
+  require("smart-splits").move_cursor_up()
+end, { desc = "Move to left split" })
+map("n", "<C-j>", function()
+  require("smart-splits").move_cursor_down()
+end, { desc = "Move to below split" })
+map("n", "<C-h>", function()
+  require("smart-splits").move_cursor_left()
+end, { desc = "Move to above split" })
+map("n", "<C-l>", function()
+  require("smart-splits").move_cursor_right()
+end, { desc = "Move to right split" })
+
+-- Trouble
+map("n", "<leader>wx", "<cmd>Trouble<CR>", { desc = "Open/close trouble list" })
+map(
   "n",
-  "<leader>m",
-  [[:lua PreserveAndRunMacro('q')<CR>]],
-  { noremap = true, desc = "PreserveAndRunMacro" }
+  "<leader>wd",
+  "<cmd>Trouble diagnostics toggle filter.buf=0<CR>",
+  { desc = "Open trouble document diagnostics" }
+)
+map(
+  "n",
+  "<leader>cl",
+  "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+  { desc = "LSP Definitions / references / ... (Trouble)" }
 )
 
-function PreserveAndRunMacro(register)
-  local saved_register = vim.fn.getreg '"'
-  vim.cmd("normal! @" .. register)
-  vim.fn.setreg('"', saved_register)
-end
+-- vim.api.nvim_set_keymap(
+--   "n",
+--   "<leader>m",
+--   [[:lua PreserveAndRunMacro('q')<CR>]],
+--   { noremap = true, desc = "PreserveAndRunMacro" }
+-- )
+--
+-- function PreserveAndRunMacro(register)
+--   local saved_register = vim.fn.getreg '"'
+--   vim.cmd("normal! @" .. register)
+--   vim.fn.setreg('"', saved_register)
+-- end
