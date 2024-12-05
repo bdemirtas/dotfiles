@@ -279,7 +279,6 @@ return {
   },
   {
     "lewis6991/gitsigns.nvim",
-    enabled = false,
     opts = {
       signs = {
         add = { text = "▎" },
@@ -375,6 +374,22 @@ return {
           { "<leader>u", group = "UI" },
         },
       }
+    end,
+  },
+  {
+    "stevearc/aerial.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = function()
+      require("aerial").setup {
+        on_attach = function(bufnr)
+          vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr })
+          vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr })
+        end,
+      }
+      vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle right<CR>", { desc = "Aerial" })
     end,
   },
 }
