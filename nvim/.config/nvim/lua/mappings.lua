@@ -65,30 +65,29 @@ map("n", "<leader>x", function()
   require("nvchad.tabufline").close_buffer()
 end, { desc = "buffer close" })
 
--- Telescope
-map("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
-map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
-map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
-map("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" })
-map("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "telescope find in current buffer" })
-map("n", "<leader>gm", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
-map("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
+-- Fzf
+map("n", "<leader>fw", require("fzf-lua").live_grep, { desc = "Fzf live grep" })
+map("n", "<leader>fb", require("fzf-lua").buffers, { desc = "Fzf find buffers" })
+map("n", "<leader>fh", require("fzf-lua").helptags, { desc = "Fzf help page" })
+map("n", "<leader>fo", require("fzf-lua").oldfiles, { desc = "Fzf find oldfiles" })
+map("n", "<leader>fz", require("fzf-lua").grep_curbuf, { desc = "Fzf find in current buffer" })
+map("n", "<leader>gm", require("fzf-lua").git_commits, { desc = "Fzf git commits" })
+map("n", "<leader>gt", require("fzf-lua").git_status, { desc = "Fzf git status" })
 map("n", "<leader>ft", function()
   require("nvchad.themes").open()
-end, { desc = "telescope nvchad themes" })
-map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
+end, { desc = "Fzf nvchad themes" })
+map("n", "<leader>ff", require("fzf-lua").files, { desc = "Fzf find files" })
 map(
   "n",
   "<leader>fa",
-  "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
-  { desc = "telescope find all files" }
+  function() require("fzf-lua").files({ cmd = "fd --color=never --type f --hidden --follow --exclude .git"}) end,
+  { desc = "Fzf find all files" }
 )
-map("n", "<leader>fD", "<cmd>Telescope diagnostics<CR>", { desc = "Workspace Diagnostics" })
-map("n", "<leader>fd", "<cmd>Telescope diagnostics bufnr=0<CR>", { desc = "Buffer Diagnostics" })
-map("n", "<leader>fk", "<cmd>Telescope keymaps<CR>", { desc = "Key Maps" })
-map("n", "<leader>fM", "<cmd>Telescope man_pages<CR>", { desc = "Man Pages" })
-map("n", "<leader>fm", "<cmd>Telescope marks<CR>", { desc = "Jump to Mark" })
-map("n", "<leader>fv", "<cmd>Telescope vim_options<CR>", { desc = "Options" })
+map("n", "<leader>fD", require("fzf-lua").diagnostics_workspace, { desc = "Workspace Diagnostics" })
+map("n", "<leader>fd", require("fzf-lua").diagnostics_document, { desc = "Buffer Diagnostics" })
+map("n", "<leader>fk", require("fzf-lua").keymaps, { desc = "Key Maps" })
+map("n", "<leader>fM", require("fzf-lua").manpages, { desc = "Man Pages" })
+map("n", "<leader>fm", require("fzf-lua").marks, { desc = "Jump to Mark" })
 
 -- Conform
 vim.keymap.set({ "n", "v" }, "<leader>cf", function()
@@ -135,15 +134,19 @@ map(
   { desc = "LSP Definitions / references / ... (Trouble)" }
 )
 
--- vim.api.nvim_set_keymap(
---   "n",
---   "<leader>m",
---   [[:lua PreserveAndRunMacro('q')<CR>]],
---   { noremap = true, desc = "PreserveAndRunMacro" }
--- )
---
--- function PreserveAndRunMacro(register)
---   local saved_register = vim.fn.getreg '"'
---   vim.cmd("normal! @" .. register)
---   vim.fn.setreg('"', saved_register)
--- end
+-- stylua: ignore start
+vim.keymap.set("n", "<leader>z",    function() Snacks.zen() end,                     { desc = "Toggle Zen Mode" })
+vim.keymap.set("n", "<leader>Z",    function() Snacks.zen.zoom() end,                { desc = "Toggle Zoom" })
+vim.keymap.set("n", "<leader>.",    function() Snacks.scratch() end,                 { desc = "Toggle Scratch Buffer" })
+vim.keymap.set("n", "<leader>S",    function() Snacks.scratch.select() end,          { desc = "Select Scratch Buffer" })
+vim.keymap.set("n", "<leader>nn",   function() Snacks.notifier.show_history() end,   { desc = "Notification History" })
+vim.keymap.set("n", "<leader>un",   function() Snacks.notifier.hide() end,           { desc = "Dismiss All Notifications" })
+vim.keymap.set("n", "<leader>bd",   function() Snacks.bufdelete() end,               { desc = "Delete Buffer" })
+vim.keymap.set("n", "<leader>gb",   function() Snacks.git.blame_line() end,          { desc = "Git Blame Line" })
+vim.keymap.set("n", "<leader>gB",   function() Snacks.gitbrowse() end,               { desc = "Git Browse" })
+vim.keymap.set("n", "<leader>cr",   function() Snacks.rename() end,                  { desc = "Rename File" })
+vim.keymap.set("n", "<leader>ps",   function() Snacks.profiler.scratch() end,        { desc = "Profiler Scratch Buffer" })
+vim.keymap.set({"n", "t"}, "<c-,>", function() Snacks.terminal.toggle() end,         { desc = "Toggle Terminal" })
+vim.keymap.set({ "n", "t" }, "]]",  function() Snacks.words.jump(vim.v.count1) end,  { desc = "Next Reference" })
+vim.keymap.set({ "n", "t" }, "[[",  function() Snacks.words.jump(-vim.v.count1) end, { desc = "Prev Reference" })
+-- stylua: ignore end

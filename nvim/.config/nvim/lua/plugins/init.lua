@@ -54,12 +54,10 @@ return {
     end,
   },
   {
-    "nvim-telescope/telescope.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    opts = function()
-      return require "configs.telescope"
+    "ibhagwan/fzf-lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("fzf-lua").setup { "fzf-native" }
     end,
   },
   {
@@ -123,6 +121,7 @@ return {
   },
   {
     "echasnovski/mini.indentscope",
+    enabled = false,
     version = false,
     config = function()
       require("mini.indentscope").setup {
