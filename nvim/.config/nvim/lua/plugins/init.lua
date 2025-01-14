@@ -5,7 +5,7 @@ return {
     priority = 1000,
     config = function()
       vim.cmd "colorscheme tokyonight"
-    end
+    end,
   },
   {
     "williamboman/mason.nvim",
@@ -107,6 +107,7 @@ return {
         graphql = { "prettier" },
         lua = { "stylua" },
         python = { "ruff_format", "ruff_fix", "ruff_organize_imports" },
+        terraform = { "terraform_fmt" },
       },
     },
   },
@@ -387,7 +388,7 @@ return {
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     config = function()
       require("lsp_lines").setup {}
-      vim.keymap.set("", "<Leader>l", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+      vim.keymap.set("n", "<Leader>l", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
       vim.diagnostic.config { virtual_lines = false }
     end,
   },

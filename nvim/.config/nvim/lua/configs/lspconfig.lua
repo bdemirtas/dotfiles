@@ -103,7 +103,6 @@ M.setup = function()
     config.capabilities = capabilities
     config.handlers = handlers
     config.on_attach = on_attach
-    
     lspconfig[server_name].setup(config)
   end
 end
