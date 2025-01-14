@@ -30,5 +30,11 @@ vim.opt.wrap = false                            -- display lines as one long lin
 vim.opt.scrolloff = 8                           -- is one of my fav
 vim.opt.sidescrolloff = 8
 vim.opt.shortmess:append "I"
-vim.g.maplocalleader = ','
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = false,
+})
 

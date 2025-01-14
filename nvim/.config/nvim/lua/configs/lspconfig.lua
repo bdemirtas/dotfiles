@@ -1,8 +1,7 @@
 local M = {}
 local map = vim.keymap.set
 
--- export on_attach & capabilities
-M.on_attach = function(_, bufnr)
+local on_attach = function(_, bufnr)
   local function opts(desc)
     return { buffer = bufnr, desc = "LSP " .. desc }
   end
@@ -24,107 +23,88 @@ M.on_attach = function(_, bufnr)
   map("n", "gr", require("fzf-lua").lsp_references, opts "Show references")
 end
 
--- disable semanticTokens
-M.on_init = function(client, _)
-  if client.supports_method "textDocument/semanticTokens" then
-    client.server_capabilities.semanticTokensProvider = nil
-  end
-end
 
-M.capabilities = vim.lsp.protocol.make_client_capabilities()
+local handlers = {
+  ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
+  ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
+}
 
-M.capabilities.textDocument.completion.completionItem = {
-  documentationFormat = { "markdown", "plaintext" },
-  snippetSupport = true,
-  preselectSupport = true,
-  insertReplaceSupport = true,
-  labelDetailsSupport = true,
-  deprecatedSupport = true,
-  commitCharactersSupport = true,
-  tagSupport = { valueSet = { 1 } },
-  resolveSupport = {
-    properties = {
-      "documentation",
-      "detail",
-      "additionalTextEdits",
+local servers = {
+  ansiblels = {},
+  jsonls = {},
+  bashls = {},
+  jqls = {},
+  cssls = {},
+  marksman = {},
+  taplo = {},
+  terraformls = {},
+  pyright = {
+    settings = {
+      pyright = {
+        -- Using Ruff's import organizer
+        disableOrganizeImports = true,
+        analysis = {
+          autoSearchPaths = true,
+          diagnosticMode = "workspace",
+          typeCheckingMode = "off",
+          useLibraryCodeForTypes = false,
+          diagnosticSeverityOverrides = {
+            reportGeneralTypeIssues = false,
+            reportOptionalMemberAccess = false,
+            reportOptionalSubscript = false,
+            reportPrivateImportUsage = false,
+            reportUnusedExpression = false,
+          },
+        },
+      },
+      python = {
+        ignore = { "*" },
+      },
+    },
+  },
+  yamlls = {
+    settings = {
+      yaml = {
+        schemas = {
+          ["http://json.schemastore.org/github-workflow.json"] = ".github/workflows/*.{yml,yaml}",
+          ["http://json.schemastore.org/github-action.json"] = ".github/action.{yml,yaml}",
+          ["http://json.schemastore.org/gitlab-ci.json"] = "/*lab-ci.{yml,yaml}",
+          ["https://json.schemastore.org/databricks-asset-bundles.json"] = ".databricks.{yml,yaml}",
+        },
+      },
+    },
+  },
+  lua_ls = {
+    settings = {
+      Lua = {
+        diagnostics = {
+          globals = { "vim" },
+        },
+        workspace = {
+          library = {
+            vim.fn.expand "$VIMRUNTIME/lua",
+            vim.fn.expand "$VIMRUNTIME/lua/vim/lsp",
+            vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy",
+            "${3rd}/luv/library",
+          },
+          maxPreload = 100000,
+          preloadFileSize = 10000,
+        },
+      },
     },
   },
 }
 
-M.defaults = function()
-  dofile(vim.g.base46_cache .. "lsp")
-  require("nvchad.lsp").diagnostic_config()
+M.setup = function()
+  local lspconfig = require('lspconfig')
+  local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-  local servers = {
-    ansiblels = {},
-    jsonls = {},
-    bashls = {},
-    jqls = {},
-    cssls = {},
-    marksman = {},
-    taplo = {},
-    basedpyright = {
-      settings = {
-        basedpyright = {
-          -- Using Ruff's import organizer
-          disableOrganizeImports = true,
-          analysis = {
-            autoSearchPaths = true,
-            diagnosticMode = "workspace",
-            typeCheckingMode = "basic",
-            useLibraryCodeForTypes = false,
-            diagnosticSeverityOverrides = {
-              reportGeneralTypeIssues = false,
-              reportOptionalMemberAccess = false,
-              reportOptionalSubscript = false,
-              reportPrivateImportUsage = false,
-              reportUnusedExpression = false,
-            },
-          },
-        },
-        python = {
-          ignore = { "*" },
-        },
-      },
-    },
-    yamlls = {
-      settings = {
-        yamll = {
-          schemas = {
-            ["http://json.schemastore.org/github-workflow.json"] = ".github/workflows/*.{yml,yaml}",
-            ["http://json.schemastore.org/github-action.json"] = ".github/action.{yml,yaml}",
-            ["http://json.schemastore.org/gitlab-ci.json"] = "/*lab-ci.{yml,yaml}",
-            ["https://json.schemastore.org/databricks-asset-bundles.json"] = ".databricks.{yml,yaml}",
-          },
-        },
-      },
-    },
-    lua_ls = {
-      settings = {
-        Lua = {
-          diagnostics = {
-            globals = { "vim" },
-          },
-          workspace = {
-            library = {
-              vim.fn.expand "$VIMRUNTIME/lua",
-              vim.fn.expand "$VIMRUNTIME/lua/vim/lsp",
-              vim.fn.stdpath "data" .. "/lazy/ui/nvchad_types",
-              vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy",
-              "${3rd}/luv/library",
-            },
-            maxPreload = 100000,
-            preloadFileSize = 10000,
-          },
-        },
-      },
-    },
-  }
-  for name, opts in pairs(servers) do
-    opts.on_init = M.on_init
-    opts.on_attach = M.on_attach
-    opts.capabilities = M.capabilities
-    require("lspconfig")[name].setup(opts)
+  for server_name, config in pairs(servers) do
+    config.capabilities = capabilities
+    config.handlers = handlers
+    config.on_attach = on_attach
+    
+    lspconfig[server_name].setup(config)
   end
 end
 

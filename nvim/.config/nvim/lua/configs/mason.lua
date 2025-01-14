@@ -14,6 +14,7 @@ options = {
     "taplo",
     "ruff",
     "basedpyright",
+    "pyright",
     "html",
     "marksman",
     "ansiblels",
@@ -27,6 +28,7 @@ options = {
     "markdownlint",
     "stylua",
     "ast-grep",
+    "terraformls"
   },
 }
 

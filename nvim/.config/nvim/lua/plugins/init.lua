@@ -1,5 +1,13 @@
 return {
   {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.cmd "colorscheme tokyonight"
+    end
+  },
+  {
     "williamboman/mason.nvim",
     lazy = false,
     opts = {
@@ -24,7 +32,7 @@ return {
     "neovim/nvim-lspconfig",
     lazy = false,
     config = function()
-      require("configs.lspconfig").defaults()
+      require("configs.lspconfig").setup()
     end,
   },
   {
@@ -373,6 +381,14 @@ return {
           { "<leader>u", group = "UI" },
         },
       }
+    end,
+  },
+  {
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    config = function()
+      require("lsp_lines").setup {}
+      vim.keymap.set("", "<Leader>l", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+      vim.diagnostic.config { virtual_lines = false }
     end,
   },
   {
