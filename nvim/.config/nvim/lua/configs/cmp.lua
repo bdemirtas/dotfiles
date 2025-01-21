@@ -1,8 +1,6 @@
 local cmp = require "cmp"
 
 local options = {
-  completion = { completeopt = "menu,menuone" },
-
   snippet = {
     expand = function(args)
       require("luasnip").lsp_expand(args.body)
@@ -43,13 +41,29 @@ local options = {
     end, { "i", "s" }),
   },
 
+  sorting = {
+    comparators = {
+      cmp.config.compare.offset,
+      cmp.config.compare.exact,
+      cmp.config.compare.score,
+      require("cmp-under-comparator").under,
+      cmp.config.compare.recently_used,
+      cmp.config.compare.locality,
+      cmp.config.compare.kind,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
+    },
+  },
+
   sources = {
     { name = "nvim_lsp" },
     { name = "luasnip" },
     { name = "buffer" },
     { name = "nvim_lua" },
     { name = "path" },
+    { name = "nvim_lsp_signature_help" },
   },
 }
 
-return vim.tbl_deep_extend("force", options)
+return options

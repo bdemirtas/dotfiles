@@ -35,9 +35,6 @@ map({ "n", "v" }, "C", '"_C')
 -- quit neovim
 map("n", "<leader>q", vim.cmd.Ex)
 
-map("n", "<leader>z", 'mzgg"+yG`z', { desc = "Yank File" })
-map("n", "<leader>x", 'gg"_dG', { desc = "Delete File" })
-
 map({ "i", "s" }, "<C-j>", function()
   vim.snippet.jump(1)
 end)

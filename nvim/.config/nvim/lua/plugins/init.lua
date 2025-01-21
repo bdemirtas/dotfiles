@@ -40,6 +40,11 @@ return {
         "<Cmd>BufferClose<CR>",
         desc = "Delete buffer",
       },
+      {
+        "<leader>x",
+        "<Cmd>BufferClose<CR>",
+        desc = "Delete buffer",
+      },
       { "<S-h>", "<cmd>BufferPrevious<cr>", desc = "Prev Buffer" },
       { "<S-l>", "<cmd>BufferNext<cr>", desc = "Next Buffer" },
     },
@@ -110,6 +115,8 @@ return {
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
+        "hrsh7th/cmp-nvim-lsp-signature-help",
+        "lukas-reineke/cmp-under-comparator",
       },
     },
     opts = function()
@@ -343,21 +350,6 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     opts = {
-      signs = {
-        add = { text = "▎" },
-        change = { text = "▎" },
-        delete = { text = "" },
-        topdelete = { text = "" },
-        changedelete = { text = "▎" },
-        untracked = { text = "▎" },
-      },
-      signs_staged = {
-        add = { text = "▎" },
-        change = { text = "▎" },
-        delete = { text = "" },
-        topdelete = { text = "" },
-        changedelete = { text = "▎" },
-      },
       on_attach = function(buffer)
         local gs = package.loaded.gitsigns
 
