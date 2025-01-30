@@ -2,6 +2,10 @@ local M = {}
 local map = vim.keymap.set
 
 local on_attach = function(_, bufnr)
+  local signature_setup = {
+    floating_window = true,
+    timer_interval = 10,
+  }
   local function opts(desc)
     return { buffer = bufnr, desc = "LSP " .. desc }
   end
@@ -21,8 +25,11 @@ local on_attach = function(_, bufnr)
 
   map({ "n", "v" }, "<leader>ca", require("fzf-lua").lsp_code_actions, opts "Code action")
   map("n", "gr", require("fzf-lua").lsp_references, opts "Show references")
+  vim.keymap.set({ "n" }, "<C-k>", function()
+    require("lsp_signature").toggle_float_win()
+  end, { silent = true, noremap = true, desc = "toggle signature" })
+  require("lsp_signature").setup(signature_setup)
 end
-
 
 local handlers = {
   ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
@@ -96,8 +103,8 @@ local servers = {
 }
 
 M.setup = function()
-  local lspconfig = require('lspconfig')
-  local capabilities = require('cmp_nvim_lsp').default_capabilities()
+  local lspconfig = require "lspconfig"
+  local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
   for server_name, config in pairs(servers) do
     config.capabilities = capabilities
