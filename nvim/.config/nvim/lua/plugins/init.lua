@@ -35,16 +35,6 @@ return {
         "<Cmd>BufferCloseBuffersLeft<CR>",
         desc = "Delete Buffers to the Left",
       },
-      {
-        "<leader>bd",
-        "<Cmd>BufferClose<CR>",
-        desc = "Delete buffer",
-      },
-      {
-        "<leader>x",
-        "<Cmd>BufferClose<CR>",
-        desc = "Delete buffer",
-      },
       { "<S-h>", "<cmd>BufferPrevious<cr>", desc = "Prev Buffer" },
       { "<S-l>", "<cmd>BufferNext<cr>", desc = "Next Buffer" },
     },
@@ -149,29 +139,10 @@ return {
     end,
   },
   {
-    "ibhagwan/fzf-lua",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = function()
-      require("fzf-lua").setup { "fzf-native" }
-    end,
-  },
-  {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     opts = function()
       require "configs.treesitter"
-    end,
-  },
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v3.x",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons",
-      "MunifTanjim/nui.nvim",
-    },
-    opts = function()
-      return require "configs.neotree"
     end,
   },
   {
@@ -342,14 +313,10 @@ return {
   },
   {
     "folke/todo-comments.nvim",
-    cmd = { "TodoTrouble" },
-    config = true,
-    -- stylua: ignore
+    optional = true,
     keys = {
-      { "]t",         function() require("todo-comments").jump_next() end, desc = "Next Todo Comment" },
-      { "[t",         function() require("todo-comments").jump_prev() end, desc = "Previous Todo Comment" },
-      { "<leader>wt", "<cmd>TodoTrouble<cr>",                              desc = "Todo (Trouble)" },
-      { "<leader>wT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>",      desc = "Todo/Fix/Fixme (Trouble)" },
+      { "<leader>st", function() Snacks.picker.todo_comments() end, desc = "Todo" },
+      { "<leader>sT", function () Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME" } }) end, desc = "Todo/Fix/Fixme" },
     },
   },
   {
@@ -425,9 +392,27 @@ return {
   },
   {
     "folke/trouble.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    cmd = "Trouble",
-    config = true,
+    optional = true,
+    specs = {
+      "folke/snacks.nvim",
+      opts = function(_, opts)
+        return vim.tbl_deep_extend("force", opts or {}, {
+          picker = {
+            actions = require("trouble.sources.snacks").actions,
+            win = {
+              input = {
+                keys = {
+                  ["<c-t>"] = {
+                    "trouble_open",
+                    mode = { "n", "i" },
+                  },
+                },
+              },
+            },
+          },
+        })
+      end,
+    },
   },
   {
     "folke/which-key.nvim",
@@ -437,7 +422,7 @@ return {
       local wk = require "which-key"
 
       wk.add {
-        { "<leader>e", "<cmd>Neotree filesystem reveal left<cr>", desc = "Neotree toggle" },
+        { "<leader>e", function () Snacks.explorer() end, desc = "Explorer" },
         { "<leader>c", group = "Code" },
         {
           "<leader>b",
@@ -462,22 +447,6 @@ return {
       require("lsp_lines").setup {}
       vim.keymap.set("n", "<Leader>l", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
       vim.diagnostic.config { virtual_lines = false }
-    end,
-  },
-  {
-    "stevearc/aerial.nvim",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-tree/nvim-web-devicons",
-    },
-    config = function()
-      require("aerial").setup {
-        on_attach = function(bufnr)
-          vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr })
-          vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr })
-        end,
-      }
-      vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle right<CR>", { desc = "Aerial" })
     end,
   },
 }

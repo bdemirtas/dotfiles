@@ -10,24 +10,12 @@ local on_attach = function(_, bufnr)
     return { buffer = bufnr, desc = "LSP " .. desc }
   end
 
-  map("n", "gD", require("fzf-lua").lsp_declarations, opts "Go to declaration")
-  map("n", "gd", require("fzf-lua").lsp_definitions, opts "Go to definition")
-  map("n", "gi", require("fzf-lua").lsp_implementations, opts "Go to implementation")
-  map("n", "<leader>sh", vim.lsp.buf.signature_help, opts "Show signature help")
   map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts "Add workspace folder")
   map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts "Remove workspace folder")
-
   map("n", "<leader>wl", function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, opts "List workspace folders")
-
-  map("n", "<leader>D", require("fzf-lua").lsp_typedefs, opts "Go to type definition")
-
-  map({ "n", "v" }, "<leader>ca", require("fzf-lua").lsp_code_actions, opts "Code action")
-  map("n", "gr", require("fzf-lua").lsp_references, opts "Show references")
-  vim.keymap.set({ "n" }, "<C-k>", function()
-    require("lsp_signature").toggle_float_win()
-  end, { silent = true, noremap = true, desc = "toggle signature" })
+  map("n", "<leader>D", function() Snacks.picker.lsp_type_definitions() end, opts "Go to type definition")
   require("lsp_signature").setup(signature_setup)
 end
 
