@@ -37,4 +37,5 @@ vim.diagnostic.config({
   update_in_insert = false,
   severity_sort = false,
 })
-
+-- Snacks Options
+vim.ui.input = Snacks.input

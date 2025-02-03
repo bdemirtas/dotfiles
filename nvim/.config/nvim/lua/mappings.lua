@@ -60,13 +60,6 @@ vim.keymap.set({ "n", "v" }, "<leader>cf", function()
   }
 end, { desc = "Format buffer" })
 
--- Noice
-map("n", "<leader>nl", ":Noice last<cr>", { desc = "Last" })
-map("n", "<leader>nh", ":Noice history<cr>", { desc = "History" })
-map("n", "<leader>nc", ":Noice dismiss<cr>", { desc = "Dismiss" })
-map("n", "<leader>ne", ":Noice errors<cr>", { desc = "Errors" })
-map("n", "<leader>nt", ":Noice telescope<cr>", { desc = "Telescope" })
-
 -- Smart Split
 map("n", "<C-k>", function()
   require("smart-splits").move_cursor_up()
