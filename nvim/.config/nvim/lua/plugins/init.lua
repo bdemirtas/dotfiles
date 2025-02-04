@@ -249,12 +249,7 @@ return {
       },
     },
     opts = function()
-      local opts = require "configs.cmp"
-      opts.sources = opts.sources or {}
-      table.insert(opts.sources, {
-        name = "lazydev",
-        group_index = 0, -- set group index to 0 to skip loading LuaLS completions
-      })
+      return require "configs.cmp"
     end,
   },
   {
@@ -533,7 +528,6 @@ return {
           end,
           { "<leader>f", group = "Find" },
           { "<leader>g", group = "Git" },
-          { "<leader>n", group = "Noice" },
           { "<leader>s", group = "Search" },
           { "<leader>t", group = "Terminal" },
           { "<leader>w", group = "Workspace" },
