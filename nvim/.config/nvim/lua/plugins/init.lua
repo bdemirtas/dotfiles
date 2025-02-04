@@ -246,6 +246,7 @@ return {
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
         "lukas-reineke/cmp-under-comparator",
+        "uga-rosa/cmp-dictionary",
       },
     },
     opts = function()
@@ -534,14 +535,6 @@ return {
           { "<leader>u", group = "UI" },
         },
       }
-    end,
-  },
-  {
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    config = function()
-      require("lsp_lines").setup {}
-      vim.keymap.set("n", "<Leader>l", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
-      vim.diagnostic.config { virtual_lines = false }
     end,
   },
 }
