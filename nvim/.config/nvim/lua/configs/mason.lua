@@ -13,7 +13,6 @@ options = {
     "cssls",
     "taplo",
     "ruff",
-    "basedpyright",
     "pyright",
     "html",
     "marksman",
