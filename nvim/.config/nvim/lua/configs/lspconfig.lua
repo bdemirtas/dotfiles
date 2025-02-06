@@ -2,10 +2,6 @@ local M = {}
 local map = vim.keymap.set
 
 local on_attach = function(_, bufnr)
-  local signature_setup = {
-    floating_window = true,
-    timer_interval = 10,
-  }
   local function opts(desc)
     return { buffer = bufnr, desc = "LSP " .. desc }
   end
@@ -15,13 +11,7 @@ local on_attach = function(_, bufnr)
   map("n", "<leader>wl", function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, opts "List workspace folders")
-  require("lsp_signature").setup(signature_setup)
 end
-
-local handlers = {
-  ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
-  ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
-}
 
 local servers = {
   ansiblels = {},
@@ -91,10 +81,10 @@ local servers = {
 
 M.setup = function()
   local lspconfig = require "lspconfig"
-  local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
   for server_name, config in pairs(servers) do
-    config.capabilities = capabilities
+    config.capabilities = require('blink.cmp').get_lsp_capabilities()
+
     config.handlers = handlers
     config.on_attach = on_attach
     lspconfig[server_name].setup(config)

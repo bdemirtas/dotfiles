@@ -19,7 +19,6 @@ local options = {
       behavior = cmp.ConfirmBehavior.Insert,
       select = true,
     },
-
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -29,7 +28,6 @@ local options = {
         fallback()
       end
     end, { "i", "s" }),
-
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
@@ -40,7 +38,7 @@ local options = {
       end
     end, { "i", "s" }),
   },
-
+  completion = { completeopt = "menu,menuone,noselect" },
   sorting = {
     comparators = {
       cmp.config.compare.offset,

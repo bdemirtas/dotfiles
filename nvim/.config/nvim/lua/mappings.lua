@@ -47,9 +47,6 @@ if vim.o.wrap then
   map("n", "j", [[v:count ? 'j' : 'gj']], { expr = true })
   map("n", "k", [[v:count ? 'k' : 'gk']], { expr = true })
 end
-map({ "n" }, "<C-k>", function()
-  require("lsp_signature").toggle_float_win()
-end, { desc = "toggle signature" })
 
 -- Conform
 vim.keymap.set({ "n", "v" }, "<leader>cf", function()
