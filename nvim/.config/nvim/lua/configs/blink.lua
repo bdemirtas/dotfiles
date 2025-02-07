@@ -6,6 +6,12 @@ options = {
     trigger = {
       show_on_keyword = true,
     },
+    list = {
+      selection = {
+        preselect = true,
+        auto_insert = true,
+      },
+    },
     menu = {
       -- nvim-cmp style menu
       draw = {
@@ -16,7 +22,7 @@ options = {
       },
     },
     -- Show documentation when selecting a completion item
-    documentation = { auto_show = true, auto_show_delay_ms = 500 },
+    -- documentation = { auto_show = true, auto_show_delay_ms = 500 },
     -- Display a preview of the selected item on the current line
     ghost_text = { enabled = false },
   },
@@ -29,7 +35,12 @@ options = {
   -- Use a preset for snippets, check the snippets documentation for more information
   snippets = { preset = "luasnip" },
   -- Experimental signature help support
-  signature = { enabled = true },
+  signature = {
+    enabled = true,
+    window = {
+      show_documentation = false,
+    },
+  },
   keymap = {
     preset = "enter",
     ["<C-k>"] = { "select_prev", "fallback" },
