@@ -1,5 +1,15 @@
 return {
   {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+    },
+    opts = function()
+      return require "configs.noice"
+    end,
+  },
+  {
     "saghen/blink.cmp",
     dependencies = {
       "L3MON4D3/LuaSnip",
