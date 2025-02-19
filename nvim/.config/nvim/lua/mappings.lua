@@ -71,21 +71,3 @@ map("n", "<C-l>", function()
   require("smart-splits").move_cursor_right()
 end, { desc = "Move to right split" })
 
-
--- stylua: ignore start
-vim.keymap.set("n", "<leader>z",    function() Snacks.zen() end,                     { desc = "Toggle Zen Mode" })
-vim.keymap.set("n", "<leader>Z",    function() Snacks.zen.zoom() end,                { desc = "Toggle Zoom" })
-vim.keymap.set("n", "<leader>.",    function() Snacks.scratch() end,                 { desc = "Toggle Scratch Buffer" })
-vim.keymap.set("n", "<leader>S",    function() Snacks.scratch.select() end,          { desc = "Select Scratch Buffer" })
-vim.keymap.set("n", "<leader>nn",   function() Snacks.notifier.show_history() end,   { desc = "Notification History" })
-vim.keymap.set("n", "<leader>un",   function() Snacks.notifier.hide() end,           { desc = "Dismiss All Notifications" })
-vim.keymap.set("n", "<leader>bd",   function() Snacks.bufdelete() end,               { desc = "Delete Buffer" })
-vim.keymap.set("n", "<leader>x",   function() Snacks.bufdelete() end,               { desc = "Delete Buffer" })
-vim.keymap.set("n", "<leader>gb",   function() Snacks.git.blame_line() end,          { desc = "Git Blame Line" })
-vim.keymap.set("n", "<leader>gB",   function() Snacks.gitbrowse() end,               { desc = "Git Browse" })
-vim.keymap.set("n", "<leader>cr",   function() Snacks.rename() end,                  { desc = "Rename File" })
-vim.keymap.set("n", "<leader>ps",   function() Snacks.profiler.scratch() end,        { desc = "Profiler Scratch Buffer" })
-vim.keymap.set({"n", "t"}, "<c-,>", function() Snacks.terminal.toggle() end,         { desc = "Toggle Terminal" })
-vim.keymap.set({ "n", "t" }, "]]",  function() Snacks.words.jump(vim.v.count1) end,  { desc = "Next Reference" })
-vim.keymap.set({ "n", "t" }, "[[",  function() Snacks.words.jump(-vim.v.count1) end, { desc = "Prev Reference" })
--- stylua: ignore end
