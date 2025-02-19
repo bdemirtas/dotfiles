@@ -3,6 +3,7 @@ local options = {}
 ---@type snacks.Config
 options = {
   scroll = {},
+  image = {},
   rename = {
     enable = true,
   },

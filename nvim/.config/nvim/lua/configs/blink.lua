@@ -30,7 +30,10 @@ options = {
     -- Remove 'buffer' if you don't want text completions, by default it's only enabled when LSP returns no items
     default = { "lsp", "path", "snippets", "buffer" },
     -- Disable cmdline completions
-    cmdline = {},
+    providers = { cmdline = { enabled = false } },
+  },
+  cmdline = {
+    enabled = false,
   },
   -- Use a preset for snippets, check the snippets documentation for more information
   snippets = { preset = "luasnip" },
