@@ -67,6 +67,7 @@ return {
       { "<leader>S",  function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
       { "<leader>n",  function() Snacks.notifier.show_history() end, desc = "Notification History" },
       { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
+      { "<leader>x", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
       { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File" },
       { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse", mode = { "n", "v" } },
       { "<leader>gb", function() Snacks.git.blame_line() end, desc = "Git Blame Line" },
@@ -128,17 +129,53 @@ return {
       { "<leader>sm", function() Snacks.picker.marks() end, desc = "Marks" },
       { "<leader>sR", function() Snacks.picker.resume() end, desc = "Resume" },
       { "<leader>sq", function() Snacks.picker.qflist() end, desc = "Quickfix List" },
-      { "<leader>uC", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
+      -- { "<leader>uC", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
       { "<leader>qp", function() Snacks.picker.projects() end, desc = "Projects" },
       -- LSP
       { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
       { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
       { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
       { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
-      { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
+      -- { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
     },
   },
   -- stylua: ignore end
+  {
+    "bassamsdata/namu.nvim",
+    config = function()
+      require("namu").setup {
+        -- Enable the modules you want
+        namu_symbols = {
+          enable = true,
+          options = {
+            movement = {
+              next = { "<C-j>", "<DOWN>" },
+              previous = { "<C-k>", "<UP>" },
+            },
+          },
+        },
+        -- Optional: Enable other modules if needed
+        ui_select = { enable = false }, -- vim.ui.select() wrapper
+        colorscheme = {
+          enable = false,
+          options = {
+            -- NOTE: if you activate persist, then please remove any vim.cmd("colorscheme ...") in your config, no needed anymore
+            persist = true, -- very efficient mechanism to Remember selected colorscheme
+            write_shada = false, -- If you open multiple nvim instances, then probably you need to enable this
+          },
+        },
+      }
+      -- === Suggested Keymaps: ===
+      vim.keymap.set("n", "<leader>ss", ":Namu symbols<cr>", {
+        desc = "Jump to LSP symbol",
+        silent = true,
+      })
+      vim.keymap.set("n", "<leader>uC", ":Namu colorscheme<cr>", {
+        desc = "Colorscheme Picker",
+        silent = true,
+      })
+    end,
+  },
   {
     "romgrk/barbar.nvim",
     dependencies = {
@@ -228,9 +265,40 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    opts = function()
-      require "configs.treesitter"
-    end,
+    opts = {
+      ensure_installed = {
+        "json",
+        "luadoc",
+        "bash",
+        "git_config",
+        "csv",
+        "vim",
+        "python",
+        "toml",
+        "jq",
+        "json",
+        "ocaml",
+        "xml",
+        "terraform",
+        "lua",
+        "gitignore",
+        "gitcommit",
+        "git_rebase",
+        "yaml",
+        "sql",
+        "markdown",
+        "markdown_inline",
+        "regex",
+        "norg",
+      },
+      ignore_install = {},
+      sync_install = false,
+      indent = {
+        enable = true,
+      },
+      auto_install = true,
+      highlight = { enable = true },
+    },
   },
   {
     "stevearc/conform.nvim",
