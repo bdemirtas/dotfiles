@@ -26,7 +26,6 @@ options = {
     "yamlfmt",
     "markdownlint",
     "stylua",
-    "ast-grep",
     "terraformls"
   },
 }

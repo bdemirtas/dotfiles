@@ -80,11 +80,6 @@ options = {
       arrow = ">",
     },
   },
-  -- notifier = {
-  --   enabled = true,
-  --   timeout = 3000,
-  --   style = "fancy",
-  -- },
   blank = {
     char = " ",
     -- char = "·",
