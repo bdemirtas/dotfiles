@@ -1,5 +1,58 @@
 return {
   {
+    "nvim-mini/mini.basics",
+    version = "*",
+    config = function()
+      require("mini.basics").setup {
+        mappings = {
+          basic = true,
+          windows = true,
+          move_with_alt = true,
+        },
+      }
+    end,
+  },
+  {
+    "m4xshen/hardtime.nvim",
+    enabled = false,
+    lazy = false,
+    dependencies = { "MunifTanjim/nui.nvim" },
+    opts = {},
+  },
+  {
+    "SuperBo/fugit2.nvim",
+    opts = {
+      libgit2_path = "/usr/lib64/libgit2.so",
+      width = 70,
+      external_diffview = true, -- tell fugit2 to use diffview.nvim instead of builtin implementation.
+    },
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "nvim-lua/plenary.nvim",
+      {
+        "chrisgrieser/nvim-tinygit", -- optional: for Github PR view
+        dependencies = { "stevearc/dressing.nvim" },
+      },
+    },
+    cmd = { "Fugit2", "Fugit2Blame", "Fugit2Diff", "Fugit2Graph" },
+    keys = {
+      { "<leader>gg", mode = "n", "<cmd>Fugit2<cr>" },
+    },
+  },
+  {
+    "sindrets/diffview.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    -- lazy, only load diffview by these commands
+    cmd = {
+      "DiffviewFileHistory",
+      "DiffviewOpen",
+      "DiffviewToggleFiles",
+      "DiffviewFocusFiles",
+      "DiffviewRefresh",
+    },
+  },
+  {
     "folke/noice.nvim",
     event = "VeryLazy",
     dependencies = {
@@ -60,10 +113,11 @@ return {
     end,
   },
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
+    "scottmckendry/cyberdream.nvim",
+    lazy = false,
+    priority = 1000,
     config = function()
-      vim.cmd "colorscheme catppuccin-frappe"
+      vim.cmd "colorscheme cyberdream"
     end,
   },
   {
@@ -85,14 +139,6 @@ return {
     lazy = false,
     opts = function()
       return require "config.mason"
-    end,
-  },
-  {
-    "neovim/nvim-lspconfig",
-    dependencies = { "saghen/blink.cmp" },
-    lazy = false,
-    config = function()
-      require("config.lspconfig").setup()
     end,
   },
   {
@@ -299,18 +345,6 @@ return {
     },
   },
   {
-    "NeogitOrg/neogit",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "sindrets/diffview.nvim",
-    },
-    config = function()
-      require("neogit").setup {
-        vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<CR>", { desc = "Neogit" }),
-      }
-    end,
-  },
-  {
     "lewis6991/gitsigns.nvim",
     opts = {
       on_attach = function(buffer)
@@ -411,6 +445,8 @@ return {
         {
           mode = { "n", "v" },
           { "<leader>f", group = "Find" },
+          { "<leader>b", group = "Buffer" },
+          { "<leader>c", group = "Code" },
           { "<leader>g", group = "Git" },
           { "<leader>s", group = "Search" },
           { "<leader>t", group = "Terminal" },

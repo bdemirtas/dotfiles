@@ -2,9 +2,13 @@ local options = {}
 
 options = {
   completion = {
-    keyword = { range = "full" },
+    keyword = { range = "prefix" },
     trigger = {
       show_on_keyword = true,
+      show_in_snippet = true,
+      show_on_accept_on_trigger_character = true,
+      show_on_insert_on_trigger_character = true,
+      show_on_trigger_character = true,
     },
     list = {
       selection = {
