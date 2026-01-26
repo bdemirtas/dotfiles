@@ -35,7 +35,7 @@ return {
     capabilities.textDocument.completion.completionItem.snippetSupport = true
 
     -- enable inlay hint
-    vim.lsp.inlay_hint.enable(true, { 0 })
+    vim.lsp.inlay_hint.enable(false, { 0 })
 
     -- change diagnostic symbols in the sign column (gutter)
     local x = vim.diagnostic.severity
@@ -70,7 +70,7 @@ return {
               callArgumentNames = true,
             },
             autoSearchPaths = true,
-            typeCheckingMode = "standard",
+            typeCheckingMode = "basic",
             useLibraryCodeForTypes = false,
             allowedUntypedLibraries = true,
             diagnosticMode = "openFilesOnly",

@@ -20,8 +20,32 @@ options = {
     bo = { filetype = "snacks_notif" },
   },
   picker = {
+    sources = {
+      explorer = {
+        layout = {
+          layout = {
+            width = 0.15,
+          },
+        },
+      },
+      diagnostics = {
+        -- This overrides only for diagnostics picker
+        layout = {
+          preview = false, -- ← disables preview completely for diagnostics
+          -- optional: make list take full space (very useful without preview)
+          layout = {
+            box = "vertical",
+            { win = "list", height = 0.9 }, -- give list almost all height
+            { win = "input", height = 1 },
+          },
+        },
+        -- optional extras that work great without preview:
+        focus = "list",
+        auto_close = true, -- close after picking a diagnostic
+      },
+    },
     layout = {
-      preset = "telescope",
+      preset = "dropdown",
     },
   },
   explorer = {},

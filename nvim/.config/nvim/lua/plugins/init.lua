@@ -1,5 +1,15 @@
 return {
   {
+    "rachartier/tiny-code-action.nvim",
+    dependencies = {
+      { "nvim-lua/plenary.nvim" },
+      { "ibhagwan/fzf-lua" },
+      { "folke/snacks.nvim" },
+    },
+    event = "LspAttach",
+    opts = {},
+  },
+  {
     "nvim-mini/mini.basics",
     version = "*",
     config = function()
@@ -22,9 +32,9 @@ return {
   {
     "SuperBo/fugit2.nvim",
     opts = {
-      libgit2_path = "/usr/lib64/libgit2.so",
+      libgit2_path = "/usr/lib64/libgit2.so.1.9",
       width = 70,
-      external_diffview = true, -- tell fugit2 to use diffview.nvim instead of builtin implementation.
+      -- external_diffview = true, -- tell fugit2 to use diffview.nvim instead of builtin implementation.
     },
     dependencies = {
       "MunifTanjim/nui.nvim",
@@ -41,16 +51,9 @@ return {
     },
   },
   {
-    "sindrets/diffview.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    -- lazy, only load diffview by these commands
-    cmd = {
-      "DiffviewFileHistory",
-      "DiffviewOpen",
-      "DiffviewToggleFiles",
-      "DiffviewFocusFiles",
-      "DiffviewRefresh",
-    },
+    "esmuellert/codediff.nvim",
+    dependencies = { "MunifTanjim/nui.nvim" },
+    cmd = "CodeDiff",
   },
   {
     "folke/noice.nvim",
@@ -113,11 +116,12 @@ return {
     end,
   },
   {
-    "scottmckendry/cyberdream.nvim",
+    "ellisonleao/gruvbox.nvim",
     lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd "colorscheme cyberdream"
+      vim.cmd "colorscheme gruvbox"
+      vim.o.background = "dark"
     end,
   },
   {
@@ -253,8 +257,35 @@ return {
   },
   {
     "nvim-lualine/lualine.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
-      require("lualine").setup {}
+      require("lualine").setup {
+        sections = {
+          lualine_b = {
+            {
+              "branch",
+              source = function()
+                local gitsigns = vim.b.gitsigns_head
+                return gitsigns or "" -- Falls back to empty if no gitsigns/no repo
+              end,
+            },
+            -- Add diff if wanted:
+            {
+              "diff",
+              source = function()
+                local gitsigns = vim.b.gitsigns_status_dict
+                if gitsigns then
+                  return {
+                    added = gitsigns.added,
+                    modified = gitsigns.changed,
+                    removed = gitsigns.removed,
+                  }
+                end
+              end,
+            },
+          },
+        },
+      }
     end,
   },
   {
