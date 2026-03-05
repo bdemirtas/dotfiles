@@ -30,7 +30,21 @@ return {
     opts = {},
   },
   {
+    "NeogitOrg/neogit",
+    lazy = true,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "esmuellert/codediff.nvim",
+      "folke/snacks.nvim",
+    },
+    cmd = "Neogit",
+    keys = {
+      { "<leader>gg", "<cmd>Neogit<cr>", desc = "Show Neogit UI" },
+    },
+  },
+  {
     "SuperBo/fugit2.nvim",
+    enabled = false,
     opts = {
       libgit2_path = "/usr/lib64/libgit2.so.1.9",
       width = 70,
@@ -116,12 +130,11 @@ return {
     end,
   },
   {
-    "ellisonleao/gruvbox.nvim",
-    lazy = false,
-    priority = 1000,
-    config = function()
-      vim.cmd "colorscheme gruvbox"
-      vim.o.background = "dark"
+    "tiagovla/tokyodark.nvim",
+    opts = {},
+    config = function(_, opts)
+      require("tokyodark").setup(opts) -- calling setup is optional
+      vim.cmd [[colorscheme tokyodark]]
     end,
   },
   {
@@ -208,13 +221,6 @@ return {
     },
   },
   {
-    "echasnovski/mini.diff",
-    version = false,
-    config = function()
-      require("mini.diff").setup()
-    end,
-  },
-  {
     "echasnovski/mini.surround",
     version = false,
     config = function()
@@ -226,13 +232,6 @@ return {
     version = false,
     config = function()
       require("mini.pairs").setup {}
-    end,
-  },
-  {
-    "echasnovski/mini.ai",
-    version = false,
-    config = function()
-      require("mini.ai").setup {}
     end,
   },
   {

@@ -24,7 +24,7 @@ options = {
       explorer = {
         layout = {
           layout = {
-            width = 0.15,
+            width = 0.20,
           },
         },
       },

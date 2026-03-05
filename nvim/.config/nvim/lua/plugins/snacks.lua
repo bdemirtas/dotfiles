@@ -101,6 +101,7 @@ return {
       { "<leader>sM", function() Snacks.picker.man() end, desc = "Man Pages" },
       { "<leader>sm", function() Snacks.picker.marks() end, desc = "Marks" },
       { "<leader>sR", function() Snacks.picker.resume() end, desc = "Resume" },
+      { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
       { "<leader>sq", function() Snacks.picker.qflist() end, desc = "Quickfix List" },
       { "<leader>uC", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
       { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
