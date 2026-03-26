@@ -33,7 +33,6 @@
   conflictstyle = diff3
 
 [core]
-  pager = delta
   editor = "nvim"
 
 [commit]
@@ -51,12 +50,3 @@
 [diff]
   algorithm = histogram
 
-[interactive]
-  diffFilter = delta --color-only --features=interactive
-
-[delta "interactive"]
-  keep-plus-minus-markers = false
-
-[delta]
-  features = collared-trogon
-  side-by-side = true
