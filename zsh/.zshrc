@@ -5,10 +5,33 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+ZSH_THEME="powerlevel10k/powerlevel10k"
+# =============================================================================
+# Oh-My-Zsh
+# =============================================================================
+export ZSH="$HOME/.oh-my-zsh"
+zstyle ':omz:update' mode auto
+
+fpath+=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-completions/src
+
+plugins=(
+  git
+  1password
+  brew
+  fzf
+  pre-commit
+  zsh-syntax-highlighting
+  zsh-autosuggestions
+)
+
+source $ZSH/oh-my-zsh.sh
+
+# =============================================================================
 # History
+# =============================================================================
 HISTFILE=$HOME/.zsh_history
-SAVEHIST=1000
-HISTSIZE=999
+HISTSIZE=10000
+SAVEHIST=10000
 setopt share_history
 setopt hist_expire_dups_first
 setopt hist_ignore_dups
@@ -16,67 +39,57 @@ setopt hist_verify
 
 bindkey "^[[A" history-search-backward
 bindkey "^[[B" history-search-forward
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
-zstyle ':omz:update' mode auto      # update automatically without asking
-plugins=(
-  git
-  1password
-)
-
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-export MANPATH="/usr/local/man:$MANPATH"
+# =============================================================================
+# Environment
+# =============================================================================
 export LANG=en_US.UTF-8
-
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='nano'
-fi
-
-# Default Editor
-export EDITOR='nvim'
+export EDITOR=nvim
+export MANPATH="/usr/local/man:$MANPATH"
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
---color=fg:#c0caf5,bg:#1a1b26,hl:#ff9e64 \
---color=fg+:#c0caf5,bg+:#292e42,hl+:#ff9e64 \
---color=info:#7aa2f7,prompt:#7dcfff,pointer:#7dcfff \
---color=marker:#9ece6a,spinner:#9ece6a,header:#9ece6a"
-alias zshconfig="vim ~/.zshrc"
-alias ohmyzsh="vim ~/.oh-my-zsh"
-alias vim="nvim"
-if hash exa 2>/dev/null; then
-  alias l="exa -l --group-directories-first --color-scale --color=always"
-  alias ll="exa -l --group-directories-first --color-scale --color=always -a --icons"
-  alias ls="exa --group-directories-first --color-scale --color=always"
-else
-  alias l="ls -lh --group-directories-first"
-  alias ll="ls -lah --group-directories-first"
-fi
 
-path+=(~/.local/bin)
-fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+path+=(~/.local/bin ~/.cargo/bin)
 
-# Pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+# Homebrew
+export HOMEBREW_NO_ENV_HINTS=1
+export HOMEBREW_NO_AUTO_UPDATE=1
 
-# NVM
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# =============================================================================
+# bat
+# =============================================================================
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANROFFOPT="-c"
+
+# =============================================================================
+# fzf
+# =============================================================================
+
+# Use ~~ as the trigger sequence instead of the default **
+export FZF_COMPLETION_TRIGGER='~~'
+
+# Options to fzf command
+export FZF_COMPLETION_OPTS='--border --info=inline'
+
+# Options for path completion (e.g. vim **<TAB>)
+export FZF_COMPLETION_PATH_OPTS='--walker file,dir,follow,hidden'
+
+# Options for directory completion (e.g. cd **<TAB>)
+export FZF_COMPLETION_DIR_OPTS='--walker dir,follow'
+
+# Advanced customization of fzf options via _fzf_comprun function
+# - The first argument to the function is the name of the command.
+# - You should make sure to pass the rest of the arguments ($@) to fzf.
+_fzf_comprun() {
+  local command=$1
+  shift
+
+  case "$command" in
+    cd)           fzf --preview 'tree -C {} | head -200'   "$@" ;;
+    export|unset) fzf --preview "eval 'echo \$'{}"         "$@" ;;
+    ssh)          fzf --preview 'dig {}'                   "$@" ;;
+    *)            fzf --preview 'bat -n --color=always {}' "$@" ;;
+  esac
+}
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# Generated for envman. Do not edit.
-[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"

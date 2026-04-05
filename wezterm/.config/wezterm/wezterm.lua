@@ -12,6 +12,41 @@ config.keys = {
 	{ key = "Tab", mods = "CTRL|SHIFT", action = wezterm.action({ ActivateTabRelative = -1 }) },
 	{ key = "h", mods = "ALT", action = wezterm.action({ ActivateTabRelative = -1 }) },
 	{ key = "l", mods = "ALT", action = wezterm.action({ ActivateTabRelative = 1 }) },
+	{
+            key = "LeftArrow",
+            mods = "OPT",
+            action = wezterm.action.SendKey { key = "b", mods = "ALT" }
+        },
+        {
+            key = "RightArrow",
+            mods = "OPT",
+            action = wezterm.action.SendKey { key = "f", mods = "ALT" }
+        },
+        {
+            key = "LeftArrow",
+            mods = "OPT",
+            action = wezterm.action.SendKey { key = "b", mods = "ALT" }
+        },
+        {
+            key = "RightArrow",
+            mods = "OPT",
+            action = wezterm.action.SendKey { key = "f", mods = "ALT" }
+        },
+        {
+            key = "LeftArrow",
+            mods = "CMD",
+	    action = wezterm.action.SendKey { key = "a", mods = "CTRL" }
+        },
+        {
+            key = "RightArrow",
+            mods = "CMD",
+            action = wezterm.action.SendKey { key = "e", mods = "CTRL" }
+        },
+        {
+            key = "RightArrow",
+            mods = "CMD",
+            action = wezterm.action.SendKey { key = "e", mods = "CTRL" }
+        },
 }
 
 config.colors = colorschema.colors
