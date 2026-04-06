@@ -29,7 +29,7 @@ return {
     ---@type blink.cmp.Config
     opts = {
       keymap = {
-        preset = "none", -- take full control — no Ctrl+N/P anywhere
+        preset = "none",
         ["<C-j>"] = { "select_next", "fallback" },
         ["<C-k>"] = { "select_prev", "fallback" },
         ["<CR>"] = { "accept", "fallback" },
@@ -78,7 +78,7 @@ return {
   {
     "williamboman/mason.nvim", -- already declared above, lazy dedupes it
     config = function()
-      require("mason").setup { max_concurrent_installers = 10 }
+      require("mason").setup({ max_concurrent_installers = 10 })
       vim.lsp.config("*", {
         capabilities = require("blink.cmp").get_lsp_capabilities(),
       })

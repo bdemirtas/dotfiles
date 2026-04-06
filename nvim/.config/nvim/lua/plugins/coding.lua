@@ -12,9 +12,7 @@ return {
     keys = {
       {
         "<leader>cf",
-        function()
-          require("conform").format { async = true, lsp_fallback = true }
-        end,
+        function() require("conform").format({ async = true, lsp_fallback = true }) end,
         desc = "Format buffer",
       },
     },

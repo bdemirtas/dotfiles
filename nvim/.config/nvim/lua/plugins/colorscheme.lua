@@ -4,8 +4,6 @@ return {
   lazy = false,
   priority = 1000,
   opts = {
-    -- variant = "moon",
-    -- dark_variant = "moon",
     styles = {
       bold = true,
       italic = false,
@@ -14,6 +12,6 @@ return {
   },
   config = function(_, opts)
     require("rose-pine").setup(opts)
-    vim.cmd.colorscheme "rose-pine"
+    vim.cmd.colorscheme("rose-pine")
   end,
 }

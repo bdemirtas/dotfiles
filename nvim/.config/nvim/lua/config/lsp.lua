@@ -2,7 +2,7 @@ vim.lsp.config("*", {
   capabilities = require("blink.cmp").get_lsp_capabilities(),
 })
 
-vim.lsp.enable {
+vim.lsp.enable({
   "lua_ls",
   "basedpyright",
   "yamlls",
@@ -12,7 +12,7 @@ vim.lsp.enable {
   "cssls",
   "jsonls",
   "dockerls",
-}
+})
 
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp_keymaps", { clear = true }),
@@ -29,8 +29,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("x", "<leader>ca", vim.lsp.buf.code_action, "Code action")
     map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, "Add workspace folder")
     map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, "Remove workspace folder")
-    map("n", "<leader>wl", function()
-      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, "List workspace folders")
+    map(
+      "n",
+      "<leader>wl",
+      function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
+      "List workspace folders"
+    )
   end,
 })

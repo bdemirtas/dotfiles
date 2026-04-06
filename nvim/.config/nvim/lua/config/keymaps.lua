@@ -46,11 +46,7 @@ map("v", "<leader>p", '"_dP', { desc = "Paste without yanking" })
 
 -- ── LSP (populated via LspAttach in lsp.lua) ───────────────────────────
 -- Diagnostic navigation
-map("n", "[d", function()
-  vim.diagnostic.jump { count = -1, float = true }
-end, { desc = "Prev diagnostic" })
-map("n", "]d", function()
-  vim.diagnostic.jump { count = 1, float = true }
-end, { desc = "Next diagnostic" })
+map("n", "[d", function() vim.diagnostic.jump({ count = -1, float = true }) end, { desc = "Prev diagnostic" })
+map("n", "]d", function() vim.diagnostic.jump({ count = 1, float = true }) end, { desc = "Next diagnostic" })
 
 map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Show diagnostic" })

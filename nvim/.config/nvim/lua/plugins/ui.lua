@@ -1,5 +1,17 @@
 return {
   {
+    "stevearc/dressing.nvim",
+    event = "VeryLazy",
+    opts = {
+      input = {
+        default_prompt = "➤ ",
+        win_options = {
+          winblend = 0,
+        },
+      },
+    },
+  },
+  {
     "folke/noice.nvim",
     event = "VeryLazy",
     dependencies = { "MunifTanjim/nui.nvim" },
@@ -27,23 +39,17 @@ return {
     keys = {
       {
         "<leader>sn",
-        function()
-          require("noice").cmd "history"
-        end,
+        function() require("noice").cmd("history") end,
         desc = "Noice history",
       },
       {
         "<leader>snl",
-        function()
-          require("noice").cmd "last"
-        end,
+        function() require("noice").cmd("last") end,
         desc = "Noice last message",
       },
       {
         "<leader>snd",
-        function()
-          require("noice").cmd "dismiss"
-        end,
+        function() require("noice").cmd("dismiss") end,
         desc = "Dismiss notifications",
       },
     },
@@ -52,7 +58,7 @@ return {
     "folke/which-key.nvim",
     event = "VeryLazy",
     opts = {
-      preset = "modern",
+      preset = "helix",
       spec = {
         { "<leader>b", group = "buffers" },
         { "<leader>c", group = "code" },
@@ -100,9 +106,7 @@ return {
       { "<S-l>", "<cmd>BufferLineCycleNext<CR>", desc = "Next buffer" },
       {
         "<leader>bd",
-        function()
-          Snacks.bufdelete()
-        end,
+        function() Snacks.bufdelete() end,
         desc = "Delete buffer",
       },
       { "<leader>bo", "<cmd>BufferLineCloseOthers<CR>", desc = "Delete other buffers" },
@@ -115,12 +119,8 @@ return {
     opts = {
       options = {
         always_show_bufferline = true,
-        close_command = function(bufnr)
-          Snacks.bufdelete(bufnr)
-        end,
-        right_mouse_command = function(bufnr)
-          Snacks.bufdelete(bufnr)
-        end,
+        close_command = function(bufnr) Snacks.bufdelete(bufnr) end,
+        right_mouse_command = function(bufnr) Snacks.bufdelete(bufnr) end,
         diagnostics = "nvim_lsp",
         diagnostics_indicator = function(_, _, diag)
           local icons = { error = " ", warning = " " }
@@ -164,9 +164,7 @@ return {
         },
         lualine_x = {
           {
-            function()
-              return require("lazy.status").updates()
-            end,
+            function() return require("lazy.status").updates() end,
             cond = require("lazy.status").has_updates,
             color = { fg = "#ff9e64" },
           },

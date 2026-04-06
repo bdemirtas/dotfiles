@@ -1,6 +1,7 @@
 local opt = vim.opt
 
 -- UI
+vim.g.have_nerd_font = true
 opt.number = true
 opt.relativenumber = true
 opt.numberwidth = 4
@@ -43,7 +44,7 @@ opt.breakindent = true
 opt.completeopt = { "menuone", "noselect" }
 
 -- Diagnostics
-vim.diagnostic.config {
+vim.diagnostic.config({
   virtual_text = { prefix = "" },
   signs = {
     text = {
@@ -56,7 +57,7 @@ vim.diagnostic.config {
   underline = true,
   update_in_insert = false,
   float = { prefix = "", header = "", severity_sort = true, source = true },
-}
+})
 
 -- Disable inlay hints globally
 vim.lsp.inlay_hint.enable(false)
