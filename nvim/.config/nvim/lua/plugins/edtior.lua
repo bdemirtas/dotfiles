@@ -98,4 +98,68 @@ return {
       },
     },
   },
+  {
+    "folke/trouble.nvim",
+    opts = {},
+    cmd = "Trouble",
+    keys = {
+      {
+        "<leader>xx",
+        "<cmd>Trouble diagnostics toggle<cr>",
+        desc = "Diagnostics (Trouble)",
+      },
+      {
+        "<leader>xX",
+        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+        desc = "Buffer Diagnostics (Trouble)",
+      },
+      {
+        "<leader>cs",
+        "<cmd>Trouble symbols toggle focus=false<cr>",
+        desc = "Symbols (Trouble)",
+      },
+      {
+        "<leader>cl",
+        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+        desc = "LSP Definitions / references / ... (Trouble)",
+      },
+      {
+        "<leader>xL",
+        "<cmd>Trouble loclist toggle<cr>",
+        desc = "Location List (Trouble)",
+      },
+      {
+        "<leader>xQ",
+        "<cmd>Trouble qflist toggle<cr>",
+        desc = "Quickfix List (Trouble)",
+      },
+    },
+  },
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    opts = {},
+    keys = {
+      {
+        "s",
+        function() require("flash").jump() end,
+        desc = "Flash",
+        mode = { "n", "x", "o" },
+      },
+      {
+        "S",
+        function() require("flash").treesitter() end,
+        desc = "Flash treesitter",
+        mode = { "n", "x", "o" },
+      },
+      { "r", function() require("flash").remote() end, desc = "Flash remote", mode = "o" },
+      {
+        "R",
+        function() require("flash").treesitter_search() end,
+        desc = "Flash treesitter search",
+        mode = { "o", "x" },
+      },
+      { "<C-s>", function() require("flash").toggle() end, desc = "Toggle flash search", mode = "c" },
+    },
+  },
 }
