@@ -95,6 +95,11 @@ return {
     opts_extend = { "sources.default" },
   },
   {
+    "echasnovski/mini.jump",
+    version = "*",
+    event = "VeryLazy",
+  },
+  {
     "echasnovski/mini.surround",
     version = "*",
     opts = {

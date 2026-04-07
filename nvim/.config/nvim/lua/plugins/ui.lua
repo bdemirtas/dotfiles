@@ -184,4 +184,23 @@ return {
       extensions = { "lazy", "mason" },
     },
   },
+  { "nvim-mini/mini.cursorword", version = "*" },
+  {
+    "echasnovski/mini.hipatterns",
+    version = "*",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = function()
+      local hi = require("mini.hipatterns")
+      return {
+        highlighters = {
+          -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
+          fixme = { pattern = "%f[%w]()FIXME()%f[%W]", group = "MiniHipatternsFixme" },
+          hack = { pattern = "%f[%w]()HACK()%f[%W]", group = "MiniHipatternsHack" },
+          todo = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },
+          note = { pattern = "%f[%w]()NOTE()%f[%W]", group = "MiniHipatternsNote" },
+          hex_color = hi.gen_highlighter.hex_color(),
+        },
+      }
+    end,
+  },
 }
