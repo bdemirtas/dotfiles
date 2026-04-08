@@ -1,5 +1,9 @@
 return {
   {
+    "nvim-mini/mini.animate",
+    version = "*",
+  },
+  {
     "stevearc/dressing.nvim",
     event = "VeryLazy",
     opts = {
