@@ -20,16 +20,16 @@ vim.api.nvim_create_autocmd("VimResized", {
   callback = function() vim.cmd("tabdo wincmd =") end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "<filetype>" },
+  callback = function() vim.treesitter.start() end,
+})
+
 -- Close certain filetypes with just q
 vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup("close_with_q", { clear = true }),
   pattern = { "help", "lspinfo", "lazy", "mason", "checkhealth", "qf" },
   callback = function(ev) vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = ev.buf, silent = true }) end,
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("treesitter_highlight", { clear = true }),
-  callback = function() pcall(vim.treesitter.start) end,
 })
 
 vim.api.nvim_create_autocmd("FileType", {

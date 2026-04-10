@@ -1,5 +1,54 @@
 return {
   {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    main = "nvim-treesitter",
+    init = function()
+      local want = {
+        "bash",
+        "dff",
+        "editorconfig",
+        "git_rebase",
+        "git_config",
+        "htmldjango",
+        "jinja",
+        "jinja_inline",
+        "latext",
+        "ssh_config",
+        "zsh",
+        "lua",
+        "luadoc",
+        "python",
+        "yaml",
+        "json",
+        "toml",
+        "terraform",
+        "markdown",
+        "markdown_inline",
+        "html",
+        "css",
+        "javascript",
+        "typescript",
+        "dockerfile",
+        "gitcommit",
+        "gitignore",
+        "vim",
+        "vimdoc",
+        "regex",
+        "sql",
+      }
+      local ok, config = pcall(require, "nvim-treesitter.config")
+      if not ok then
+        return
+      end
+      local installed = config.get_installed()
+      local missing = vim.iter(want):filter(function(p) return not vim.tbl_contains(installed, p) end):totable()
+      if #missing > 0 then
+        require("nvim-treesitter").install(missing)
+      end
+    end,
+  },
+  {
     "folke/ts-comments.nvim",
     version = "*",
     event = "VeryLazy",
