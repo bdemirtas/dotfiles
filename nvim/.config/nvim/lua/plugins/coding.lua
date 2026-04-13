@@ -1,19 +1,72 @@
 return {
   {
+    "smjonas/inc-rename.nvim",
+    event = "LspAttach",
+    config = function()
+      require("inc_rename").setup({
+        hl_group = "Substitute",
+        input_buffer_type = "snacks",
+        preview_empty_name = false,
+        save_in_cmdline_history = true,
+        show_message = true,
+      })
+    end,
+  },
+  {
+    "jake-stewart/multicursor.nvim",
+    branch = "1.0",
+    event = "VeryLazy",
+    config = function()
+      local mc = require("multicursor-nvim")
+      mc.setup()
+
+      local map = vim.keymap.set
+
+      -- Add cursor by matching word/selection
+      map({ "n", "x" }, "<C-n>", function() mc.matchAddCursor(1) end, { desc = "Add cursor next match" })
+      map({ "n", "x" }, "<C-p>", function() mc.matchAddCursor(-1) end, { desc = "Add cursor prev match" })
+
+      -- Toggle cursors
+      map({ "n", "v" }, "<c-q>", mc.toggleCursor, { desc = "Toggle cursor" })
+
+      mc.addKeymapLayer(function(layerSet)
+        layerSet({ "n", "x" }, "<C-h>", mc.prevCursor, { desc = "Prev cursor" })
+        layerSet({ "n", "x" }, "<C-l>", mc.nextCursor, { desc = "Next cursor" })
+        layerSet({ "n", "x" }, "<C-x>", mc.deleteCursor, { desc = "Delete cursor" })
+
+        layerSet("n", "<esc>", function()
+          if not mc.cursorsEnabled() then
+            mc.enableCursors()
+          else
+            mc.clearCursors()
+          end
+        end)
+      end)
+
+      local hl = vim.api.nvim_set_hl
+      hl(0, "MultiCursorCursor", { reverse = true })
+      hl(0, "MultiCursorVisual", { link = "Visual" })
+      hl(0, "MultiCursorSign", { link = "SignColumn" })
+      hl(0, "MultiCursorMatchPreview", { link = "Search" })
+      hl(0, "MultiCursorDisabledCursor", { reverse = true })
+      hl(0, "MultiCursorDisabledVisual", { link = "Visual" })
+      hl(0, "MultiCursorDisabledSign", { link = "SignColumn" })
+    end,
+  },
+  {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     main = "nvim-treesitter",
     init = function()
       local want = {
         "bash",
-        "dff",
+        "diff",
         "editorconfig",
         "git_rebase",
         "git_config",
         "htmldjango",
         "jinja",
         "jinja_inline",
-        "latext",
         "ssh_config",
         "zsh",
         "lua",
@@ -178,7 +231,6 @@ return {
       },
     },
   },
-  -- ── Lazydev ───────────────────────────────────────────────────────────
   {
     "folke/lazydev.nvim",
     ft = "lua",
@@ -188,8 +240,6 @@ return {
       },
     },
   },
-
-  -- ── Mini AI ───────────────────────────────────────────────────────────
   {
     "echasnovski/mini.ai",
     version = "*",

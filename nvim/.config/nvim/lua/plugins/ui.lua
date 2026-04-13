@@ -4,18 +4,6 @@ return {
     version = "*",
   },
   {
-    "stevearc/dressing.nvim",
-    event = "VeryLazy",
-    opts = {
-      input = {
-        default_prompt = "➤ ",
-        win_options = {
-          winblend = 0,
-        },
-      },
-    },
-  },
-  {
     "folke/noice.nvim",
     event = "VeryLazy",
     dependencies = { "MunifTanjim/nui.nvim" },
@@ -36,6 +24,10 @@ return {
       routes = {
         {
           filter = { event = "msg_show", kind = "", find = "written" },
+          opts = { skip = true },
+        },
+        {
+          filter = { event = "cmdline", find = "IncRename" },
           opts = { skip = true },
         },
       },
@@ -64,46 +56,23 @@ return {
     opts = {
       preset = "helix",
       spec = {
-        { "<leader>b", group = "buffers" },
-        { "<leader>c", group = "code" },
-        { "<leader>f", group = "find" },
-        { "<leader>g", group = "git" },
-        { "<leader>h", group = "hunks" },
-        { "<leader>n", group = "notifications" },
-        { "<leader>q", group = "quit/session" },
-        { "<leader>s", group = "search" },
-        { "<leader>u", group = "ui" },
-        { "<leader>w", group = "windows" },
-        { "<leader>x", group = "diagnostics" },
-        { "[", group = "prev" },
-        { "]", group = "next" },
-        { "g", group = "goto" },
-        { "gs", group = "surround" },
-      },
-    },
-  },
-  {
-    "folke/noice.nvim",
-    event = "VeryLazy",
-    dependencies = { "MunifTanjim/nui.nvim" },
-    opts = {
-      lsp = {
-        override = {
-          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-          ["vim.lsp.util.stylize_markdown"] = true,
-          ["cmp.entry.get_documentation"] = true,
-        },
-      },
-      presets = {
-        bottom_search = false,
-        command_palette = true,
-        long_message_to_split = true,
-        lsp_doc_border = true,
-      },
-      routes = {
         {
-          filter = { event = "msg_show", kind = "", find = "written" },
-          opts = { skip = true },
+          mode = { "n", "v" },
+          { "<leader>b", group = "buffers" },
+          { "<leader>c", group = "code" },
+          { "<leader>f", group = "find" },
+          { "<leader>g", group = "git" },
+          { "<leader>h", group = "hunks" },
+          { "<leader>n", group = "notifications" },
+          { "<leader>q", group = "quit/session" },
+          { "<leader>s", group = "search" },
+          { "<leader>u", group = "ui" },
+          { "<leader>w", group = "windows" },
+          { "<leader>x", group = "diagnostics" },
+          { "[", group = "prev" },
+          { "]", group = "next" },
+          { "g", group = "goto" },
+          { "gs", group = "surround" },
         },
       },
     },

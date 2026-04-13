@@ -50,3 +50,6 @@ map("n", "[d", function() vim.diagnostic.jump({ count = -1, float = true }) end,
 map("n", "]d", function() vim.diagnostic.jump({ count = 1, float = true }) end, { desc = "Next diagnostic" })
 
 map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Show diagnostic" })
+
+map("n", "<leader>qq", "<cmd>qa<CR>", { desc = "Quit all" })
+map("n", "<leader>qw", "<cmd>q<CR>", { desc = "Quit window" })
