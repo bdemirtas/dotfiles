@@ -34,22 +34,22 @@ map("n", "<leader>bd", "<cmd>bdelete<CR>", { desc = "Delete buffer" })
 map("n", "<leader>bo", "<cmd>%bdelete|edit#|bdelete#<CR>", { desc = "Delete other buffers" })
 
 -- ── Indenting ──────────────────────────────────────────────────────────
-map("v", "<Tab>", ">gv", { desc = "Indent" })
-map("v", "<S-Tab>", "<gv", { desc = "Unindent" })
+map({ "v", "n" }, "<Tab>", ">gv", { desc = "Indent" })
+map({ "v", "n" }, "<S-Tab>", "<gv", { desc = "Unindent" })
 
 -- ── Moving lines ───────────────────────────────────────────────────────
-map("v", "J", ":m '>+1<CR>gv=gv", { silent = true })
-map("v", "K", ":m '<-2<CR>gv=gv", { silent = true })
+-- Visual mode
+map("v", "<A-j>", ":m '>+1<CR>gv=gv", { silent = true, desc = "Move line down" })
+map("v", "<A-k>", ":m '<-2<CR>gv=gv", { silent = true, desc = "Move line up" })
 
+-- Normal mode
+map("n", "<A-j>", "<cmd>m .+1<CR>==", { silent = true, desc = "Move line down" })
+map("n", "<A-k>", "<cmd>m .-2<CR>==", { silent = true, desc = "Move line up" })
 -- ── Paste without losing register ──────────────────────────────────────
 map("v", "<leader>p", '"_dP', { desc = "Paste without yanking" })
 
--- ── LSP (populated via LspAttach in lsp.lua) ───────────────────────────
 -- Diagnostic navigation
 map("n", "[d", function() vim.diagnostic.jump({ count = -1, float = true }) end, { desc = "Prev diagnostic" })
 map("n", "]d", function() vim.diagnostic.jump({ count = 1, float = true }) end, { desc = "Next diagnostic" })
 
 map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Show diagnostic" })
-
-map("n", "<leader>qq", "<cmd>qa<CR>", { desc = "Quit all" })
-map("n", "<leader>qw", "<cmd>q<CR>", { desc = "Quit window" })

@@ -64,7 +64,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
       vim.keymap.set(mode, lhs, rhs, vim.tbl_extend("force", { buffer = buf, silent = true, desc = desc }, opts or {}))
     end
 
-    map("n", "K", vim.lsp.buf.hover, "Hover docs")
+    map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
+    map("n", "gO", vim.lsp.buf.document_symbol, "Document symbols")
     map("n", "gK", vim.lsp.buf.signature_help, "Signature help")
     map(
       "n",
@@ -74,6 +75,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
       { expr = true }
     )
     map("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
+    map("n", "<leader>ci", vim.lsp.buf.incoming_calls, "Incoming calls")
+    map("n", "<leader>co", vim.lsp.buf.outgoing_calls, "Outgoing calls")
+    map("n", "K", vim.lsp.buf.hover, "Hover docs")
     map("x", "<leader>ca", vim.lsp.buf.code_action, "Code action")
     map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, "Add workspace folder")
     map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, "Remove workspace folder")
