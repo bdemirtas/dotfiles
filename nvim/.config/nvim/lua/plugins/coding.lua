@@ -1,5 +1,24 @@
 return {
   {
+    "mikavilpas/blink-ripgrep.nvim",
+    dependencies = { "saghen/blink.cmp" },
+  },
+  {
+    "rachartier/tiny-code-action.nvim",
+    dependencies = {
+      {
+        "folke/snacks.nvim",
+        opts = {
+          terminal = {},
+        },
+      },
+    },
+    event = "LspAttach",
+    opts = {
+      picker = "snacks",
+    },
+  },
+  {
     "smjonas/inc-rename.nvim",
     event = "LspAttach",
     config = function()

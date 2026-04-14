@@ -74,7 +74,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
       "Rename symbol",
       { expr = true }
     )
-    map("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
+    map(
+      "n",
+      "<leader>ca",
+      function() require("tiny-code-action").code_action() end,
+      "Code action",
+      { noremap = true, silent = true }
+    )
     map("n", "<leader>ci", vim.lsp.buf.incoming_calls, "Incoming calls")
     map("n", "<leader>co", vim.lsp.buf.outgoing_calls, "Outgoing calls")
     map("n", "K", vim.lsp.buf.hover, "Hover docs")

@@ -1,9 +1,5 @@
 return {
   {
-    "nvim-mini/mini.animate",
-    version = "*",
-  },
-  {
     "folke/noice.nvim",
     event = "VeryLazy",
     dependencies = { "MunifTanjim/nui.nvim" },

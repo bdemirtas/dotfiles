@@ -24,7 +24,7 @@ return {
       },
     },
     picker = {
-      layout = { preset = "dropdown" },
+      layout = { preset = "telescope" },
       win = {
         input = {
           keys = {
@@ -47,7 +47,7 @@ return {
     indent = { enabled = true, char = "│" },
     scope = { enabled = true },
     scroll = { enabled = true },
-    statuscolumn = { enabled = false },
+    statuscolumn = { enabled = true },
     words = { enabled = false },
     input = {
       icon = " ",

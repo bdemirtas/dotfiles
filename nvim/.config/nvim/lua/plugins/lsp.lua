@@ -1,4 +1,5 @@
 return {
+  { "b0o/schemastore.nvim" },
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     lazy = false,
