@@ -30,10 +30,17 @@
   untracked = red bold
 
 [merge]
-  conflictstyle = diff3
+  conflictstyle = zdiff3
+
+[delta]
+    side-by-side = true
+
+[interactive]
+  diffFilter = delta --color-only
 
 [core]
   editor = "nvim"
+  pager = delta
 
 [commit]
   template = "~/.config/git/gitmessage.txt"
