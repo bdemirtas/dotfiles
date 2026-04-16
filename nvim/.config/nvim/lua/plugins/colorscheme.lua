@@ -1,6 +1,6 @@
 return {
-  "oskarnurm/koda.nvim",
+  "scottmckendry/cyberdream.nvim",
   lazy = false,
   priority = 1000,
-  config = function() vim.cmd("colorscheme koda") end,
+  config = function() vim.cmd("colorscheme cyberdream") end,
 }

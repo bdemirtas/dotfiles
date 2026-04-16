@@ -46,7 +46,15 @@ bindkey "^[[B" history-search-forward
 export LANG=en_US.UTF-8
 export EDITOR=nvim
 export MANPATH="/usr/local/man:$MANPATH"
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # macOS: Use the system-provided agent path
+  # Usually macOS sets this automatically; only set if missing.
+  export SSH_AUTH_SOCK="${SSH_AUTH_SOCK:-$(launchctl getenv SSH_AUTH_SOCK)}"
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  # Linux: Use the systemd user socket path
+  export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/ssh-agent.socket"
+fi
 
 path+=(~/.local/bin ~/.cargo/bin)
 
