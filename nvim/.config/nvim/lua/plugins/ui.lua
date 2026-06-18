@@ -64,7 +64,7 @@ return {
           { "<leader>s", group = "search" },
           { "<leader>u", group = "ui" },
           { "<leader>w", group = "windows" },
-          { "<leader>x", group = "diagnostics" },
+{ "<leader>x", group = "diagnostics" },
           { "[", group = "prev" },
           { "]", group = "next" },
           { "g", group = "goto" },

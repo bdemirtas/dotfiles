@@ -11,7 +11,7 @@ return {
         "ruff",
         "lua-language-server",
         "bash-language-server",
-        "basedpyright",
+        "pyrefly",
         "yaml-language-server",
         "ansible-language-server",
         "html-lsp",

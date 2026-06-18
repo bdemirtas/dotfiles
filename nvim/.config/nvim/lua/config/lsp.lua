@@ -4,7 +4,7 @@ vim.lsp.config("*", {
 
 vim.lsp.enable({
   "lua_ls",
-  "basedpyright",
+  "pyrefly",
   "yamlls",
   "bashls",
   "ansiblels",

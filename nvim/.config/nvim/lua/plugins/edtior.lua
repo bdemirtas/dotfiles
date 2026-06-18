@@ -132,6 +132,22 @@ return {
     },
   },
   {
+    "andythigpen/nvim-coverage",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    cmd = { "CoverageLoad", "CoverageShow", "CoverageHide", "CoverageToggle", "CoverageSummary" },
+    keys = {
+      { "<leader>cL", "<cmd>CoverageLoad<cr>", desc = "Load coverage" },
+      { "<leader>cv", "<cmd>CoverageToggle<cr>", desc = "Toggle coverage" },
+      { "<leader>cS", "<cmd>CoverageSummary<cr>", desc = "Coverage summary" },
+    },
+    opts = {
+      auto_reload = true,
+      lang = {
+        python = { coverage_file = vim.fn.getcwd() .. "/lcov.info" },
+      },
+    },
+  },
+  {
     "folke/flash.nvim",
     event = "VeryLazy",
     opts = {},
