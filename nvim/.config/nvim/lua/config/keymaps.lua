@@ -2,7 +2,7 @@ local map = vim.keymap.set
 
 -- ── General ────────────────────────────────────────────────────────────
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "Clear highlights" })
-map("n", "<leader>q", "<cmd>q<CR>", { desc = "Quit" })
+map("n", "<leader>qq", "<cmd>q<CR>", { desc = "Quit" })
 map("n", "<leader>w", "<cmd>w<CR>", { desc = "Save" })
 map("n", "<leader>W", "<cmd>wa<CR>", { desc = "Save all" })
 
@@ -27,12 +27,6 @@ map("n", "<C-Down>", "<cmd>resize -2<CR>")
 map("n", "<C-Left>", "<cmd>vertical resize -2<CR>")
 map("n", "<C-Right>", "<cmd>vertical resize +2<CR>")
 
--- ── Buffers ────────────────────────────────────────────────────────────
-map("n", "<S-h>", "<cmd>bprevious<CR>", { desc = "Prev buffer" })
-map("n", "<S-l>", "<cmd>bnext<CR>", { desc = "Next buffer" })
-map("n", "<leader>bd", "<cmd>bdelete<CR>", { desc = "Delete buffer" })
-map("n", "<leader>bo", "<cmd>%bdelete|edit#|bdelete#<CR>", { desc = "Delete other buffers" })
-
 -- ── Indenting ──────────────────────────────────────────────────────────
 map({ "v", "n" }, "<Tab>", ">gv", { desc = "Indent" })
 map({ "v", "n" }, "<S-Tab>", "<gv", { desc = "Unindent" })
@@ -45,8 +39,15 @@ map("v", "<A-k>", ":m '<-2<CR>gv=gv", { silent = true, desc = "Move line up" })
 -- Normal mode
 map("n", "<A-j>", "<cmd>m .+1<CR>==", { silent = true, desc = "Move line down" })
 map("n", "<A-k>", "<cmd>m .-2<CR>==", { silent = true, desc = "Move line up" })
+-- ── Select / yank buffer ───────────────────────────────────────────────
+map("n", "<leader>A", "ggVG", { desc = "Select entire buffer" })
+map("n", "<leader>Y", ":%y<CR>", { desc = "Yank entire buffer" })
+
 -- ── Paste without losing register ──────────────────────────────────────
-map("v", "<leader>p", '"_dP', { desc = "Paste without yanking" })
+-- Visual paste normally overwrites the yanked register with the replaced text.
+-- Send the replaced text to the black-hole register so you can paste repeatedly.
+map({ "x", "s" }, "p", '"_dP', { desc = "Paste without overwriting register" })
+map({ "x", "s" }, "P", '"_dP', { desc = "Paste before without overwriting register" })
 
 -- Diagnostic navigation
 map("n", "[d", function() vim.diagnostic.jump({ count = -1, float = true }) end, { desc = "Prev diagnostic" })
