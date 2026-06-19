@@ -19,6 +19,7 @@ opt.softtabstop = 2
 opt.smartindent = true
 
 -- Behaviour
+vim.o.sessionoptions = "buffers,curdir,tabpages,winsize,help,globals,skiprtp,folds"
 opt.clipboard = "unnamedplus"
 opt.undofile = true
 opt.swapfile = false
