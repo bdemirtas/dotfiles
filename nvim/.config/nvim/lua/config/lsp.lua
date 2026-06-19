@@ -5,6 +5,7 @@ vim.lsp.config("*", {
 vim.lsp.enable({
   "lua_ls",
   "pyrefly",
+  "ts_ls",
   "yamlls",
   "bashls",
   "ansiblels",
