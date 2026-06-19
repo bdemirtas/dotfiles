@@ -51,6 +51,10 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   # macOS: Use the system-provided agent path
   # Usually macOS sets this automatically; only set if missing.
   export SSH_AUTH_SOCK="${SSH_AUTH_SOCK:-$(launchctl getenv SSH_AUTH_SOCK)}"
+  # Load SSH keys from Keychain when the agent is empty (e.g. after reboot)
+  if ! ssh-add -l &>/dev/null; then
+    ssh-add --apple-load-keychain &>/dev/null
+  fi
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   # Linux: Use the systemd user socket path
   export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/ssh-agent.socket"
@@ -101,3 +105,9 @@ _fzf_comprun() {
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# >>> grok installer >>>
+export PATH="$HOME/.grok/bin:$PATH"
+fpath=(~/.grok/completions/zsh $fpath)
+autoload -Uz compinit && compinit -C
+# <<< grok installer <<<
