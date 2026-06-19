@@ -17,6 +17,7 @@ return {
         "html-lsp",
         "css-lsp",
         "json-lsp",
+        "typescript-language-server",
         "dockerfile-language-server",
       },
       auto_update = false,
@@ -27,9 +28,6 @@ return {
     "williamboman/mason.nvim", -- already declared above, lazy dedupes it
     config = function()
       require("mason").setup({ max_concurrent_installers = 10 })
-      vim.lsp.config("*", {
-        capabilities = require("blink.cmp").get_lsp_capabilities(),
-      })
     end,
   },
 }

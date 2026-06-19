@@ -115,7 +115,7 @@ return {
     },
     -- Pickers — Git
     {
-      "<leader>gc",
+      "<leader>gL",
       function() Snacks.picker.git_log() end,
       desc = "Git log",
     },

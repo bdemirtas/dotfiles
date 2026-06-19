@@ -1,7 +1,7 @@
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = vim.api.nvim_create_augroup("highlight_yank", { clear = true }),
-  callback = function() vim.highlight.on_yank({ higroup = "IncSearch", timeout = 150 }) end,
+  callback = function() vim.hl.on_yank({ higroup = "IncSearch", timeout = 150 }) end,
 })
 
 -- Remove trailing whitespace on save
@@ -18,11 +18,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 vim.api.nvim_create_autocmd("VimResized", {
   group = vim.api.nvim_create_augroup("resize_splits", { clear = true }),
   callback = function() vim.cmd("tabdo wincmd =") end,
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "<filetype>" },
-  callback = function() vim.treesitter.start() end,
 })
 
 -- Close certain filetypes with just q
