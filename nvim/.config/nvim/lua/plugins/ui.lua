@@ -54,6 +54,8 @@ return {
       spec = {
         {
           mode = { "n", "v" },
+          { "<leader>A", desc = "Select entire buffer" },
+          { "<leader>Y", desc = "Yank entire buffer" },
           { "<leader>b", group = "buffers" },
           { "<leader>c", group = "code" },
           { "<leader>f", group = "find" },
