@@ -124,7 +124,10 @@ return {
   },
   {
     "nvim-lualine/lualine.nvim",
-    dependencies = "nvim-tree/nvim-web-devicons",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      "topaxi/pipeline.nvim",
+    },
     event = "VeryLazy",
     opts = {
       options = {
@@ -143,6 +146,7 @@ return {
           { "filename", path = 1, symbols = { modified = "  ", readonly = " ", unnamed = "" } },
         },
         lualine_x = {
+          { "pipeline", icon = "" },
           {
             function() return require("lazy.status").updates() end,
             cond = require("lazy.status").has_updates,
