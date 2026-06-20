@@ -11,6 +11,7 @@ return {
     config = function()
       local dap = require("dap")
       local dapui = require("dapui")
+      local dap_python = require("dap-python")
 
       dapui.setup()
       require("nvim-dap-virtual-text").setup()
@@ -27,8 +28,10 @@ return {
 
       require("mason-nvim-dap").setup({
         ensure_installed = { "python" },
-        handlers = {},
+        handlers = {}, -- mason wires up debugpy; no dap-python.setup() needed
       })
+
+      dap_python.test_runner = "pytest"
 
       dap.configurations.python = {
         {
@@ -37,6 +40,7 @@ return {
           name = "Debug file",
           program = "${file}",
           console = "integratedTerminal",
+          justMyCode = false,
         },
         {
           type = "python",
@@ -47,7 +51,18 @@ return {
             return vim.split(vim.fn.input("Args: "), " ")
           end,
           console = "integratedTerminal",
+          justMyCode = false,
         },
+        {
+          type = "python",
+          request = "launch",
+          name = "Pytest: current file",
+          module = "pytest",
+          args = { "${file}", "-vv", "-s" },
+          console = "integratedTerminal",
+          justMyCode = false,
+        },
+
       }
     end,
     keys = {
@@ -67,6 +82,26 @@ return {
         "<leader>dc",
         function() require("dap").continue() end,
         desc = "Continue / start debug",
+      },
+      {
+        "<leader>dT",
+        function() require("dap-python").test_method() end,
+        desc = "Debug pytest at cursor",
+      },
+      {
+        "<leader>dF",
+        function()
+          require("dap").run({
+            type = "python",
+            request = "launch",
+            name = "Pytest: current file",
+            module = "pytest",
+            args = { vim.api.nvim_buf_get_name(0), "-vv", "-s" },
+            console = "integratedTerminal",
+            justMyCode = false,
+          })
+        end,
+        desc = "Debug pytest file",
       },
       {
         "<leader>ds",
