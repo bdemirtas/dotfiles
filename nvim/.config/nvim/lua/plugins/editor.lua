@@ -1,3 +1,15 @@
+local function project_root()
+  return vim.fs.root(0, {
+    "pyproject.toml",
+    "setup.py",
+    "setup.cfg",
+    "tox.ini",
+    "uv.lock",
+    "Pipfile",
+    ".git",
+  }) or vim.fn.getcwd()
+end
+
 return {
   {
     "NeogitOrg/neogit",
@@ -20,7 +32,7 @@ return {
     cmd = "CodeDiff",
     keys = {
       { "<leader>gd", "<cmd>CodeDiff<cr>", desc = "Diff working tree" },
-      { "<leader>gdm", "<cmd>CodeDiff main...<cr>", desc = "Diff from main (PR view)" },
+      { "<leader>gdm", "<cmd>CodeDiff develop...<cr>", desc = "Diff vs develop (PR view)" },
       { "<leader>gdh", "<cmd>CodeDiff HEAD~1<cr>", desc = "Diff last commit" },
     },
     opts = {},
@@ -28,10 +40,51 @@ return {
   {
     "fredeeb/tardis.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
-    config = true,
     keys = {
       { "<leader>gt", "<cmd>Tardis<cr>", desc = "Git time machine" },
     },
+    config = function()
+      require("tardis-nvim").setup()
+
+      local Session = require("tardis-nvim.session").Session
+
+      function Session:goto_buffer(index)
+        if index < 1 or index > #self.log then
+          return false
+        end
+        local buf = self.buffers[index]
+        if not buf or not buf.fd or not vim.api.nvim_buf_is_valid(buf.fd) then
+          self.buffers[index] = self:create_buffer(index)
+        end
+        self.buffers[index]:focus()
+        self.curret_buffer_index = index
+        return true
+      end
+
+      local close = Session.close
+      function Session:close()
+        if self.info_fd and vim.api.nvim_buf_is_valid(self.info_fd) then
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            if vim.api.nvim_win_get_buf(win) == self.info_fd then
+              vim.api.nvim_win_close(win, false)
+            end
+          end
+          pcall(vim.api.nvim_buf_delete, self.info_fd, { force = true })
+          self.info_fd = nil
+        end
+        if self.origin and vim.api.nvim_buf_is_valid(self.origin) then
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            local buf = vim.api.nvim_win_get_buf(win)
+            for _, tardis_buf in pairs(self.buffers) do
+              if tardis_buf.fd and buf == tardis_buf.fd then
+                vim.api.nvim_win_set_buf(win, self.origin)
+              end
+            end
+          end
+        end
+        close(self)
+      end
+    end,
   },
   {
     "lewis6991/gitsigns.nvim",
@@ -134,16 +187,53 @@ return {
   {
     "andythigpen/nvim-coverage",
     dependencies = { "nvim-lua/plenary.nvim" },
-    cmd = { "CoverageLoad", "CoverageShow", "CoverageHide", "CoverageToggle", "CoverageSummary" },
+    cmd = {
+      "Coverage",
+      "CoverageLoad",
+      "CoverageLoadLcov",
+      "CoverageShow",
+      "CoverageHide",
+      "CoverageToggle",
+      "CoverageSummary",
+    },
     keys = {
-      { "<leader>cL", "<cmd>CoverageLoad<cr>", desc = "Load coverage" },
+      {
+        "<leader>cL",
+        function()
+          -- Prefer lcov at project root, else coverage.py .coverage via language loader
+          local root = project_root()
+
+          for _, rel in ipairs({ "lcov.info", "coverage/lcov.info", "coverage/coverage.lcov" }) do
+            local path = root .. "/" .. rel
+            if vim.fn.filereadable(path) == 1 then
+              require("coverage").load_lcov(path, true)
+              return
+            end
+          end
+
+          require("coverage").load(true)
+        end,
+        desc = "Load coverage",
+      },
       { "<leader>cv", "<cmd>CoverageToggle<cr>", desc = "Toggle coverage" },
       { "<leader>cS", "<cmd>CoverageSummary<cr>", desc = "Coverage summary" },
     },
     opts = {
       auto_reload = true,
       lang = {
-        python = { coverage_file = vim.fn.getcwd() .. "/lcov.info" },
+        python = {
+          -- Function so path is resolved at load time (not plugin-load cwd)
+          coverage_file = function()
+            local root = project_root()
+            for _, rel in ipairs({ ".coverage", "htmlcov/.coverage" }) do
+              local path = root .. "/" .. rel
+              if vim.fn.filereadable(path) == 1 then
+                return path
+              end
+            end
+            return root .. "/.coverage"
+          end,
+        },
       },
     },
   },

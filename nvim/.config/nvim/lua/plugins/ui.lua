@@ -48,9 +48,21 @@ return {
   },
   {
     "folke/which-key.nvim",
-    event = "VeryLazy",
+    event = "VimEnter",
+    keys = {
+      {
+        "<leader>?",
+        function() require("which-key").show({ global = false }) end,
+        desc = "Keymaps",
+      },
+    },
     opts = {
       preset = "helix",
+      -- Space leader is a single key; which-key won't auto-trigger on it.
+      triggers = {
+        { "<leader>", mode = { "n", "v" } },
+        { "<auto>", mode = "nxso" },
+      },
       spec = {
         {
           mode = { "n", "v" },
@@ -58,8 +70,21 @@ return {
           { "<leader>Y", desc = "Yank entire buffer" },
           { "<leader>b", group = "buffers" },
           { "<leader>c", group = "code" },
+          { "<leader>ci", desc = "CI/CD pipelines" },
           { "<leader>f", group = "find" },
           { "<leader>g", group = "git" },
+          { "<leader>gg", desc = "Neogit" },
+          { "<leader>gc", desc = "Commit" },
+          { "<leader>gp", desc = "Push" },
+          { "<leader>gl", desc = "Pull" },
+          { "<leader>gt", desc = "Time machine" },
+          { "<leader>gd", group = "diff" },
+          { "<leader>gdm", desc = "vs develop (PR)" },
+          { "<leader>gdh", desc = "Last commit" },
+          { "<leader>gL", desc = "Log" },
+          { "<leader>gs", desc = "Status" },
+          { "<leader>gb", desc = "Blame line" },
+          { "<leader>gB", desc = "Browse" },
           { "<leader>h", group = "hunks" },
           { "<leader>n", group = "notifications" },
           { "<leader>q", group = "session" },
@@ -67,7 +92,7 @@ return {
           { "<leader>s", group = "search" },
           { "<leader>u", group = "ui" },
           { "<leader>w", group = "windows" },
-{ "<leader>x", group = "diagnostics" },
+          { "<leader>x", group = "diagnostics" },
           { "[", group = "prev" },
           { "]", group = "next" },
           { "g", group = "goto" },

@@ -90,7 +90,7 @@ ALL_GROUPS = [
         ("[d / ]d", "Prev / Next diagnostic"),
     ]),
     ("Coverage", [
-        ("<leader>cL", "Load coverage (lcov.info)"),
+        ("<leader>cL", "Load coverage (project root .coverage / lcov)"),
         ("<leader>cv", "Toggle coverage signs"),
         ("<leader>cS", "Coverage summary"),
     ]),
@@ -107,10 +107,25 @@ ALL_GROUPS = [
         ("<leader>du", "Toggle debug UI"),
         ("<leader>dr", "Open debug REPL"),
     ]),
-    ("CI/CD", [
-        ("<leader>ci", "Open pipeline panel"),
-        (":Pipeline", "Toggle CI/CD panel"),
-        ("statusline", "Pipeline status (right side)"),
+    ("CI/CD (pipeline.nvim)", [
+        ("<leader>ci", "Toggle GitHub Actions / GitLab CI panel"),
+        (":Pipeline", "Toggle pipeline panel"),
+        (":Pipeline open", "Open pipeline panel"),
+        (":Pipeline close", "Close pipeline panel"),
+        (":Pipeline remote", "Pick git remote for CI"),
+        ("statusline", "Pipeline status (lualine)"),
+    ]),
+    ("Pipeline panel (GitHub Actions)", [
+        ("q", "Close pipeline panel"),
+        ("gp", "Open workflow on GitHub"),
+        ("gr", "Open run on GitHub"),
+        ("gj", "Open job on GitHub"),
+        ("gs", "Open step on GitHub"),
+        ("gR", "Switch active remote"),
+        ("d", "Dispatch workflow_dispatch run"),
+        ("rr", "Retry run"),
+        ("rj", "Retry job"),
+        ("rs", "Retry step"),
     ]),
     ("Git", [
         ("<leader>gg", "Open Neogit"),
@@ -306,7 +321,8 @@ story = [
     HRFlowable(width="100%", thickness=0.5, color=BORDER, spaceBefore=2),
     Paragraph(
         "Pytest: cursor in def test_* → <leader>db → <leader>dT  •  "
-        "CI/CD: gh auth login once, then <leader>ci  •  "
+        "CI/CD: gh auth login (or GITHUB_TOKEN), then <leader>ci  •  "
+        "In panel: gp/gr/gj open on GitHub, d = dispatch  •  "
         "[layer] = multicursor active",
         note_style,
     ),

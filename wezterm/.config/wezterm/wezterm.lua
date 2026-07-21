@@ -6,6 +6,7 @@ config.font = wezterm.font("CommitMono Nerd Font")
 -- config.color_scheme = 'Dark Ocean (terminal.sexy)'
 config.audible_bell = "Disabled"
 config.font_size = 13
+config.enable_kitty_keyboard = true
 
 config.keys = {
 	{ key = "Tab", mods = "CTRL", action = wezterm.action({ ActivateTabRelative = 1 }) },
