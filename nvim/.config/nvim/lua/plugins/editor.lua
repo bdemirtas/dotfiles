@@ -16,7 +16,6 @@ return {
     lazy = true,
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "esmuellert/codediff.nvim",
     },
     cmd = "Neogit",
     keys = {
@@ -27,15 +26,13 @@ return {
     },
   },
   {
-    "esmuellert/codediff.nvim",
-    dependencies = { "MunifTanjim/nui.nvim" },
-    cmd = "CodeDiff",
+    "CoreyKaylor/diffbandit.nvim",
+    config = function() require("diffbandit").setup() end,
     keys = {
-      { "<leader>gd", "<cmd>CodeDiff<cr>", desc = "Diff working tree" },
-      { "<leader>gdm", "<cmd>CodeDiff develop...<cr>", desc = "Diff vs develop (PR view)" },
-      { "<leader>gdh", "<cmd>CodeDiff HEAD~1<cr>", desc = "Diff last commit" },
+      { "<leader>gd", "<cmd>DiffBanditGit<cr>", desc = "Diff working tree" },
+      { "<leader>gdm", "<cmd>DiffBanditGit --base develop<cr>", desc = "Diff vs develop" },
+      { "<leader>gdh", "<cmd>DiffBanditGitCommit HEAD<cr>", desc = "Diff last commit" },
     },
-    opts = {},
   },
   {
     "fredeeb/tardis.nvim",
