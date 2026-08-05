@@ -129,20 +129,12 @@ return {
     init = function() vim.g.undotree_WindowLayout = 3 end,
   },
   {
-    "MagicDuck/grug-far.nvim",
-    cmd = "GrugFar",
-    opts = { headerMaxWidth = 80 },
+    "ankushbhagats/match.nvim",
+    cmd = { "Match", "MatchWord", "MatchLine" },
     keys = {
       {
         "<leader>sr",
-        function()
-          local grug = require("grug-far")
-          local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
-          grug.open({
-            transient = true,
-            prefills = { filesFilter = ext and ext ~= "" and "*." .. ext or nil },
-          })
-        end,
+        "<cmd>Match<cr>",
         mode = { "n", "v" },
         desc = "Search and Replace",
       },

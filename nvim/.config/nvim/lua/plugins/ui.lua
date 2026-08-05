@@ -100,6 +100,8 @@ return {
           { "<leader>q", group = "session" },
           { "<leader>d", group = "debug" },
           { "<leader>s", group = "search" },
+          { "<leader>sr", desc = "Search/replace" },
+          { "<leader>sv", desc = "Videre YAML/JSON" },
           { "<leader>u", group = "ui" },
           { "<leader>w", group = "windows" },
           { "<leader>x", group = "diagnostics" },

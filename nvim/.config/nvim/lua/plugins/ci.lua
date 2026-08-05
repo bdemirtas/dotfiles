@@ -48,6 +48,17 @@ return {
           },
         },
       },
+      keymaps = {
+        pulls = {
+          open_diff = "gD",
+          checkout = "gC",
+          review = {
+            add_note = "gn",
+            add_pending_comment = "gq",
+            request_changes = "gX",
+          },
+        },
+      },
     },
   },
 }

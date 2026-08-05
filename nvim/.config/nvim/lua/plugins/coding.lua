@@ -11,6 +11,23 @@ return {
     end,
   },
   {
+    "ori-ecosystem/lensline.nvim",
+    event = "LspAttach",
+    opts = {},
+  },
+  {
+    "nemanjamalesija/smart-paste.nvim",
+    event = "VeryLazy",
+    opts = {},
+  },
+  {
+    "Owen-Dechow/videre.nvim",
+    cmd = "Videre",
+    keys = {
+      { "<leader>sv", "<cmd>Videre<cr>", desc = "Explore YAML/JSON/TOML" },
+    },
+  },
+  {
     "mikavilpas/blink-ripgrep.nvim",
     dependencies = { "saghen/blink.cmp" },
   },
