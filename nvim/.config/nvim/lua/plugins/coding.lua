@@ -11,7 +11,7 @@ return {
     end,
   },
   {
-    "ori-ecosystem/lensline.nvim",
+    "oribarilan/lensline.nvim",
     event = "LspAttach",
     opts = {},
   },
