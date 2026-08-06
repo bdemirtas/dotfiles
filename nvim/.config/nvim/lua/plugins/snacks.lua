@@ -183,6 +183,16 @@ return {
       function() Snacks.zen() end,
       desc = "Zen mode",
     },
+    {
+      "<leader>uu",
+      function() Snacks.picker.undo() end,
+      desc = "Undo tree",
+    },
+    {
+      "<leader>cR",
+      function() Snacks.rename.rename_file() end,
+      desc = "Rename file",
+    },
     -- LSP (wired after snacks loads)
     {
       "gd",

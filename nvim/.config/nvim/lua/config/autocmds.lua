@@ -20,13 +20,7 @@ vim.api.nvim_create_autocmd("VimResized", {
   callback = function() vim.cmd("tabdo wincmd =") end,
 })
 
--- Close certain filetypes with just q
-vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("close_with_q", { clear = true }),
-  pattern = { "help", "lspinfo", "lazy", "mason", "checkhealth", "qf" },
-  callback = function(ev) vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = ev.buf, silent = true }) end,
-})
-
+-- Close certain filetypes with just q and keep them unlisted
 vim.api.nvim_create_autocmd("FileType", {
   pattern = {
     "PlenaryTestPopup",
@@ -43,7 +37,6 @@ vim.api.nvim_create_autocmd("FileType", {
     "checkhealth",
     "neotest-summary",
     "neotest-output-panel",
-    "grug-far",
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
@@ -65,9 +58,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map(
       "n",
       "<leader>cr",
-      function() return ":IncRename " .. vim.fn.expand("<cword>") end,
-      "Rename symbol",
-      { expr = true }
+      vim.lsp.buf.rename,
+      "Rename symbol"
     )
     map(
       "n",

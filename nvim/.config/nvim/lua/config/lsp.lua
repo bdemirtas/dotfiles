@@ -13,4 +13,5 @@ vim.lsp.enable({
   "cssls",
   "jsonls",
   "dockerls",
+  "terraformls",
 })

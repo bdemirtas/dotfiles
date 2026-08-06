@@ -78,6 +78,7 @@ return {
           { "<leader>b", group = "buffers" },
           { "<leader>c", group = "code" },
           { "<leader>ci", desc = "CI/CD pipelines" },
+          { "<leader>cR", desc = "Rename file" },
           { "<leader>f", group = "find" },
           { "<leader>g", group = "git" },
           { "<leader>gg", desc = "Neogit" },

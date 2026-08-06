@@ -122,13 +122,6 @@ return {
     },
   },
   {
-    "mbbill/undotree",
-    keys = {
-      { "<leader>uu", "<cmd>UndotreeToggle<cr>", desc = "Undo tree" },
-    },
-    init = function() vim.g.undotree_WindowLayout = 3 end,
-  },
-  {
     "ankushbhagats/match.nvim",
     cmd = { "Match", "MatchWord", "MatchLine" },
     keys = {

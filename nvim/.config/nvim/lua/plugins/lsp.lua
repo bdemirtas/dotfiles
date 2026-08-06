@@ -20,6 +20,7 @@ return {
         "json-lsp",
         "typescript-language-server",
         "dockerfile-language-server",
+        "terraform-ls",
       },
       auto_update = false,
       run_on_start = true,

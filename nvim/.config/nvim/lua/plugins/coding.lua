@@ -47,19 +47,6 @@ return {
     },
   },
   {
-    "smjonas/inc-rename.nvim",
-    event = "LspAttach",
-    config = function()
-      require("inc_rename").setup({
-        hl_group = "Substitute",
-        input_buffer_type = "snacks",
-        preview_empty_name = false,
-        save_in_cmdline_history = true,
-        show_message = true,
-      })
-    end,
-  },
-  {
     "jake-stewart/multicursor.nvim",
     branch = "1.0",
     event = "VeryLazy",
@@ -260,6 +247,8 @@ return {
         highlight = "gsh",
         replace = "gsr",
         update_n_lines = "gsn",
+        visual = "gsa",
+        visual_line = "gsa",
       },
     },
   },
