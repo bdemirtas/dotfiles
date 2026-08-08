@@ -1,57 +1,18 @@
 return {
   {
+    -- AI coding agent integration (send context, prompts)
     "nickjvandyke/opencode.nvim",
     version = "*",
     config = function()
       vim.g.opencode_opts = {}
-      vim.keymap.set(
-        { "n", "x" },
-        "<leader>oa",
-        function() require("opencode").ask("@this: ") end,
-        { desc = "Ask OpenCode" }
-      )
-      vim.keymap.set(
-        { "n", "x" },
-        "<leader>os",
-        function() require("opencode").select() end,
-        { desc = "Select OpenCode" }
-      )
-      vim.keymap.set(
-        { "n", "x" },
-        "go",
-        function() return require("opencode").operator("@this ") end,
-        { desc = "Send range to OpenCode", expr = true }
-      )
-      vim.keymap.set(
-        "n",
-        "goo",
-        function() return require("opencode").operator("@this ") .. "_" end,
-        { desc = "Send line to OpenCode", expr = true }
-      )
+      vim.keymap.set({ "n", "x" }, "<leader>oa", function() require("opencode").ask("@this: ") end, { desc = "Ask OpenCode" })
+      vim.keymap.set({ "n", "x" }, "<leader>os", function() require("opencode").select() end, { desc = "Select OpenCode" })
+      vim.keymap.set({ "n", "x" }, "go", function() return require("opencode").operator("@this ") end, { desc = "Send range to OpenCode", expr = true })
+      vim.keymap.set("n", "goo", function() return require("opencode").operator("@this ") .. "_" end, { desc = "Send line to OpenCode", expr = true })
     end,
   },
   {
-    "oribarilan/lensline.nvim",
-    event = "LspAttach",
-    opts = {},
-  },
-  {
-    "nemanjamalesija/smart-paste.nvim",
-    event = "VeryLazy",
-    opts = {},
-  },
-  {
-    "Owen-Dechow/videre.nvim",
-    cmd = "Videre",
-    keys = {
-      { "<leader>sv", "<cmd>Videre<cr>", desc = "Explore YAML/JSON/TOML" },
-    },
-  },
-  {
-    "mikavilpas/blink-ripgrep.nvim",
-    dependencies = { "saghen/blink.cmp" },
-  },
-  {
+    -- peek LSP definitions in floating popup
     "r4ppz/lspeek.nvim",
     event = "LspAttach",
     keys = {
@@ -59,6 +20,32 @@ return {
     },
   },
   {
+    -- code lenses above functions: references, author, diagnostics
+    "oribarilan/lensline.nvim",
+    event = "LspAttach",
+    opts = {},
+  },
+  {
+    -- auto-indent pasted code
+    "nemanjamalesija/smart-paste.nvim",
+    event = "VeryLazy",
+    opts = {},
+  },
+  {
+    -- YAML/JSON/TOML graph explorer
+    "Owen-Dechow/videre.nvim",
+    cmd = "Videre",
+    keys = {
+      { "<leader>sv", "<cmd>Videre<cr>", desc = "Explore YAML/JSON/TOML" },
+    },
+  },
+  {
+    -- ripgrep source for blink.cmp
+    "mikavilpas/blink-ripgrep.nvim",
+    dependencies = { "saghen/blink.cmp" },
+  },
+  {
+    -- snacks-style code action picker
     "rachartier/tiny-code-action.nvim",
     dependencies = {
       {
@@ -74,6 +61,22 @@ return {
     },
   },
   {
+    -- add/delete/change surrounding chars: ys, ds, cs
+    "kylechui/nvim-surround",
+    version = "*",
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup()
+    end,
+  },
+  {
+    -- which-key hints for available surround pairs
+    "gregorias/nvim-surround-wk",
+    dependencies = { "kylechui/nvim-surround" },
+    config = true,
+  },
+  {
+    -- multiple cursors like vscode
     "jake-stewart/multicursor.nvim",
     branch = "1.0",
     event = "VeryLazy",
@@ -83,11 +86,9 @@ return {
 
       local map = vim.keymap.set
 
-      -- Add cursor by matching word/selection
       map({ "n", "x" }, "<C-n>", function() mc.matchAddCursor(1) end, { desc = "Add cursor next match" })
       map({ "n", "x" }, "<C-p>", function() mc.matchAddCursor(-1) end, { desc = "Add cursor prev match" })
 
-      -- Toggle cursors
       map({ "n", "v" }, "<c-q>", mc.toggleCursor, { desc = "Toggle cursor" })
 
       mc.addKeymapLayer(function(layerSet)
@@ -115,6 +116,7 @@ return {
     end,
   },
   {
+    -- syntax highlighting and folding
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     main = "nvim-treesitter",
@@ -163,12 +165,14 @@ return {
     end,
   },
   {
+    -- smart comment toggling, context-aware
     "folke/ts-comments.nvim",
     version = "*",
     event = "VeryLazy",
     opts = {},
   },
   {
+    -- format-on-save: ruff, prettier, stylua, terraform_fmt
     "stevearc/conform.nvim",
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },
@@ -189,7 +193,6 @@ return {
         python = { "ruff_organize_imports", "ruff_fix", "ruff_format" },
         terraform = { "terraform_fmt" },
         fish = { "fish_indent" },
-        -- prettier family
         javascript = { "prettier" },
         typescript = { "prettier" },
         javascriptreact = { "prettier" },
@@ -205,13 +208,14 @@ return {
     },
   },
   {
+    -- fast LSP completion engine
     "saghen/blink.cmp",
     version = "*",
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
       keymap = {
-        preset = "none", -- take full control — no Ctrl+N/P anywhere
+        preset = "none",
         ["<C-j>"] = { "select_next", "fallback" },
         ["<C-k>"] = { "select_prev", "fallback" },
         ["<CR>"] = { "accept", "fallback" },
@@ -258,22 +262,13 @@ return {
     opts_extend = { "sources.default" },
   },
   {
+    -- enhanced f/F/t/T with repeat via ;
     "echasnovski/mini.jump",
     version = "*",
     event = "VeryLazy",
   },
   {
-    "kylechui/nvim-surround",
-    version = "*",
-    event = "VeryLazy",
-    config = function() require("nvim-surround").setup() end,
-  },
-  {
-    "gregorias/nvim-surround-wk",
-    dependencies = { "kylechui/nvim-surround" },
-    config = true,
-  },
-  {
+    -- auto-close brackets, quotes, parens
     "windwp/nvim-autopairs",
     version = "*",
     event = "InsertEnter",
@@ -289,6 +284,7 @@ return {
     },
   },
   {
+    -- LSP for Lua/Neovim config
     "folke/lazydev.nvim",
     ft = "lua",
     opts = {
@@ -298,6 +294,7 @@ return {
     },
   },
   {
+    -- text objects: va), di", ci[, and custom
     "echasnovski/mini.ai",
     version = "*",
     event = "VeryLazy",

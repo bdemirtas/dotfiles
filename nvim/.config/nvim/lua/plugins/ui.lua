@@ -1,5 +1,6 @@
 return {
   {
+    -- better cmdline, search, messages UI
     "folke/noice.nvim",
     event = "VeryLazy",
     dependencies = { "MunifTanjim/nui.nvim" },
@@ -47,6 +48,7 @@ return {
     },
   },
   {
+    -- keybinding popup showing available mappings
     "folke/which-key.nvim",
     event = "VimEnter",
     keys = {
@@ -58,7 +60,6 @@ return {
     },
     opts = {
       preset = "helix",
-      -- Space leader is a single key; which-key won't auto-trigger on it.
       triggers = {
         { "<leader>", mode = { "n", "v" } },
         { "<auto>", mode = "nxso" },
@@ -81,10 +82,7 @@ return {
           { "<leader>cR", desc = "Rename file" },
           { "<leader>f", group = "find" },
           { "<leader>g", group = "git" },
-          { "<leader>gg", desc = "Neogit" },
-          { "<leader>gc", desc = "Commit" },
-          { "<leader>gp", desc = "Push" },
-          { "<leader>gl", desc = "Pull" },
+          { "<leader>gg", desc = "Git status" },
           { "<leader>gt", desc = "Time machine" },
           { "<leader>gd", group = "diff" },
           { "<leader>gdm", desc = "vs develop" },
@@ -115,6 +113,7 @@ return {
     },
   },
   {
+    -- tab-style buffer line
     "akinsho/bufferline.nvim",
     version = "*",
     dependencies = "nvim-tree/nvim-web-devicons",
@@ -161,6 +160,7 @@ return {
     },
   },
   {
+    -- statusline: branch, diagnostics, CI, progress
     "nvim-lualine/lualine.nvim",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
@@ -169,8 +169,8 @@ return {
     event = "VeryLazy",
     opts = {
       options = {
-        theme = "auto", -- picks up oxocarbon automatically
-        globalstatus = true, -- single statusline across all splits
+        theme = "auto",
+        globalstatus = true,
         disabled_filetypes = { statusline = { "snacks_dashboard" } },
         component_separators = { left = "", right = "" },
         section_separators = { left = "", right = "" },
@@ -198,8 +198,13 @@ return {
       extensions = { "lazy", "mason" },
     },
   },
-  { "nvim-mini/mini.cursorword", version = "*" },
   {
+    -- underline word under cursor
+    "nvim-mini/mini.cursorword",
+    version = "*",
+  },
+  {
+    -- highlight TODO/FIXME/HACK/NOTE inline
     "echasnovski/mini.hipatterns",
     version = "*",
     event = { "BufReadPre", "BufNewFile" },
@@ -207,7 +212,6 @@ return {
       local hi = require("mini.hipatterns")
       return {
         highlighters = {
-          -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
           fixme = { pattern = "%f[%w]()FIXME()%f[%W]", group = "MiniHipatternsFixme" },
           hack = { pattern = "%f[%w]()HACK()%f[%W]", group = "MiniHipatternsHack" },
           todo = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },

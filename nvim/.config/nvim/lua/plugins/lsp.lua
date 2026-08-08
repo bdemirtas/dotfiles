@@ -1,6 +1,10 @@
 return {
-  { "b0o/schemastore.nvim" },
   {
+    -- JSON/YAML schema support for LSP
+    "b0o/schemastore.nvim",
+  },
+  {
+    -- auto-install LSP servers, formatters, linters
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     lazy = false,
     dependencies = { "williamboman/mason.nvim" },
@@ -27,7 +31,8 @@ return {
     },
   },
   {
-    "williamboman/mason.nvim", -- already declared above, lazy dedupes it
+    -- LSP/DAP/linter/formatter package manager
+    "williamboman/mason.nvim",
     config = function()
       require("mason").setup({ max_concurrent_installers = 10 })
     end,

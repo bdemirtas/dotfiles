@@ -12,20 +12,44 @@ end
 
 return {
   {
-    "NeogitOrg/neogit",
-    lazy = true,
+    -- magit-style git GUI: status, rebase, graph, stash
+    "SuperBo/fugit2.nvim",
+    build = false,
     dependencies = {
       "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "sindrets/diffview.nvim",
+      "MunifTanjim/nui.nvim",
     },
-    cmd = "Neogit",
+    cmd = { "Fugit2", "Fugit2Graph", "Fugit2Diff", "Fugit2Rebase" },
     keys = {
-      { "<leader>gg", "<cmd>Neogit<cr>", desc = "Neogit" },
-      { "<leader>gc", "<cmd>Neogit commit<cr>", desc = "Neogit commit" },
-      { "<leader>gp", "<cmd>Neogit push<cr>", desc = "Neogit push" },
-      { "<leader>gl", "<cmd>Neogit pull<cr>", desc = "Neogit pull" },
+      { "<leader>gg", "<cmd>Fugit2<cr>", desc = "Git status" },
+    },
+    opts = {
+      width = 100,
+      external_diffview = true,
+      libgit2_path = "/opt/homebrew/lib/libgit2.dylib",
     },
   },
   {
+    -- side-by-side git diff viewer (integrated with fugit2)
+    "sindrets/diffview.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    cmd = { "DiffviewOpen", "DiffviewFileHistory", "DiffviewToggleFiles", "DiffviewFocusFiles", "DiffviewRefresh" },
+    keys = {
+      { "<leader>gdv", "<cmd>DiffviewClose<cr>", desc = "Close diffview" },
+    },
+    config = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "DiffviewFilePanel", "DiffviewFileHistoryPanel", "DiffviewFiles", "diffview" },
+        callback = function(ev)
+          vim.keymap.set("n", "q", "<cmd>DiffviewClose<cr>", { buffer = ev.buf, silent = true })
+        end,
+      })
+    end,
+  },
+  {
+    -- jetbrains-style diff with connector gutters
     "CoreyKaylor/diffbandit.nvim",
     config = function() require("diffbandit").setup() end,
     keys = {
@@ -35,6 +59,7 @@ return {
     },
   },
   {
+    -- git time machine: browse file history
     "fredeeb/tardis.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     keys = {
@@ -84,6 +109,7 @@ return {
     end,
   },
   {
+    -- gutter signs, hunk staging, blame
     "lewis6991/gitsigns.nvim",
     event = { "BufReadPre", "BufNewFile" },
     opts = {
@@ -122,18 +148,27 @@ return {
     },
   },
   {
+    -- floating search-and-replace
     "ankushbhagats/match.nvim",
-    cmd = { "Match", "MatchWord", "MatchLine" },
+    event = "VeryLazy",
+    config = function() require("match") end,
     keys = {
       {
         "<leader>sr",
-        "<cmd>Match<cr>",
-        mode = { "n", "v" },
+        function() vim.cmd("Match ") end,
+        mode = "n",
+        desc = "Search and Replace",
+      },
+      {
+        "<leader>sr",
+        function() vim.cmd("MatchWord") end,
+        mode = "v",
         desc = "Search and Replace",
       },
     },
   },
   {
+    -- diagnostics + symbols panel
     "folke/trouble.nvim",
     opts = { focus = true },
     cmd = "Trouble",
@@ -167,6 +202,7 @@ return {
     },
   },
   {
+    -- python test coverage inline
     "andythigpen/nvim-coverage",
     dependencies = { "nvim-lua/plenary.nvim" },
     cmd = {
@@ -182,7 +218,6 @@ return {
       {
         "<leader>cL",
         function()
-          -- Prefer lcov at project root, else coverage.py .coverage via language loader
           local root = project_root()
 
           for _, rel in ipairs({ "lcov.info", "coverage/lcov.info", "coverage/coverage.lcov" }) do
@@ -204,7 +239,6 @@ return {
       auto_reload = true,
       lang = {
         python = {
-          -- Function so path is resolved at load time (not plugin-load cwd)
           coverage_file = function()
             local root = project_root()
             for _, rel in ipairs({ ".coverage", "htmlcov/.coverage" }) do
@@ -220,6 +254,7 @@ return {
     },
   },
   {
+    -- jump to any visible character
     "folke/flash.nvim",
     event = "VeryLazy",
     opts = {},

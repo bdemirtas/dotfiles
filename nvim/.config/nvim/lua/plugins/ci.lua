@@ -1,5 +1,6 @@
 return {
   {
+    -- CI/CD pipeline status in lualine
     "topaxi/pipeline.nvim",
     cmd = { "Pipeline" },
     build = "make",
@@ -11,6 +12,7 @@ return {
     },
   },
   {
+    -- browse GitHub PRs + Jira issues
     "emrearmagan/atlas.nvim",
     cmd = {
       "AtlasPulls",

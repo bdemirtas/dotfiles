@@ -1,4 +1,5 @@
 return {
+  -- picker, explorer, notifier, git, dashboard, zen, scratch
   "folke/snacks.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons" },
   priority = 1000,

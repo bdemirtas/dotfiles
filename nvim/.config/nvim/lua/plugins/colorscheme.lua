@@ -1,14 +1,15 @@
 return {
   {
-    "kbraggins/duskhaven.nvim",
+    -- near-black dark theme, minimal accents
+    "WTFox/luna.nvim",
     lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme("duskhaven")
+      vim.cmd.colorscheme("luna")
     end,
   },
-  -- Kept so you can switch back via <leader>uC
   {
+    -- backup colorscheme
     "scottmckendry/cyberdream.nvim",
     lazy = true,
   },

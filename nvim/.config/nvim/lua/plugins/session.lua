@@ -1,9 +1,11 @@
 return {
   {
+    -- auto-detect indent settings per file
     "tpope/vim-sleuth",
     event = { "BufReadPre", "BufNewFile" },
   },
   {
+    -- session restore: remembers open files and layout
     "folke/persistence.nvim",
     event = "BufReadPre",
     opts = {
@@ -12,8 +14,6 @@ return {
     },
     config = function(_, opts)
       require("persistence").setup(opts)
-
-      -- persistence.nvim saves on exit but does not restore by default
       vim.api.nvim_create_autocmd("VimEnter", {
         group = vim.api.nvim_create_augroup("persistence_auto", { clear = true }),
         callback = function()
@@ -27,26 +27,10 @@ return {
       })
     end,
     keys = {
-      {
-        "<leader>qs",
-        function() require("persistence").load() end,
-        desc = "Restore session (cwd)",
-      },
-      {
-        "<leader>qS",
-        function() require("persistence").select() end,
-        desc = "Select session",
-      },
-      {
-        "<leader>ql",
-        function() require("persistence").load({ last = true }) end,
-        desc = "Restore last session",
-      },
-      {
-        "<leader>qd",
-        function() require("persistence").stop() end,
-        desc = "Stop session autosave",
-      },
+      { "<leader>qs", function() require("persistence").load() end, desc = "Restore session (cwd)" },
+      { "<leader>qS", function() require("persistence").select() end, desc = "Select session" },
+      { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "Restore last session" },
+      { "<leader>qd", function() require("persistence").stop() end, desc = "Stop session autosave" },
     },
   },
 }
