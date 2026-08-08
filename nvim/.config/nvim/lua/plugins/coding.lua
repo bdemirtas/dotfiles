@@ -4,10 +4,30 @@ return {
     version = "*",
     config = function()
       vim.g.opencode_opts = {}
-      vim.keymap.set({ "n", "x" }, "<leader>oa", function() require("opencode").ask("@this: ") end, { desc = "Ask OpenCode" })
-      vim.keymap.set({ "n", "x" }, "<leader>os", function() require("opencode").select() end, { desc = "Select OpenCode" })
-      vim.keymap.set({ "n", "x" }, "go", function() return require("opencode").operator("@this ") end, { desc = "Send range to OpenCode", expr = true })
-      vim.keymap.set("n", "goo", function() return require("opencode").operator("@this ") .. "_" end, { desc = "Send line to OpenCode", expr = true })
+      vim.keymap.set(
+        { "n", "x" },
+        "<leader>oa",
+        function() require("opencode").ask("@this: ") end,
+        { desc = "Ask OpenCode" }
+      )
+      vim.keymap.set(
+        { "n", "x" },
+        "<leader>os",
+        function() require("opencode").select() end,
+        { desc = "Select OpenCode" }
+      )
+      vim.keymap.set(
+        { "n", "x" },
+        "go",
+        function() return require("opencode").operator("@this ") end,
+        { desc = "Send range to OpenCode", expr = true }
+      )
+      vim.keymap.set(
+        "n",
+        "goo",
+        function() return require("opencode").operator("@this ") .. "_" end,
+        { desc = "Send line to OpenCode", expr = true }
+      )
     end,
   },
   {
@@ -30,6 +50,13 @@ return {
   {
     "mikavilpas/blink-ripgrep.nvim",
     dependencies = { "saghen/blink.cmp" },
+  },
+  {
+    "r4ppz/lspeek.nvim",
+    event = "LspAttach",
+    keys = {
+      { "gp", function() require("lspeek").peek_definition() end, desc = "Peek definition" },
+    },
   },
   {
     "rachartier/tiny-code-action.nvim",
@@ -236,21 +263,15 @@ return {
     event = "VeryLazy",
   },
   {
-    "echasnovski/mini.surround",
+    "kylechui/nvim-surround",
     version = "*",
-    opts = {
-      mappings = {
-        add = "gsa",
-        delete = "gsd",
-        find = "gsf",
-        find_left = "gsF",
-        highlight = "gsh",
-        replace = "gsr",
-        update_n_lines = "gsn",
-        visual = "gsa",
-        visual_line = "gsa",
-      },
-    },
+    event = "VeryLazy",
+    config = function() require("nvim-surround").setup() end,
+  },
+  {
+    "gregorias/nvim-surround-wk",
+    dependencies = { "kylechui/nvim-surround" },
+    config = true,
   },
   {
     "windwp/nvim-autopairs",

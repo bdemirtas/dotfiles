@@ -68,7 +68,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
       "Code action",
       { noremap = true, silent = true }
     )
-    -- <leader>ci is reserved for pipeline.nvim (CI/CD)
     map("n", "<leader>cI", vim.lsp.buf.incoming_calls, "Incoming calls")
     map("n", "<leader>cO", vim.lsp.buf.outgoing_calls, "Outgoing calls")
     map("n", "K", vim.lsp.buf.hover, "Hover docs")

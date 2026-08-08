@@ -109,7 +109,7 @@ return {
           { "[", group = "prev" },
           { "]", group = "next" },
           { "g", group = "goto" },
-          { "gs", group = "surround" },
+          { "gp", desc = "Peek definition" },
         },
       },
     },
