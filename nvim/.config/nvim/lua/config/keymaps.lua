@@ -1,5 +1,15 @@
 local map = vim.keymap.set
 
+-- Safety: re-map leader on every buffer enter (prevents space from reverting to <right>)
+vim.api.nvim_create_autocmd({ "BufEnter", "ModeChanged" }, {
+  group = vim.api.nvim_create_augroup("remap_leader", { clear = true }),
+  callback = function()
+    if vim.g.mapleader and not vim.fn.mapcheck(" ", "n") then
+      vim.keymap.set({ "n", "v" }, " ", "<Nop>", { silent = true })
+    end
+  end,
+})
+
 -- ── General ────────────────────────────────────────────────────────────
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "Clear highlights" })
 map("n", "<leader>qq", "<cmd>q<CR>", { desc = "Quit" })
@@ -46,7 +56,7 @@ map("n", "<leader>Y", ":%y<CR>", { desc = "Yank entire buffer" })
 -- ── Paste without losing register ──────────────────────────────────────
 -- Visual paste normally overwrites the yanked register with the replaced text.
 -- Send the replaced text to the black-hole register so you can paste repeatedly.
-map({ "x", "s" }, "p", '"_dP', { desc = "Paste without overwriting register" })
+map({ "x", "s" }, "p", '"_dp', { desc = "Paste without overwriting register" })
 map({ "x", "s" }, "P", '"_dP', { desc = "Paste before without overwriting register" })
 
 -- Diagnostic navigation

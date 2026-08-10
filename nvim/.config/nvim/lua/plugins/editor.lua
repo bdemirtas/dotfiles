@@ -12,30 +12,25 @@ end
 
 return {
   {
-    -- magit-style git GUI: status, rebase, graph, stash
-    "SuperBo/fugit2.nvim",
-    build = false,
+    -- magit-style git UI: status, staging, committing, branching
+    "NeogitOrg/neogit",
+    lazy = true,
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons",
-      "sindrets/diffview.nvim",
-      "MunifTanjim/nui.nvim",
     },
-    cmd = { "Fugit2", "Fugit2Graph", "Fugit2Diff", "Fugit2Rebase" },
+    cmd = "Neogit",
     keys = {
-      { "<leader>gg", "<cmd>Fugit2<cr>", desc = "Git status" },
-    },
-    opts = {
-      width = 100,
-      external_diffview = true,
-      libgit2_path = "/opt/homebrew/lib/libgit2.dylib",
+      { "<leader>gg", "<cmd>Neogit<cr>", desc = "Neogit" },
+      { "<leader>gc", "<cmd>Neogit commit<cr>", desc = "Commit" },
+      { "<leader>gp", "<cmd>Neogit push<cr>", desc = "Push" },
+      { "<leader>gl", "<cmd>Neogit pull<cr>", desc = "Pull" },
     },
   },
   {
-    -- side-by-side git diff viewer (integrated with fugit2)
+    -- side-by-side git diff viewer
     "sindrets/diffview.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    cmd = { "DiffviewOpen", "DiffviewFileHistory", "DiffviewToggleFiles", "DiffviewFocusFiles", "DiffviewRefresh" },
+    cmd = { "DiffviewOpen", "DiffviewFileHistory", "DiffviewClose" },
     keys = {
       { "<leader>gdv", "<cmd>DiffviewClose<cr>", desc = "Close diffview" },
     },
@@ -70,6 +65,10 @@ return {
 
       local Session = require("tardis-nvim.session").Session
 
+      function Session:get_current_buffer()
+        return self.buffers[self.current_buffer_index]
+      end
+
       function Session:goto_buffer(index)
         if index < 1 or index > #self.log then
           return false
@@ -79,8 +78,20 @@ return {
           self.buffers[index] = self:create_buffer(index)
         end
         self.buffers[index]:focus()
-        self.curret_buffer_index = index
+        self.current_buffer_index = index
         return true
+      end
+
+      function Session:next_buffer()
+        if not self:goto_buffer(self.current_buffer_index + 1) then
+          vim.notify("No earlier revisions of file")
+        end
+      end
+
+      function Session:prev_buffer()
+        if not self:goto_buffer(self.current_buffer_index - 1) then
+          vim.notify("No later revisions of file")
+        end
       end
 
       local close = Session.close
@@ -179,26 +190,6 @@ return {
       { "<leader>cl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "LSP" },
       { "<leader>xL", "<cmd>Trouble loclist toggle<cr>", desc = "Location list" },
       { "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix list" },
-    },
-    specs = {
-      "folke/snacks.nvim",
-      opts = function(_, opts)
-        return vim.tbl_deep_extend("force", opts or {}, {
-          picker = {
-            actions = require("trouble.sources.snacks").actions,
-            win = {
-              input = {
-                keys = {
-                  ["<c-t>"] = {
-                    "trouble_open",
-                    mode = { "n", "i" },
-                  },
-                },
-              },
-            },
-          },
-        })
-      end,
     },
   },
   {

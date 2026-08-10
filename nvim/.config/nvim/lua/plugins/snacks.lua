@@ -26,11 +26,13 @@ return {
     },
     picker = {
       layout = { preset = "telescope" },
+      actions = require("trouble.sources.snacks").actions,
       win = {
         input = {
           keys = {
             ["<C-j>"] = { "list_down", mode = { "i", "n" } },
             ["<C-k>"] = { "list_up", mode = { "i", "n" } },
+            ["<c-t>"] = { "trouble_open", mode = { "n", "i" } },
           },
         },
       },
@@ -50,6 +52,7 @@ return {
     scroll = { enabled = true },
     statuscolumn = { enabled = true },
     words = { enabled = false },
+    image = { enabled = true },
     input = {
       icon = " ",
       icon_pos = "left",
@@ -228,7 +231,6 @@ return {
       callback = function()
         _G.dd = function(...) Snacks.debug.inspect(...) end
         _G.bt = function() Snacks.debug.backtrace() end
-        vim.print = _G.dd
 
         Snacks.toggle.diagnostics():map("<leader>ud")
         Snacks.toggle.inlay_hints():map("<leader>uh")

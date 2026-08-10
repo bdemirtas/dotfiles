@@ -12,55 +12,49 @@ return {
     },
   },
   {
-    -- browse GitHub PRs + Jira issues
-    "emrearmagan/atlas.nvim",
-    cmd = {
-      "AtlasPulls",
-      "AtlasIssues",
-      "AtlasDiff",
-      "AtlasCreatePR",
-      "AtlasCreateIssue",
-      "AtlasSearch",
-      "AtlasOpen",
-      "AtlasNotes",
-    },
+    -- full-featured GitHub PRs + code review (inline comments, approve/merge)
+    "pwntester/octo.nvim",
     dependencies = {
-      "esmuellert/codediff.nvim",
       "nvim-tree/nvim-web-devicons",
-      "MeanderingProgrammer/render-markdown.nvim",
+      "MunifTanjim/nui.nvim",
+    },
+    cmd = { "Octo" },
+    keys = {
+      { "<leader>go", "<cmd>Octo pr list<cr>", desc = "PR list" },
+      { "<leader>goc", "<cmd>Octo pr create<cr>", desc = "Create PR" },
+    },
+    opts = {},
+  },
+  {
+    -- Jira issues, sprints, agile boards, transitions
+    "letieu/jira.nvim",
+    cmd = { "Jira" },
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      "MunifTanjim/nui.nvim",
     },
     keys = {
-      { "<leader>ap", "<cmd>AtlasPulls github<cr>", desc = "Pull requests" },
-      { "<leader>ai", "<cmd>AtlasIssues jira<cr>", desc = "Issues" },
-      { "<leader>ac", "<cmd>AtlasCreatePR<cr>", desc = "Create PR" },
-      { "<leader>aC", "<cmd>AtlasCreateIssue<cr>", desc = "Create issue" },
-      { "<leader>an", "<cmd>AtlasNotes<cr>", desc = "Review notes" },
-      { "<leader>as", "<cmd>AtlasSearch jira<cr>", desc = "Search" },
+      { "<leader>ji", "<cmd>Jira issues<cr>", desc = "Issues" },
+      { "<leader>jb", "<cmd>Jira boards<cr>", desc = "Board" },
+      { "<leader>jc", "<cmd>Jira create_issue<cr>", desc = "Create issue" },
+      { "<leader>js", "<cmd>Jira search<cr>", desc = "Search" },
     },
     opts = {
-      pulls = {
-        providers = { github = {} },
-      },
-      issues = {
-        providers = {
-          jira = {
-            base_url = "https://your-site.atlassian.net",
-            email = "you@example.com",
-            token = vim.env.JIRA_TOKEN or "",
-          },
-        },
-      },
-      keymaps = {
-        pulls = {
-          open_diff = "gD",
-          checkout = "gC",
-          review = {
-            add_note = "gn",
-            add_pending_comment = "gq",
-            request_changes = "gX",
-          },
-        },
-      },
+      url = vim.env.JIRA_URL or "",
+      email = vim.env.JIRA_EMAIL or "",
+      token = vim.env.JIRA_TOKEN or "",
     },
+  },
+  {
+    -- HTTP/GraphQL/gRPC client, JetBrains .http compatible
+    "mistweaverco/kulala.nvim",
+    event = { "SessionLoadPost", "VimLeavePre" },
+    ft = { "http", "rest" },
+    keys = {
+      { "<leader>Rs", function() require("kulala").run() end, desc = "Send request" },
+      { "<leader>Ra", function() require("kulala").run_all() end, desc = "Send all requests" },
+      { "<leader>Rb", function() require("kulala").scratchpad() end, desc = "Open scratchpad" },
+    },
+    opts = {},
   },
 }

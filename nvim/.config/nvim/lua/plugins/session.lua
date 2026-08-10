@@ -33,4 +33,22 @@ return {
       { "<leader>qd", function() require("persistence").stop() end, desc = "Stop session autosave" },
     },
   },
+  {
+    -- Obsidian vault: [[wiki-links]], daily notes, backlinks, tags
+    "obsidian-nvim/obsidian.nvim",
+    version = "*",
+    ft = "markdown",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    keys = {
+      { "<leader>Nt", "<cmd>Obsidian today<cr>", desc = "Today note" },
+      { "<leader>Nn", "<cmd>Obsidian new<cr>", desc = "New note" },
+      { "<leader>Ns", "<cmd>Obsidian quick_switch<cr>", desc = "Quick switch" },
+    },
+    opts = {
+      workspaces = {
+        { name = "personal", path = "~/vaults/personal" },
+      },
+      picker = { name = "snacks.picker" },
+    },
+  },
 }

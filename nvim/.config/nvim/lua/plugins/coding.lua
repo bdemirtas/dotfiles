@@ -15,6 +15,9 @@ return {
     -- peek LSP definitions in floating popup
     "r4ppz/lspeek.nvim",
     event = "LspAttach",
+    config = function()
+      require("lspeek").setup()
+    end,
     keys = {
       { "gp", function() require("lspeek").peek_definition() end, desc = "Peek definition" },
     },
@@ -210,7 +213,7 @@ return {
   {
     -- fast LSP completion engine
     "saghen/blink.cmp",
-    version = "*",
+    version = "1.*",
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
@@ -247,7 +250,14 @@ return {
       },
 
       sources = {
-        default = { "lsp", "path", "snippets", "buffer" },
+        default = { "lsp", "path", "snippets", "buffer", "ripgrep" },
+        providers = {
+          ripgrep = {
+            module = "blink-ripgrep",
+            name = "Ripgrep",
+            opts = {},
+          },
+        },
       },
 
       signature = {
@@ -263,9 +273,10 @@ return {
   },
   {
     -- enhanced f/F/t/T with repeat via ;
-    "echasnovski/mini.jump",
+    "nvim-mini/mini.jump",
     version = "*",
     event = "VeryLazy",
+    opts = {},
   },
   {
     -- auto-close brackets, quotes, parens
@@ -295,7 +306,7 @@ return {
   },
   {
     -- text objects: va), di", ci[, and custom
-    "echasnovski/mini.ai",
+    "nvim-mini/mini.ai",
     version = "*",
     event = "VeryLazy",
     opts = {
