@@ -38,6 +38,10 @@ return {
     -- YAML/JSON/TOML graph explorer
     "Owen-Dechow/videre.nvim",
     cmd = "Videre",
+    dependencies = {
+      "Owen-Dechow/graph_view_yaml_parser",
+      "Owen-Dechow/graph_view_toml_parser",
+    },
     keys = {
       { "<leader>sv", "<cmd>Videre<cr>", desc = "Explore YAML/JSON/TOML" },
     },
@@ -121,10 +125,20 @@ return {
   {
     -- syntax highlighting and folding
     "nvim-treesitter/nvim-treesitter",
+    lazy = false,
     build = ":TSUpdate",
-    main = "nvim-treesitter",
     init = function()
-      local want = {
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("treesitter_start", { clear = true }),
+        callback = function(ev)
+          local lang = vim.treesitter.language.get_lang(vim.bo[ev.buf].filetype)
+          if lang and vim.treesitter.language.add(lang) then
+            vim.treesitter.start(ev.buf, lang)
+          end
+        end,
+      })
+
+      require("nvim-treesitter").install({
         "bash",
         "diff",
         "editorconfig",
@@ -155,16 +169,7 @@ return {
         "vimdoc",
         "regex",
         "sql",
-      }
-      local ok, config = pcall(require, "nvim-treesitter.config")
-      if not ok then
-        return
-      end
-      local installed = config.get_installed()
-      local missing = vim.iter(want):filter(function(p) return not vim.tbl_contains(installed, p) end):totable()
-      if #missing > 0 then
-        require("nvim-treesitter").install(missing)
-      end
+      })
     end,
   },
   {
@@ -182,14 +187,14 @@ return {
     keys = {
       {
         "<leader>cf",
-        function() require("conform").format({ async = true, lsp_fallback = true }) end,
+        function() require("conform").format({ async = true, lsp_format = "fallback" }) end,
         desc = "Format buffer",
       },
     },
     opts = {
       format_on_save = {
         timeout_ms = 500,
-        lsp_fallback = true,
+        lsp_format = "fallback",
       },
       formatters_by_ft = {
         lua = { "stylua" },
@@ -250,8 +255,13 @@ return {
       },
 
       sources = {
-        default = { "lsp", "path", "snippets", "buffer", "ripgrep" },
+        default = { "lazydev", "lsp", "path", "snippets", "buffer", "ripgrep" },
         providers = {
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+            score_offset = 100,
+          },
           ripgrep = {
             module = "blink-ripgrep",
             name = "Ripgrep",

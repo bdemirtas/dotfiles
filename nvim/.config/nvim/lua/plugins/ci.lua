@@ -23,7 +23,9 @@ return {
       { "<leader>go", "<cmd>Octo pr list<cr>", desc = "PR list" },
       { "<leader>goc", "<cmd>Octo pr create<cr>", desc = "Create PR" },
     },
-    opts = {},
+    opts = {
+      picker = "snacks",
+    },
   },
   {
     -- Jira issues, sprints, agile boards, transitions
@@ -38,11 +40,6 @@ return {
       { "<leader>jb", "<cmd>Jira boards<cr>", desc = "Board" },
       { "<leader>jc", "<cmd>Jira create_issue<cr>", desc = "Create issue" },
       { "<leader>js", "<cmd>Jira search<cr>", desc = "Search" },
-    },
-    opts = {
-      url = vim.env.JIRA_URL or "",
-      email = vim.env.JIRA_EMAIL or "",
-      token = vim.env.JIRA_TOKEN or "",
     },
   },
   {

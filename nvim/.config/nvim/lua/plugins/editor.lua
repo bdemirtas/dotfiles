@@ -162,7 +162,7 @@ return {
     -- floating search-and-replace
     "ankushbhagats/match.nvim",
     event = "VeryLazy",
-    config = function() require("match") end,
+    opts = {},
     keys = {
       {
         "<leader>sr",
