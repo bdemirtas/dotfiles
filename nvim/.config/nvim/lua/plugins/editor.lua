@@ -44,13 +44,14 @@ return {
     end,
   },
   {
-    -- jetbrains-style diff with connector gutters
-    "CoreyKaylor/diffbandit.nvim",
-    config = function() require("diffbandit").setup() end,
+    -- VSCode-style diff with two-tier char-level highlighting
+    "esmuellert/codediff.nvim",
+    cmd = "CodeDiff",
+    opts = {},
     keys = {
-      { "<leader>gd", "<cmd>DiffBanditGit<cr>", desc = "Diff working tree" },
-      { "<leader>gdm", "<cmd>DiffBanditGit --base develop<cr>", desc = "Diff vs develop" },
-      { "<leader>gdh", "<cmd>DiffBanditGitCommit HEAD<cr>", desc = "Diff last commit" },
+      { "<leader>gd", "<cmd>CodeDiff<cr>", desc = "Diff working tree" },
+      { "<leader>gdm", "<cmd>CodeDiff develop<cr>", desc = "Diff vs develop" },
+      { "<leader>gdh", "<cmd>CodeDiff HEAD~1 HEAD<cr>", desc = "Diff last commit" },
     },
   },
   {
