@@ -1,3 +1,19 @@
+local function current_repo_view(domain, kind)
+  return function()
+    local info = require("atlas.core.git").local_repository(vim.fn.expand("%:p:h"))
+    if not info then
+      vim.notify("Not in a git repo with a known remote", vim.log.levels.WARN)
+      return
+    end
+    require("atlas").open(domain, info.provider, {
+      initial_view = {
+        name = info.slug,
+        search = string.format("repo:%s is:%s is:open", info.slug, kind),
+      },
+    })
+  end
+end
+
 return {
   {
     -- CI/CD pipeline status in lualine
@@ -15,25 +31,17 @@ return {
     -- PRs (GitHub/Bitbucket/GitLab) + issues (Jira/GitHub/GitLab) in one tool
     "emrearmagan/atlas.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    cmd = {
-      "AtlasPulls",
-      "AtlasIssues",
-      "AtlasCreatePR",
-      "AtlasCreateIssue",
-      "AtlasSearch",
-      "AtlasDiff",
-      "AtlasNotes",
-      "AtlasOpen",
-      "AtlasClearCache",
-      "AtlasLogs",
-    },
+    -- Atlas only registers `:Atlas <subcommand>` and `:AtlasDiff`.
+    cmd = { "Atlas", "AtlasDiff" },
     keys = {
-      { "<leader>ap", "<cmd>AtlasPulls<cr>", desc = "Pull requests" },
-      { "<leader>ai", "<cmd>AtlasIssues<cr>", desc = "Issues" },
-      { "<leader>ac", "<cmd>AtlasCreatePR<cr>", desc = "Create PR" },
-      { "<leader>aC", "<cmd>AtlasCreateIssue<cr>", desc = "Create issue" },
-      { "<leader>as", "<cmd>AtlasSearch<cr>", desc = "Search" },
-      { "<leader>an", "<cmd>AtlasNotes<cr>", desc = "Review notes" },
+      { "<leader>ap", "<cmd>Atlas pulls<cr>", desc = "Pull requests" },
+      { "<leader>ai", "<cmd>Atlas issues<cr>", desc = "Issues" },
+      { "<leader>ac", "<cmd>Atlas create pr<cr>", desc = "Create PR" },
+      { "<leader>aC", "<cmd>Atlas create issue<cr>", desc = "Create issue" },
+      { "<leader>as", "<cmd>Atlas search<cr>", desc = "Search" },
+      { "<leader>an", "<cmd>Atlas notes<cr>", desc = "Review notes" },
+      { "<leader>aP", current_repo_view("pulls", "pr"), desc = "PRs (this repo)" },
+      { "<leader>aI", current_repo_view("issues", "issue"), desc = "Issues (this repo)" },
     },
     opts = {
       pulls = {

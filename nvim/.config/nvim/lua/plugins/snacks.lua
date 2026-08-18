@@ -36,6 +36,12 @@ return {
           },
         },
       },
+      sources = {
+        explorer = {
+          hidden = true,
+          ignored = true,
+        },
+      },
     },
     explorer = {
       win = {
