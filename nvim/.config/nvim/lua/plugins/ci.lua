@@ -1,10 +1,13 @@
 local function current_repo_view(domain, kind)
   return function()
     local info = require("atlas.core.git").local_repository(vim.fn.expand("%:p:h"))
-    if not info then
-      vim.notify("Not in a git repo with a known remote", vim.log.levels.WARN)
+    local configured = info and vim.tbl_get(require("atlas.config").options, domain, "providers", info.provider) ~= nil
+
+    if not configured then
+      vim.cmd("Atlas " .. domain)
       return
     end
+
     require("atlas").open(domain, info.provider, {
       initial_view = {
         name = info.slug,
